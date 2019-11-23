@@ -16,7 +16,7 @@ class CreateGroupMembersTable extends Migration
         Schema::create('group_members', function (Blueprint $table) {
             $table->unsignedBigInteger('userID');
             $table->unsignedBigInteger('groupID');
-            $table->primary(['userID', 'groupID']); // toUpdate
+            $table->primary(['userID', 'groupID']);
             $table->binary('isLeader');
             $table->timestamp('joinDate');
             $table->timestamps();
