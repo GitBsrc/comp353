@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDmMessagesTable extends Migration
+class CreateDmRecipientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateDmMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dm_messages', function (Blueprint $table) {
+        Schema::create('dm_recipients', function (Blueprint $table) {
             $table->increment('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('message_id')->unsigned();
+            $table->integer('group_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->mediumText('message_body');
+            $table->foreign('message_id')->references('id')->on('dm_messages')->onDelete('cascade');
+            $table->foreign('group_id')->references('groupID')->on('group')->onDelete('cascade');
+            $table->unique(["user_id","message_id","group_id"]);
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateDmMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dm_messages');
+        Schema::dropIfExists('dm_recipients');
     }
 }
