@@ -24,3 +24,8 @@ Route::get('/posts', function () {
 });
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
+
+Route::get('/dm', function () {
+    return view('dm');
+});
+
