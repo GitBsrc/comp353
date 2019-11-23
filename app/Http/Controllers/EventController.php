@@ -14,7 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        //return view for all events (or viewable events)
     }
 
     /**
@@ -24,7 +24,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('edit_event');
     }
 
     /**
@@ -35,7 +35,22 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, ['name' => 'required', 'description' => 'required', 'startDate' => 'required', 'endDate' => 'required', 'type' => 'required']); 
+
+        $event = new _Event_();
+
+        $event->name = $request->input('name');
+        $event->description = $request->input('description');
+        $event->startDate = $request->input('startDate');
+        $event->endDate = $request->input('endDate');
+        // $event->status = $request->input('status'); Needs some default value
+        $event->type = $request->input('type');
+        // $event->discount = $request->input('discount'); From somewhere?
+        // $event->price = $request->input('price'); From some function
+
+        $event->save();
+
+        // return redirect("SOMEWHERE")
     }
 
     /**
@@ -44,9 +59,11 @@ class EventController extends Controller
      * @param  \App\_Event_  $_Event_
      * @return \Illuminate\Http\Response
      */
-    public function show(_Event_ $_Event_)
+    public function show($id)
     {
-        //
+        $event = _Event_::find($id);
+
+        return View::make('event')->with('event', $event);
     }
 
     /**
@@ -55,9 +72,11 @@ class EventController extends Controller
      * @param  \App\_Event_  $_Event_
      * @return \Illuminate\Http\Response
      */
-    public function edit(_Event_ $_Event_)
+    public function edit($id)
     {
-        //
+        $event = _Event_::find($id);
+
+        return View::make('edit_event')->with('event', $event);
     }
 
     /**
@@ -67,9 +86,23 @@ class EventController extends Controller
      * @param  \App\_Event_  $_Event_
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, _Event_ $_Event_)
+    public function update(Request $request, _Event_ $event)
     {
-        //
+        
+        $this->validate($request, ['name' => 'required', 'description' => 'required', 'startDate' => 'required', 'endDate' => 'required', 'type' => 'required']); 
+
+        $event->name = $request->input('name');
+        $event->description = $request->input('description');
+        $event->startDate = $request->input('startDate');
+        $event->endDate = $request->input('endDate');
+        // $event->status = $request->input('status'); Needs some default value
+        $event->type = $request->input('type');
+        // $event->discount = $request->input('discount'); From somewhere?
+        // $event->price = $request->input('price'); From some function
+
+        $event->save();
+
+        // return redirect("SOMEWHERE")
     }
 
     /**
@@ -80,6 +113,6 @@ class EventController extends Controller
      */
     public function destroy(_Event_ $_Event_)
     {
-        //
+        //not needed? or change to something that changes status
     }
 }
