@@ -23,4 +23,8 @@ Route::get('/posts', function () {
     return view('posts');
 });
 
+Route::get('/event', function () {
+    return view('event');
+});
+
 Route::get('/profile', 'ProfileController@index')->name('profile');

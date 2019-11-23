@@ -43,6 +43,10 @@
                         <a class="navbar-item" href="posts">
                           Posts
                         </a>
+
+                        <a class="navbar-item" href="event">
+                          Events
+                        </a>
                   
                         <div class="navbar-item has-dropdown is-hoverable">
                           <a class="navbar-link">
