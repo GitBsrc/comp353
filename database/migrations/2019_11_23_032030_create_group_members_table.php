@@ -14,10 +14,15 @@ class CreateGroupMembersTable extends Migration
     public function up()
     {
         Schema::create('group_members', function (Blueprint $table) {
+            $table->unsignedBigInteger('userID');
+            $table->unsignedBigInteger('groupID');
             $table->primary(['userID', 'groupID']); // toUpdate
             $table->binary('isLeader');
             $table->timestamp('joinDate');
             $table->timestamps();
+
+            $table->foreign('userID')->references('id')->on('users');
+            $table->foreign('groupID')->references('groupID')->on('group');
         });
     }
 

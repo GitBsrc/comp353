@@ -14,9 +14,8 @@ class CreateGroupPostsTable extends Migration
     public function up()
     {
         Schema::create('group_posts', function (Blueprint $table) {
-            $table->primary(['postID', 'groupID']); // toUpdate
-            $table->timestamp('postDate');
-            $table->timestamp('updateDate');
+            $table->bigIncrements('groupID'); // temporary
+            // $table->primary(['postID', 'groupID']); // toUpdate
             $table->timestamps();
         });
     }
