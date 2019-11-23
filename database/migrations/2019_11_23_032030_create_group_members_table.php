@@ -22,7 +22,7 @@ class CreateGroupMembersTable extends Migration
             $table->timestamps();
 
             $table->foreign('userID')->references('id')->on('users');
-            $table->foreign('groupID')->references('groupID')->on('group');
+            $table->foreign('groupID')->references('id')->on('group');
         });
     }
 

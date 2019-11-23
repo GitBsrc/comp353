@@ -19,10 +19,11 @@ class CreateDmRecipientsTable extends Migration
             $table->unsignedBigInteger('message_id');
             $table->unsignedBigInteger('group_id');
             $table->unique(["user_id","message_id","group_id"]);
+            $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('message_id')->references('id')->on('dm_messages');
-            // $table->foreign('group_id')->references('groupID')->on('group');
-            $table->timestamps();
+            $table->foreign('group_id')->references('id')->on('group');
         });
     }
 
