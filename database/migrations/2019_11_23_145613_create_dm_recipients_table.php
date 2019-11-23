@@ -14,11 +14,11 @@ class CreateDmRecipientsTable extends Migration
     public function up()
     {
         Schema::create('dm_recipients', function (Blueprint $table) {
-            $table->increment('id');
+            $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('message_id')->unsigned();
             $table->integer('group_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('message_id')->references('id')->on('dm_messages')->onDelete('cascade');
             $table->foreign('group_id')->references('groupID')->on('group')->onDelete('cascade');
             $table->unique(["user_id","message_id","group_id"]);

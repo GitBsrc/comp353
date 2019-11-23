@@ -14,9 +14,9 @@ class CreateDmMessagesTable extends Migration
     public function up()
     {
         Schema::create('dm_messages', function (Blueprint $table) {
-            $table->increment('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->mediumText('message_body');
             $table->timestamps();
         });
