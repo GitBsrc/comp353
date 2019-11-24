@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class _EventMemberType_ extends Model
+class EventMemberType extends Model
 {
     // RELATIONSHIPS
     /**
