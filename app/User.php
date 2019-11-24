@@ -9,7 +9,34 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    // RELATIONSHIPS
+    /**
+     * Groups the user is a member of through GroupMembers.
+     */
+    public function member_of(){
+        return $this->hasMany('App\GroupMembers');
+    }
+    /**
+     * Each user has several messages they send.
+     */
+    public function messages(){
+        return $this->hasMany('App\DMMessage');
+    }
+    /**
+     * Each user can receive several messages from a DM 
+     * or group DM.
+     */
+    public function receivesDMs(){
+        return $this->hasMany('App\DMRecipients');
+    }
+    /**
+     * Each user can be a member of several events.
+     */
+    public function events(){
+        return $this->hasMany('App\EventMembers');
+    }
 
+    // VARIABLES
     /**
      * The attributes that are mass assignable.
      *

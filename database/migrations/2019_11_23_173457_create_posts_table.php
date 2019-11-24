@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('firstName');
             $table->unsignedBigInteger('constraint');
             $table->unsignedBigInteger('groupID');
-            $table->unsignedBigInteger('eventID');
+            $table->unsignedBigInteger('eventID')->nullable();
             $table->timestamps();
 
             $table->foreign('groupID')->references('id')->on('group');
