@@ -14,7 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //return view for all events (or viewable events)
+        return view('event_list');
     }
 
     /**
@@ -43,7 +43,7 @@ class EventController extends Controller
         $event->description = $request->input('description');
         $event->startDate = $request->input('startDate');
         $event->endDate = $request->input('endDate');
-        // $event->status = $request->input('status'); Needs some default value
+        $event->status = $this->generate_status($request->input('startDate'),$request->input('endDate'));
         $event->type = $request->input('type');
         // $event->discount = $request->input('discount'); From somewhere?
         // $event->price = $request->input('price'); From some function
@@ -114,5 +114,31 @@ class EventController extends Controller
     public function destroy(_Event_ $_Event_)
     {
         //not needed? or change to something that changes status
+    }
+
+    public function generate_status($startDate, $endDate){
+        if( (strtotime('now') < strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
+            return 'upcoming';
+        }
+        else if( (strtotime('now') > strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
+            return 'in progress';
+        }
+        else if ( (strtotime('now') > strtotime($startDate)) & (strtotime('now') > strtotime($endDate)) ){
+            return 'completed';
+        }
+    }
+
+    public function generate_price($original_price, $discount_percentage){
+        return (($original_price)-($original_price*($discount_percentage/100)));
+    }
+
+    public function generate_discount($repeated_events, $current_discount){
+        if ($repeated_events % 3 == 1){
+            $current_discount += 4;
+            return $current_discount;
+        }
+        else{
+            return $current_discount;
+        }
     }
 }
