@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDmRecipientsTable extends Migration
+class CreateEventMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateDmRecipientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dm_recipients', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('event_memberss', function (Blueprint $table) {
+            $table->primary(['user_id','event_id']);
+            $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('message_id');
-            $table->unsignedBigInteger('group_id');
-            $table->unique(["user_id","message_id","group_id"]);
+            $table->unsignedBigInteger('member_type_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('message_id')->references('id')->on('dm_messages');
-            $table->foreign('group_id')->references('id')->on('group');
+            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('member_type_id')->references('id')->on('event_member_types');
         });
     }
 
@@ -34,6 +33,6 @@ class CreateDmRecipientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dm_recipients');
+        Schema::dropIfExists('__event_members_s');
     }
 }

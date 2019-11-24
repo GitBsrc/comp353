@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupPostsTable extends Migration
+class CreateConstraintsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateGroupPostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_posts', function (Blueprint $table) {
-            $table->bigIncrements('groupID'); // temporary
-            // $table->primary(['postID', 'groupID']); // toUpdate
-            $table->timestamps();
+        Schema::create('constraints', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('constraint');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateGroupPostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_posts');
+        Schema::dropIfExists('constraints');
     }
 }

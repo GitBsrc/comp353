@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupMembersTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateGroupMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_members', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('userID');
+            $table->string('firstName');
+            $table->unsignedBigInteger('constraint');
             $table->unsignedBigInteger('groupID');
-            $table->primary(['userID', 'groupID']);
-            $table->binary('isLeader');
-            $table->timestamp('joinDate');
+            $table->unsignedBigInteger('eventID');
             $table->timestamps();
 
-            $table->foreign('userID')->references('id')->on('users');
             $table->foreign('groupID')->references('id')->on('group');
+            $table->foreign('eventID')->references('id')->on('events');
+            $table->foreign('constraint')->references('id')->on('constraints');
+            $table->foreign('userID')->references('id')->on('users');
         });
     }
 
@@ -33,6 +36,6 @@ class CreateGroupMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_members');
+        Schema::dropIfExists('posts');
     }
 }

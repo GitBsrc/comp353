@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGroupTable extends Migration
+class CreateEventMemberTypeSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('group', function (Blueprint $table) {
+        Schema::create('event_member_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('groupName');
-            $table->string('groupDescription', 1000);
-            $table->binary('groupIsPublic');
-            $table->timestamps(); // takes care of creation & update date columns
+            $table->string('type');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +27,6 @@ class CreateGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group');
+        Schema::dropIfExists('__event_member_type_s');
     }
 }
