@@ -23,7 +23,10 @@ class CreateEventsTable extends Migration
             $table->string('type');
             $table->decimal('discount',9,3);
             $table->decimal('price',9,3);
+            $table->unsignedBigInteger('eventType');
             $table->timestamps();
+
+            $table->foreign('eventType')->references('id')->on('event_types');
         });
     }
 
