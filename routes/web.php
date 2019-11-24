@@ -14,3 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/posts', function () {
+    return view('posts');
+});
+
+Route::get('/event', function () {
+    return view('event');
+});
+
+Route::get('/edit_event', function () {
+    return view('edit_event');
+});
+
+Route::get('/event_list', function () {
+    return view('event_list');
+});
+
+Route::get('/profile', 'ProfileController@index')->name('profile');
