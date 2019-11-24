@@ -44,7 +44,7 @@
                           Posts
                         </a>
 
-                        <a class="navbar-item" href="event">
+                        <a class="navbar-item" href="event_list">
                           Events
                         </a>
                   
