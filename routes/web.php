@@ -27,4 +27,8 @@ Route::get('/event', function () {
     return view('event');
 });
 
+Route::get('/edit_event', function () {
+    return view('edit_event');
+});
+
 Route::get('/profile', 'ProfileController@index')->name('profile');

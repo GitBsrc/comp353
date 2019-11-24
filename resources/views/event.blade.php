@@ -16,9 +16,9 @@
                  <div class="column is-two-thirds content">
                     <p>
                        <div class="level"><span class="level-left title is-bold">
-                             Event 1
+                        Event 1
                        </span>
-                       <button class="button level-right">Edit</button></div>
+                    <a class="button level-right" href="/edit_event">Edit</a></div>
                        <p><span class="title is-bold is-size-4">
                         Start Date
                        </span> 
@@ -28,6 +28,10 @@
                         End Date
                        </span>
                        <span class="is-size-5">2019/05/22 (extended)</span></p> 
+                       <p><span class="title is-bold is-size-4">
+                        Location
+                       </span>
+                       <span class="is-size-5">Hall Building Concordia 8th floor</span></p> 
                     </p>
                     <span class="title is-bold is-size-4">Description</span>
                     <p><span class="subtitle"><small>Evsehfe ubime ijufi lu sot zidic fe baope vaivove curdah mop mafu do iwuetpi ufji. Mud rejuga tem fevevu la avuazdo wi gec jespa sesa je jiosejeb pi gik maruape. Deverkap dansof du woki seluup uzanziz mot pohojce leana pe nulusej wilce ocuac. Pu pebholi kub vekebaz ra ziak vufoz hipwo ciw izurir abu nomsivow omkil fa medi. Tiza suzmif uzro zaeb vuin suz wos fo ripca cobguf ihobu do wine botuz cevde en icu. Meg taba uhgekpac bab ruf dakokvim gimtaodi so jek von ro pabit gifriwlu judav husgenmo juila.</small></span></p>
@@ -49,20 +53,20 @@
                   </a>
                   <a href="/social-ui/#/u/me/c" class="level-item has-text-centered">
                      <div>
-                        <p>0</p>
+                        <p>54</p>
                         <p>Participants</p>
                      </div>
                   </a>
                   <a href="/social-ui/#/u/me/e" class="level-item has-text-centered">
                      <div>
-                        <p>13</p>
-                        <p>Following</p>
+                        <p>3</p>
+                        <p>Groups</p>
                      </div>
                   </a>
                   <a href="/social-ui/#/u/me/r" class="level-item has-text-centered">
                      <div>
                         <p>6</p>
-                        <p>Followers</p>
+                        <p>Join request</p>
                      </div>
                   </a>
                </div>
