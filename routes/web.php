@@ -22,5 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/posts', function () {
     return view('posts');
 });
-
+Route::get('/postform', function () {
+    return view('postform');
+});
 Route::get('/profile', 'ProfileController@index')->name('profile');
