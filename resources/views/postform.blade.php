@@ -26,7 +26,7 @@
     </div>
     <div class="field-body">
       <div class="field is-narrow">
-            <div class="file has-name is-right">
+            <div class="file">
                     <label class="file-label">
                       <input class="file-input" type="file" name="resume">
                       <span class="file-cta">
@@ -36,8 +36,6 @@
                         <span class="file-label">
                           Choose a file…
                         </span>
-                      </span>
-                      <span class="file-name">
                       </span>
                     </label>
                   </div>
