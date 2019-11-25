@@ -35,7 +35,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'description' => 'required', 'startDate' => 'required', 'endDate' => 'required', 'type' => 'required']); 
+        $this->validate($request, ['name' => 'required', 'description|max:450' => 'required', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required']); 
 
         $event = new _Event_();
 
@@ -45,12 +45,14 @@ class EventController extends Controller
         $event->endDate = $request->input('endDate');
         $event->status = $this->generate_status($request->input('startDate'),$request->input('endDate'));
         $event->type = $request->input('type');
-        // $event->discount = $request->input('discount'); From somewhere?
-        // $event->price = $request->input('price'); From some function
+        $event->discount = 0;
+        $event->location = $request->iput('location'); 
+        $event->price = $this->generate_price($request->input('type'));
+        $event->recurrence = 0;
 
         $event->save();
 
-        // return redirect("SOMEWHERE")
+        return redirect('event')->with('event', $event);
     }
 
     /**
@@ -89,20 +91,37 @@ class EventController extends Controller
     public function update(Request $request, _Event_ $event)
     {
         
-        $this->validate($request, ['name' => 'required', 'description' => 'required', 'startDate' => 'required', 'endDate' => 'required', 'type' => 'required']); 
-
+        $this->validate($request, ['name' => 'required', 'description|max:450' => 'required', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'location' => 'required']); 
+        # Not resaving discount nor recurrence because they are not affected from content
+        # Not allowing type update (for now at least)
         $event->name = $request->input('name');
         $event->description = $request->input('description');
         $event->startDate = $request->input('startDate');
         $event->endDate = $request->input('endDate');
-        // $event->status = $request->input('status'); Needs some default value
-        $event->type = $request->input('type');
-        // $event->discount = $request->input('discount'); From somewhere?
-        // $event->price = $request->input('price'); From some function
+        $event->status = $this->generate_status($request->input('startDate'),$request->input('endDate'));
+        $event->location = $request->iput('location'); 
 
         $event->save();
+        
+        return redirect('event')->with('event', $event);;
+    }
 
-        // return redirect("SOMEWHERE")
+    public function repeat(Request $request, _Event_ $event)
+    {
+        
+        $this->validate($request, ['startDate' => 'required', 'endDate' => 'required|after:startDate', 'location' => 'required']); 
+
+        $event->startDate = $request->input('startDate');
+        $event->endDate = $request->input('endDate');
+        $event->status = $this->generate_status($request->input('startDate'),$request->input('endDate'));
+        $event->location = $request->input('location'); 
+        $event->recurrence = $event->recurrence + 1;
+        $event->discount = $this->generate_discount($event->recurrence, $event->discount);
+        $event->price = $this->apply_discount($event->price, $event->discount);
+
+        $event->save();
+        
+        return redirect('event')->with('event', $event);;
     }
 
     /**
@@ -124,12 +143,27 @@ class EventController extends Controller
             return 'in progress';
         }
         else if ( (strtotime('now') > strtotime($startDate)) & (strtotime('now') > strtotime($endDate)) ){
-            return 'completed';
+            return 'archived';
         }
     }
 
-    public function generate_price($original_price, $discount_percentage){
-        return (($original_price)-($original_price*($discount_percentage/100)));
+    public function generate_price($event_type){
+        switch ($event_type){
+            case 'non-profit': 
+                return 0;
+            case 'family':
+                return 0;
+            case 'community':
+                return 0;
+            case 'business':
+                return 35;
+            case 'other':
+                return 25;
+        }
+    }
+
+    public function apply_discount($base_price, $price_discount){
+        return (($base_price)-($base_price*($price_discount/100)));
     }
 
     public function generate_discount($repeated_events, $current_discount){
@@ -141,4 +175,8 @@ class EventController extends Controller
             return $current_discount;
         }
     }
+
+    ##TODO: add function that deletes events that have been archived for 7 weeks plus
+
 }
+
