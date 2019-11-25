@@ -7,8 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class GroupMembers extends Model  
 {
 
+    // RELATIONSHIPS
+    /**
+     * Group user is a member of.
+     */
+    public function group(){
+        return $this->belongsTo('App\Group');
+    }
     
+    /**
+     * User who is a memeber.
+     */
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 
+    // VARIABLES
     /**
      * The database table used by the model.
      *

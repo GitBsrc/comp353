@@ -6,10 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model  
 {
-
-    
+    // RELATIONSHIPS
+    /**
+     * Members that belong to the group.
+     */
+    public function members() {
+        return $this->hasMany('App\GroupMembers');
+    }
 
     /**
+     * Each group has several direct message sub-groups.
+     */
+    public function recipients(){
+        return $this->hasMany('App\DMRecipients');
+    }
+
+    /**
+     * Each group has several posts.
+     */
+    public function posts(){
+        return $this->hasMany('App\Posts');
+    }
+
+    // VARIABLES
+    /** 
      * The database table used by the model.
      *
      * @var string
