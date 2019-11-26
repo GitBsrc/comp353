@@ -25,6 +25,8 @@ class CreateEventsTable extends Migration
             $table->string('type');
             $table->decimal('discount',9,3);
             $table->decimal('price',9,3);
+            $table->decimal('bandwidth',3,3);
+            $table->integer('storage');
             $table->timestamps();
         });
     }
