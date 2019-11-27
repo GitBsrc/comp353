@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view('event_list');
+        return view::make('event_list');
     }
 
     public function create()
@@ -52,10 +52,15 @@ class EventController extends Controller
 
     public function show($id)
     {
+        $generator = new Generator();
         // Re-generate event status and price and what about storage and bandwidth??
         $event = _Event_::find($id);
-
-        return View::make('event')->with('event', $event);
+        // Making sure we do not show archived events by generating the status on the spot
+        $event->status = $generator->generate_status($event->startDate, $event->endDate);
+        if($event->status != "archived"){
+            return View::make('event')->with('event', $event);
+        }
+        return null;
     }
 
     public function edit($id)
@@ -82,7 +87,6 @@ class EventController extends Controller
         $current_end_date = $event->endDate;
 
         // Add 15$ additional charge if date was extended during event update
-
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
             $event->price += 15;
         };
@@ -122,10 +126,10 @@ class EventController extends Controller
 
         $this->validate($request, ['bandwidth' => 'required|min:86.92', 'storage' => 'required|min:50']);
         $event->bandwidth = $request->input('bandwidth');
-        $event->storage = $request.input('storage');
+        $event->storage = $request->input('storage');
 
         // Rates should be set by administrator
-        $event->price += $generator->add_config_rates($request.input('storage'),$request->input('bandwidth'),2,3);
+        $event->price += $generator->add_config_rates($request->input('storage'),$request->input('bandwidth'),2,3);
 
     }
 
