@@ -6,6 +6,7 @@ use App\_Event_;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
 
+// TODO: Instantiate Generator once (wasn't working)
 class EventController extends Controller
 {
     public function index()
@@ -114,9 +115,23 @@ class EventController extends Controller
         return redirect('event')->with('event', $event);;
     }
 
+    // Only administrator user type can call this function based on his set price rates for storage and bandwidth
+    public function edit_event_config(Request $request, _Event_ $event){
+
+        $generator = new Generator();
+
+        $this->validate($request, ['bandwidth' => 'required|min:86.92', 'storage' => 'required|min:50']);
+        $event->bandwidth = $request->input('bandwidth');
+        $event->storage = $request.input('storage');
+
+        // Rates should be set by administrator
+        $event->price += $generator->add_config_rates($request.input('storage'),$request->input('bandwidth'),2,3);
+
+    }
+
     public function destroy(_Event_ $_Event_)
     {
-        //not needed? or change to something that changes status
+        // TODO: Change to method that archives an event and only makes it visible to certain user types
     }
 
 

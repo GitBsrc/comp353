@@ -3,6 +3,8 @@
 
 namespace App\Providers;
 
+use DateTime;
+
 class Generator
 {
     // Increments discount by 4% every 3 times an event is repeated
@@ -29,6 +31,13 @@ class Generator
         else if($event_type == "Non-Profit"){
             return 0;
             }
+    }
+
+    public function add_config_rates($storage, $bandwidth, $storage_rate, $bandwidth_rate){
+        $extra_storage = 50 - $storage;
+        $extra_bandwidth = 86.92 - $bandwidth;
+
+        return ($extra_storage*$storage_rate)+($extra_bandwidth*$bandwidth_rate);
     }
 
     // Generate event status by checking current date within the bounds of start and end dates
