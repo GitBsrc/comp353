@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<a class="button is-primary" type="submit" href="/postform" value="Create New Post"></a>
 
 <section class="section is-light">
-    <div class="container">
+        <div class="buttons">
+            <a class="button is-primary" type="submit" href="/postform" value="Create New Post">Create New Post</a>
+        </div>
+        <div class="container">
         <article class="media">
             <figure class="media-left">
                 <p class="image is-64x64">
