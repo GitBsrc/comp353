@@ -1,0 +1,46 @@
+<?php
+
+
+namespace App\Providers;
+
+class Generator
+{
+    // Increments discount by 4% every 3 times an event is repeated
+    public static function generate_discount($repeated_events, $current_discount){
+        if ($repeated_events % 3 == 1){
+            $current_discount += 4;
+            return $current_discount;
+        }
+        else{
+            return $current_discount;
+        }
+    }
+
+    // Applies a certain discount on a price
+    public static function apply_discount($base_price, $price_discount){
+        return (($base_price)-($base_price*($price_discount/100)));
+    }
+
+    // Generates price based on event bandwidth, storage, and type
+    public function generate_price($event_type, $system_price_rate){
+        if ($event_type == "Profit") {
+            return $system_price_rate;
+        }
+        else if($event_type == "Non-Profit"){
+            return 0;
+            }
+    }
+
+    // Generate event status by checking current date within the bounds of start and end dates
+    public static function generate_status($startDate, $endDate){
+        if( (strtotime('now') < strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
+            return 'upcoming';
+        }
+        else if( (strtotime('now') > strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
+            return 'in progress';
+        }
+        else if ( (strtotime('now') > strtotime($startDate)) & (strtotime('now') > strtotime($endDate)) ){
+            return 'archived';
+        }
+    }
+}
