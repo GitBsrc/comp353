@@ -43,4 +43,18 @@ class Generator
             return 'archived';
         }
     }
+
+    public function date_is_greater($date1, $date2){
+        $date1 = new DateTime($date1);
+        $date2 = new DateTime($date2);
+        return $date1>$date2;
+    }
+
+    // If var1 is null return var2
+    public function verify_null($var1, $var2){
+        if (empty($var1)){
+            $var1 = $var2;
+        }
+        return $var1;
+    }
 }
