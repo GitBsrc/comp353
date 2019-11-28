@@ -43,4 +43,8 @@ Route::get('/add_manager_info', function() {
     return view('add_manager_info');
 });
 
+Route::get('/event_members', function() {
+   return view('event_members');
+});
+
 Route::get('/profile', 'ProfileController@index')->name('profile');

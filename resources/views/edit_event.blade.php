@@ -45,7 +45,7 @@
                   <input class="input" type="email" placeholder="e.g H609 Hall Building">
                 </div>
         </div>
-
+        <br />
         <p>
         <a class="button is-fullwidth" href="/event">Save</a>
         </p>

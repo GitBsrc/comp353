@@ -32,11 +32,13 @@ class EventMembersController extends Controller
 
     public function show(_EventMembers_ $_EventMembers_)
     {
-        $events = _EventMembers_::with('_Event_')->get();
+        $members = _EventMembers_::with('_Event_')->get();
 
-        return view::make('event_list')->with('_Event_', $events);
+        return view::make('event_members')->with($members);
     }
 
+
+    // Not sure you can edit an event member
     public function edit(_EventMembers_ $_EventMembers_)
     {
         return view::make('event_member');
@@ -48,10 +50,12 @@ class EventMembersController extends Controller
         //
     }
 
-    public function destroy(_EventMembers_ $_EventMembers_, Request $request)
+    // To remove an event member
+    public function destroy($id)
     {
-        $this->validate($request, ['event_id' => 'required']);
-        $events = $_EventMembers_::with('_Event_')->find($request->input('id'));
-        // An event member has a pk made of 2 keys so how do i call that
+        $event_member = _EventMembers_::find($id);
+        $event_member->delete();
+
+        return redirect('event_members');
     }
 }

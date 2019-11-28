@@ -18,7 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->string('description', 1000);
             $table->timestamp('startDate');
-            $table->timestamp('endDate');
+            $table->timestamp('endDate')->nullable();
             $table->string('location');
             $table->integer('recurrence');
             $table->string('status');
