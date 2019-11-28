@@ -44,10 +44,6 @@
                           Posts
                         </a>
 
-                        <a class="navbar-item" href="dm">
-                          Messages
-                        </a>
-                  
                         <div class="navbar-item has-dropdown is-hoverable">
                           <a class="navbar-link">
                             More
@@ -72,8 +68,11 @@
                       </div>
                   
                       <div class="navbar-end">
-                          
-
+                         <li class = "navbar-item">
+                           <a class="button is-info" href="dm_recipients">
+                               Messages
+                           </a>
+                        </li>
                       @guest
                             <li class="navbar-item">
                                 <a class="button is-info" href="{{ route('login') }}">{{ __('Login') }}</a>

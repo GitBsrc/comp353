@@ -29,3 +29,6 @@ Route::get('/dm', function () {
     return view('dm');
 });
 
+Route::get('/dm_recipients', function(){
+    return view('dm_recipients');
+});
