@@ -29,3 +29,8 @@ Route::get('/dm', function () {
     return view('dm');
 });
 
+Route::get('/group', 'GroupController')->name('group');
+
+Route::get('/groupMembers', function() {
+    return view('groupMembers');
+});
