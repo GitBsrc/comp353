@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/posts', function () {
+    return view('posts');
+});
+
+Route::get('/profile', 'ProfileController@index')->name('profile');
+
+Route::get('/dm', function () {
+    return view('dm');
+});
+
