@@ -11,11 +11,8 @@ class Generator
     public static function generate_discount($repeated_events, $current_discount){
         if ($repeated_events % 3 == 1){
             $current_discount += 4;
-            return $current_discount;
         }
-        else{
-            return $current_discount;
-        }
+        return $current_discount;
     }
 
     // Applies a certain discount on a price
@@ -34,8 +31,8 @@ class Generator
     }
 
     public function add_config_rates($storage, $bandwidth, $storage_rate, $bandwidth_rate){
-        $extra_storage = 50 - $storage;
-        $extra_bandwidth = 86.92 - $bandwidth;
+        $extra_storage = abs(50 - $storage);
+        $extra_bandwidth = abs(86.92 - $bandwidth);
 
         return ($extra_storage*$storage_rate)+($extra_bandwidth*$bandwidth_rate);
     }
