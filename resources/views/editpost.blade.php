@@ -5,7 +5,7 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-      Create New Post
+      Update Post
       </h1>
     </div>
   </div>
@@ -69,7 +69,6 @@
       </div>
     </div>
   </div>
-
   <div class="field is-horizontal">
     <div class="field-label is-normal">
       <label class="label">Link to</label>
@@ -107,7 +106,9 @@
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <a class="button is-primary" type="submit" href="/posts" value="reply">Create Post</a>
+          <button class="button is-primary">
+            Update Post
+          </button>
         </div>
       </div>
     </div>

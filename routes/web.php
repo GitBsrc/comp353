@@ -25,4 +25,11 @@ Route::get('/posts', function () {
 Route::get('/postform', function () {
     return view('postform');
 });
+Route::get('/editpost', function () {
+    return view('editpost');
+});
+Route::get('/replypost', function () {
+    return view('replypost');
+});
 Route::get('/profile', 'ProfileController@index')->name('profile');
+

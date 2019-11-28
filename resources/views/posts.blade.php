@@ -1,11 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-
-<section class="section is-light">
-        <div class="buttons">
+<section class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+        Event Contents
+        </h1>
+        <div class="box has-text-centered">
             <a class="button is-primary" type="submit" href="/postform" value="Create New Post">Create New Post</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section is-light">
         <div class="container">
         <article class="media">
             <figure class="media-left">
@@ -20,7 +29,7 @@
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
                         <br>
-                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                        <small><a>Like</a> · <a href="/replypost">Reply (only if allowed)</a> · 3 hrs</small>
                     </p>
                 </div>
                 <article class="media">
@@ -36,7 +45,7 @@
                             <br>
                             Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
                             <br>
-                            <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                            <small><a>Like</a> · 2 hrs</small>
                         </p>
                         </div>
                 
@@ -62,7 +71,7 @@
                                 <br>
                                 Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
                                 <br>
-                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                                <small><a>Like</a> ·  2 hrs</small>
                             </p>
                         </div>
                     </div>
@@ -81,11 +90,15 @@
                     <textarea class="textarea" placeholder="Add a comment..."></textarea>
                 </p>
                 </div>
-                <div class="field">
-                <p class="control">
-                    <button class="button">Post comment</button>
-                </p>
-                </div>
+                <div class="control">
+                    <div class="select">
+                      <select>
+                        <option>View Only</option>
+                        <option>View & Comment</option>
+                      </select>
+                    </div>
+                  </div>
+                    <button class="button is-primary">Post comment</button>
             </div>
         </article>
     </div>
