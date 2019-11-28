@@ -29,7 +29,7 @@
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
                         <br>
-                        <small><a>Like</a> · <a href="/replypost">Reply (only if allowed)</a> · 3 hrs</small>
+                        <small><a>Like</a> · <a href="/commentpost">Reply (only if allowed)</a> · 3 hrs</small>
                     </p>
                 </div>
                 <article class="media">

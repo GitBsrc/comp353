@@ -28,8 +28,8 @@ Route::get('/postform', function () {
 Route::get('/editpost', function () {
     return view('editpost');
 });
-Route::get('/replypost', function () {
-    return view('replypost');
+Route::get('/commentpost', function () {
+    return view('commentpost');
 });
 Route::get('/profile', 'ProfileController@index')->name('profile');
 
