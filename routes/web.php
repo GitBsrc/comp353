@@ -35,4 +35,8 @@ Route::get('/event_list', function () {
     return view('event_list');
 });
 
+Route::get('/create_event', function (){
+    return view('create_event');
+});
+
 Route::get('/profile', 'ProfileController@index')->name('profile');

@@ -14,7 +14,7 @@
               <i class="fas fa-search" aria-hidden="true"></i>
             </span>
           </p>
-          <a class="button" href="edit_event">+</a>
+          <a class="button" href="create_event">+</a>
         </div>
         <p class="panel-tabs">
           <a class="is-active">All</a>
@@ -69,7 +69,7 @@
                         </form>
                       </div>
                     </div>
-        
+
       </nav>
 </div>
 </div>
