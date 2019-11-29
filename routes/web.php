@@ -48,3 +48,11 @@ Route::get('/event_members', function() {
 });
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
+
+Route::get('/dm', function () {
+    return view('dm');
+});
+
+Route::get('/dm_recipients', function(){
+    return view('dm_recipients');
+});

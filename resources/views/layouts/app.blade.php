@@ -72,8 +72,11 @@
                       </div>
                   
                       <div class="navbar-end">
-                          
-
+                         <li class = "navbar-item">
+                           <a class="button is-info" href="dm_recipients">
+                               Messages
+                           </a>
+                        </li>
                       @guest
                             <li class="navbar-item">
                                 <a class="button is-info" href="{{ route('login') }}">{{ __('Login') }}</a>
