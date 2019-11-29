@@ -32,3 +32,6 @@ Route::get('/dm', function () {
 Route::get('/dm_recipients', function(){
     return view('dm_recipients');
 });
+
+# routing the dm message model to the controller
+Route::resource('dm_messages', 'DMController');

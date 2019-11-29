@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\DMMessage;
 
 class DMController extends Controller
 {
@@ -13,7 +14,7 @@ class DMController extends Controller
      */
     public function index()
     {
-        //
+       //
     }
 
     /**
@@ -34,7 +35,12 @@ class DMController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dm = new DMMessage();
+        $dm->message_body = $request->input('message_body');
+        #getting the user that created the message
+        $request->user()->messages()->save($dm);
+        #redirect to the dm page
+        return redirect()->route('dm');
     }
 
     /**

@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dmmessage extends Model
+class DMMessage extends Model
 {
+   
     // RELATIONSHIPS
     /**
      * Each Message belongs to a single user.

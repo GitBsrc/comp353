@@ -126,7 +126,7 @@
               </div>
             </div>
 
-            <article class="media">
+   <article class="media">
             <figure class="media-left">
                 <p class="image is-64x64">
                       <img class="is-rounded" src="/images/users.png">

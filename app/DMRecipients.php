@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dmrecipients extends Model
+class DMRecipients extends Model
 {
     // RELATIONSHIPS
     /**
