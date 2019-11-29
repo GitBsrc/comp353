@@ -19,11 +19,14 @@ class CreateEventsTable extends Migration
             $table->string('description', 1000);
             $table->timestamp('startDate');
             $table->timestamp('endDate')->nullable();
+            $table->string('location');
+            $table->integer('recurrence');
             $table->string('status');
             $table->string('type');
             $table->decimal('discount',9,3);
             $table->decimal('price',9,3);
-            $table->unsignedBigInteger('eventType');
+            $table->decimal('bandwidth',3,3);
+            $table->integer('storage');
             $table->timestamps();
 
             $table->foreign('eventType')->references('id')->on('event_types');

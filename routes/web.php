@@ -35,4 +35,16 @@ Route::get('/event_list', function () {
     return view('event_list');
 });
 
+Route::get('/create_event', function (){
+    return view('create_event');
+});
+
+Route::get('/add_manager_info', function() {
+    return view('add_manager_info');
+});
+
+Route::get('/event_members', function() {
+   return view('event_members');
+});
+
 Route::get('/profile', 'ProfileController@index')->name('profile');

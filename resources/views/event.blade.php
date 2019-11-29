@@ -21,17 +21,17 @@
                     <a class="button level-right" href="/edit_event">Edit</a></div>
                        <p><span class="title is-bold is-size-4">
                         Start Date
-                       </span> 
+                       </span>
                        <span class="is-size-5">2019/04/16</span>
                        <br /></p>
                        <p><span class="title is-bold is-size-4">
                         End Date
                        </span>
-                       <span class="is-size-5">2019/05/22 (extended)</span></p> 
+                       <span class="is-size-5">2019/05/22 (extended)</span></p>
                        <p><span class="title is-bold is-size-4">
                         Location
                        </span>
-                       <span class="is-size-5">Hall Building Concordia 8th floor</span></p> 
+                       <span class="is-size-5">Hall Building Concordia 8th floor</span></p>
                     </p>
                     <span class="title is-bold is-size-4">Description</span>
                     <p><span class="subtitle"><small>Evsehfe ubime ijufi lu sot zidic fe baope vaivove curdah mop mafu do iwuetpi ufji. Mud rejuga tem fevevu la avuazdo wi gec jespa sesa je jiosejeb pi gik maruape. Deverkap dansof du woki seluup uzanziz mot pohojce leana pe nulusej wilce ocuac. Pu pebholi kub vekebaz ra ziak vufoz hipwo ciw izurir abu nomsivow omkil fa medi. Tiza suzmif uzro zaeb vuin suz wos fo ripca cobguf ihobu do wine botuz cevde en icu. Meg taba uhgekpac bab ruf dakokvim gimtaodi so jek von ro pabit gifriwlu judav husgenmo juila.</small></span></p>
@@ -51,7 +51,7 @@
                         <p>Posts</p>
                      </div>
                   </a>
-                  <a href="/social-ui/#/u/me/c" class="level-item has-text-centered">
+                  <a href="/event_members" class="level-item has-text-centered">
                      <div>
                         <p>54</p>
                         <p>Participants</p>
@@ -129,16 +129,16 @@
                             <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
                         </p>
                         </div>
-                
+
                         <article class="media">
                         Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.
                         </article>
-                
+
                         <article class="media">
                         Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.
                         </article>
                     </div>
-                </article>   
+                </article>
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-48x48">
