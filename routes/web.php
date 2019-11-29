@@ -71,3 +71,8 @@ Route::get('/commentpost', function () {
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 
+Route::get('/group', 'GroupController@index')->name('group');
+
+Route::get('/groupMembers', function() {
+    return view('groupMembers');
+});
