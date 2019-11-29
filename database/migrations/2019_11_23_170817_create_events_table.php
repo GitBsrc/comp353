@@ -28,8 +28,6 @@ class CreateEventsTable extends Migration
             $table->decimal('bandwidth',3,3);
             $table->integer('storage');
             $table->timestamps();
-
-            $table->foreign('eventType')->references('id')->on('event_types');
         });
     }
 

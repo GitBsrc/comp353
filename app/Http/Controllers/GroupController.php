@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -13,7 +14,9 @@ class GroupController extends Controller
      * @return Response
      */
     public function index(){
-        return View::make('group');
+        $user = Auth::user();
+        return view('group', ['user'=>$user]);
+        // return View::make('group');
     }
 
     /**

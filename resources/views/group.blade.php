@@ -16,7 +16,7 @@
                 <div class="column is-two-thirds content">
                    <p>
                       <span class="title is-bold">
-                            {{$user->name}}
+                           {{$user->name}}
                       </span> 
                    </p>
                    <p><span class="subtitle"><small>Evsehfe ubime ijufi lu sot zidic fe baope vaivove curdah mop mafu do iwuetpi ufji. Mud rejuga tem fevevu la avuazdo wi gec jespa sesa je jiosejeb pi gik maruape. Deverkap dansof du woki seluup uzanziz mot pohojce leana pe nulusej wilce ocuac. Pu pebholi kub vekebaz ra ziak vufoz hipwo ciw izurir abu nomsivow omkil fa medi. Tiza suzmif uzro zaeb vuin suz wos fo ripca cobguf ihobu do wine botuz cevde en icu. Meg taba uhgekpac bab ruf dakokvim gimtaodi so jek von ro pabit gifriwlu judav husgenmo juila.</small></span></p>
