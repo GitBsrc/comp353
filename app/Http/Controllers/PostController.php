@@ -18,7 +18,7 @@ class postController extends Controller
          $posts = Posts::all();
 
        // load the view and pass the posts
-       return View::make('views.posts')
+       return View::make('posts')
            ->with('posts', $posts);
     }
 
@@ -30,7 +30,7 @@ class postController extends Controller
     public function create()
     {
         // load the create form (app/views/postform.blade.php)
-        return View::make('views.postform');   
+        return View::make('postform');   
     
     }
 
@@ -70,7 +70,7 @@ class postController extends Controller
         $posts = Posts::find($id);
 
         // show the view and pass the nerd to it
-        return View::make('views.posts')
+        return View::make('posts')
             ->with('posts', $posts);
     }
 
@@ -89,7 +89,7 @@ class postController extends Controller
         $posts = Posts::find($id);
 
         // show the edit form and pass the current post
-        return View::make('views.editpost')
+        return View::make('editpost')
             ->with('posts', $posts);
     }
 
