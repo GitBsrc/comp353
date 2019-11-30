@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\_Posts_;
+use App\Posts;
 use Illuminate\Http\Request;
 
 //add routes
@@ -14,12 +14,11 @@ class postController extends Controller
      */
     public function index()
     {
-         // get all the posts
-         $posts = Posts::all();
+        // get all the posts
+        $posts = Posts::all();
 
-       // load the view and pass the posts
-       return View::make('views.posts')
-           ->with('posts', $posts);
+        // load the view and pass the posts
+        return view('posts', ['posts'=>$posts]);
     }
 
     /**

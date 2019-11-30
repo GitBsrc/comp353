@@ -78,6 +78,26 @@
                 </article>
             </div>
         </article>
+        @foreach ($posts as $post)
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{$post->firstName}}</strong>
+                        <br>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                        <br>
+                        <small><a>Like</a> · <a href="/commentpost">Reply (only if allowed)</a> · {{$post->created_at}}</small>
+                    </p>
+                </div>
+            </div>
+        </article>
+        @endforeach
         <article class="media">
             <figure class="media-left">
                 <p class="image is-64x64">
