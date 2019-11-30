@@ -29,8 +29,7 @@ class postController extends Controller
     public function create()
     {
         // load the create form (app/views/postform.blade.php)
-        return View::make('views.postform');   
-    
+        return View::make('views.postform');
     }
 
     /**
@@ -54,10 +53,9 @@ class postController extends Controller
             // redirect
             Session::flash('message', 'Successfully created new post!');
             return Redirect::to('Posts');
-        
     }
 
-   /**
+    /**
      * Display the specified post.
      *
      * @param  int  $id
@@ -74,7 +72,7 @@ class postController extends Controller
     }
 
 
-  /**
+    /**
      * Show the form for editing the specified post.
      *
      * @param  int  $id
@@ -92,7 +90,7 @@ class postController extends Controller
             ->with('posts', $posts);
     }
 
-   /**
+    /**
      * Update the specified post in database.
      *
      * @param  int  $id
@@ -113,10 +111,9 @@ class postController extends Controller
             // redirect
             Session::flash('message', 'Successfully updated post!');
             return Redirect::to('Posts');
-        
     }
 
-  /**
+    /**
      * Remove the specified post from storage.
      *
      * @param  int  $id

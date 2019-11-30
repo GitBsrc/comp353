@@ -25,14 +25,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/event', function () {
         return view('event');
     });
+
+    Route::get('event/{$id}', 'EventController@get');
     
     Route::get('/edit_event', function () {
         return view('edit_event');
     });
     
-    Route::get('/event_list', function () {
-        return view('event_list');
-    });
+    Route::get('/event_list', 'EventController@index')->name('event_list');
     
     Route::get('/create_event', function (){
         return view('create_event');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\_Event_;
+use App\Event;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
 
@@ -11,7 +11,11 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view::make('event_list');
+        // get all the posts
+        $events = Event::all();
+
+        // load the view and pass the posts
+        return view('event_list', ['events'=>$events]);
     }
 
     public function create()
@@ -26,7 +30,7 @@ class EventController extends Controller
 
         $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required']);
 
-        $event = new _Event_();
+        $event = new Event();
         $event->name = $request->input('name');
         $event->description = $request->input('description');
         $event->startDate = $request->input('startDate');
@@ -54,18 +58,23 @@ class EventController extends Controller
     {
         $generator = new Generator();
         // Re-generate event status and price and what about storage and bandwidth??
-        $event = _Event_::find($id);
+        $event = Event::find($id);
         // Making sure we do not show archived events by generating the status on the spot
         $event->status = $generator->generate_status($event->startDate, $event->endDate);
         if($event->status != "archived"){
-            return View::make('event')->with('event', $event);
+            return view('event', ['event'=>$event]);
         }
         return null;
     }
 
+    public function get($id)
+    {
+        return view('event.profile', ['event' => Event::findOrFail($id)]);
+    }
+
     public function edit($id)
     {
-        $event = _Event_::find($id);
+        $event = Event::find($id);
 
         return View::make('edit_event')->with('event', $event);
     }
@@ -73,7 +82,7 @@ class EventController extends Controller
     // Only manager type user can call this function
     // Cannot update type to avoid bypassing additional charges
     // Not sure about verify null unless we get current values in front end then re-post them
-    public function update(Request $request,  _Event_ $event)
+    public function update(Request $request,  Event $event)
     {
         $generator = new Generator();
 
@@ -97,7 +106,7 @@ class EventController extends Controller
     }
 
     // Does not clearly state but assume this function should be called by manager user type
-    public function repeat(Request $request, _Event_ $event)
+    public function repeat(Request $request, Event $event)
     {
         $generator = new Generator();
 
@@ -120,7 +129,7 @@ class EventController extends Controller
     }
 
     // Only administrator user type can call this function based on his set price rates for storage and bandwidth
-    public function edit_event_config(Request $request, _Event_ $event){
+    public function editEventconfig(Request $request, Event $event){
 
         $generator = new Generator();
 
@@ -133,7 +142,7 @@ class EventController extends Controller
 
     }
 
-    public function destroy(_Event_ $_Event_)
+    public function destroy(Event $Event)
     {
         // TODO: Change to method that archives an event and only makes it visible to certain user types
     }
