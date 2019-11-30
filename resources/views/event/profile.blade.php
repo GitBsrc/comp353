@@ -19,23 +19,33 @@
                         {{$event->name}}
                        </span>
                     <a class="button level-right" href="/edit_event">Edit</a></div>
-                       <p><span class="title is-bold is-size-4">
+
+                     <p><span class="title is-bold is-size-4">
                         Start Date
                        </span>
                        <span class="is-size-5">{{$event->startDate}}</span>
                        <br /></p>
-                       <p><span class="title is-bold is-size-4">
+
+                     <p><span class="title is-bold is-size-4">
                         End Date
-                       </span>
-                       <span class="is-size-5">{{$event->endDate}}</span></p>
-                       <p><span class="title is-bold is-size-4">
+                     </span>
+                     <span class="is-size-5">{{$event->endDate}}</span></p>
+
+                     <p><span class="title is-bold is-size-4">
                         Location
-                       </span>
-                       <span class="is-size-5">{{$event->location}}</span></p>
-                     <span class="title is-bold is-size-4">Status</span>
-                     <p><span class="subtitle"><small>{{$event->status}}</small></span></p>
-                    <span class="title is-bold is-size-4">Description</span>
+                     </span>
+                     <span class="is-size-5">{{$event->location}}</span></p>
+
+                     <p><span class="title is-bold is-size-4">
+                        Status
+                     </span>
+                     <span class="is-size-5"><small>{{$event->status}}</small></span></p>
+
+                     <p><span class="title is-bold is-size-4">
+                        Description
+                     </span></p>
                     <p><span class="subtitle"><small>{{$event->description}}</small></span></p>
+
                  </div>
               </div>
            </div>
