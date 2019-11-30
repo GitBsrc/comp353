@@ -27,7 +27,7 @@
                        <p><span class="title is-bold is-size-4">
                         End Date
                        </span>
-                       <span class="is-size-5">2019/05/22 (extended)</span></p>
+                       <span class="is-size-5">{{$event->endDate}}</span></p>
                        <p><span class="title is-bold is-size-4">
                         Location
                        </span>
