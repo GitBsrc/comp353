@@ -9,7 +9,7 @@ class Generator
 {
     // Increments discount by 4% every 3 times an event is repeated
     public static function generate_discount($repeated_events, $current_discount){
-        if ($repeated_events % 3 == 1){
+        if ($repeated_events % 2 == 1){
             $current_discount += 4;
         }
         return $current_discount;
@@ -39,14 +39,18 @@ class Generator
 
     // Generate event status by checking current date within the bounds of start and end dates
     public static function generate_status($startDate, $endDate){
-        if( (strtotime('now') < strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
-            return 'upcoming';
+
+        $start = $startDate->format('Y-m-d H:i:s');
+        $end = $endDate->format('Y-m-d H:i:s');
+
+        if( (strtotime('now') < strtotime($start)) & (strtotime('now') < strtotime($end)) ){
+            return 'Upcoming';
         }
-        else if( (strtotime('now') > strtotime($startDate)) & (strtotime('now') < strtotime($endDate)) ){
-            return 'in progress';
+        else if( (strtotime('now') > strtotime($start)) & (strtotime('now') < strtotime($end)) ){
+            return 'In Progress';
         }
-        else if ( (strtotime('now') > strtotime($startDate)) & (strtotime('now') > strtotime($endDate)) ){
-            return 'archived';
+        else if ( (strtotime('now') > strtotime($start)) & (strtotime('now') > strtotime($end)) ){
+            return 'Archived';
         }
     }
 
@@ -62,5 +66,11 @@ class Generator
             $var1 = $var2;
         }
         return $var1;
+    }
+
+    public function generate_random_type(){
+        $input = array("profit", "non-profit");
+        $rand_keys = array_rand($input, 2);
+        return $input[$rand_keys[0]];
     }
 }
