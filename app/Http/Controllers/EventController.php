@@ -69,6 +69,7 @@ class EventController extends Controller
 
     public function get($id)
     {
+        // event.profile same as event view, just kept both to see difference in code
         return view('event.profile', ['event' => Event::findOrFail($id)]);
     }
 
