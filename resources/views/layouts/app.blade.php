@@ -23,7 +23,7 @@
     <div id="app">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                     <div class="navbar-brand">
-                      <a class="navbar-item" href="/" style="font-weight:500;">
+                      <a class="navbar-item" href="{{ route('index') }}" style="font-weight:500;">
                         {{ config('app.name', 'Laravel') }}
                       </a>
                   
