@@ -23,7 +23,7 @@
     <div id="app">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                     <div class="navbar-brand">
-                      <a class="navbar-item" href="/">
+                      <a class="navbar-item" href="/" style="font-weight:500;">
                         {{ config('app.name', 'Laravel') }}
                       </a>
                   
@@ -36,10 +36,6 @@
                   
                     <div id="navbarBasicExample" class="navbar-menu">
                       <div class="navbar-start">
-                        <a class="navbar-item">
-                          Home
-                        </a>
-                  
                         <a class="navbar-item" href="posts">
                           Posts
                         </a>
@@ -47,46 +43,23 @@
                         <a class="navbar-item" href="event_list">
                           Events
                         </a>
-                  
-                        <div class="navbar-item has-dropdown is-hoverable">
-                          <a class="navbar-link">
-                            More
-                          </a>
-                  
-                          <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                              About
-                            </a>
-                            <a class="navbar-item">
-                              Jobs
-                            </a>
-                            <a class="navbar-item">
-                              Contact
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                              Report an issue
-                            </a>
-                          </div>
                         </div>
+                      </div>
+
+                      <div class="navbar-center">
+                        
                       </div>
                   
                       <div class="navbar-end">
-                         <li class = "navbar-item">
-                           <a class="button is-info" href="dm_recipients">
-                               Messages
-                           </a>
-                        </li>
                       @guest
                             <li class="navbar-item">
-                                <a class="button is-info" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="button is-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
-                                {{-- <li class="navbar-item">
-                                    <a class="button is-light" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li> --}}
-                            @endif
                         @else
+                                
+                        <a class="navbar-item" href="dm_recipients">
+                          Messages
+                        </a>
                             <div class="navbar-item has-dropdown is-hoverable">
                                 <a class="navbar-link" href="/profile">
                                     {{ Auth::user()->name }}
