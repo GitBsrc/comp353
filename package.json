@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.11.2",
+        "bulma-calendar": "^6.0.7",
         "bulma-helpers": "^0.3.8"
     }
 }

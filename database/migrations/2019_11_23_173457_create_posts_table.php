@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('userID');
-            $table->string('firstName');
+            $table->string('firstName'); //Pretty sure this is redundant
             $table->unsignedBigInteger('constraint');
             $table->unsignedBigInteger('groupID');
             $table->unsignedBigInteger('eventID')->nullable();
