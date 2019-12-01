@@ -78,3 +78,5 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('event_details/{id}', 'EventController@get_details');
+
+    Route::post('/new_event', 'EventController@store');
