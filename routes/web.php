@@ -75,11 +75,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/groupMembers', function() {
         return view('groupMembers');
     });
+   
 });
 
 # routing the dm message model to the controller
-Route::resource('dm_messages', 'DMController');
+#Route::resource('dm_messages', 'DMController');
 
 #routing the dm recipient model to the controller
-Route::resource("dm_recipients", "DMRecipientController");
+#Route::resource("dm_recipients", "DMRecipientController");
 

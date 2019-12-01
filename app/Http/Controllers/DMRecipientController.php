@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\DMRecipients;
 
 class DMRecipientController extends Controller
 {
@@ -13,7 +14,10 @@ class DMRecipientController extends Controller
      */
     public function index()
     {
-        //
+        #get all the dm recipients from the DMRecipient model
+        $dmrecipients = DMRecipients::all(); 
+        #open up the dm recipient page and load the dm recipient list according to the user
+        return view('dm_recipients', ['dm_recipient' => $dmrecipients]);
     }
 
     /**
@@ -34,7 +38,13 @@ class DMRecipientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dm_recipient = new DMRecipients();
+        $dm_recipient->user_id= $request->input('user_id');
+        $dm_recipient->message_id= $request->input('message_id');
+        $dm_recipient->group_id= $request->input('group_id');
+
+        #redirect to the dm recipient page with dm recipient page.
+        return redirect('dm_recipients')->with('dm_recipient', $dm_recipient);
     }
 
     /**
@@ -45,40 +55,11 @@ class DMRecipientController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('dm_recipient', ['dm_recipient' => DMRecipient::findOrFail($id)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
+    
 }
