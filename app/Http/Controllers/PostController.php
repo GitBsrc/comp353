@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 //add routes
 class postController extends Controller
@@ -37,22 +39,22 @@ class postController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
             //include validation + make sure session logged in
 
             // store
             $posts = new Posts;
-            $posts->user_id    = Input::get('user_id');
-            $posts->first_name = Input::get('first_name');
-            $posts->group_id   = Input::get('group_id');
-            $posts->event_id   = Input::get('event_id');
-            $posts->constraint = Input::get('constraint');
+            $posts->userID     = Auth::id();
+            $posts->firstName = Auth::user()->name;
+            $posts->groupID   = 1; // change once proper frontend options are there
+            $posts->eventID   = 1; //change once proper frontend options are there
+            $posts->constraint = $request->input('constraint'); // need to fill DB table with only 2 values for this to really make sense
             $posts->save();
 
             // redirect
             Session::flash('message', 'Successfully created new post!');
-            return Redirect::to('Posts');
+            return redirect('/posts');
     }
 
     /**
