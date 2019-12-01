@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest')->name('index');
 
+Route::view('/payment', 'payment');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
