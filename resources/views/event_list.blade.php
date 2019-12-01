@@ -16,11 +16,6 @@
           </p>
           <a class="button" href="create_event">+</a>
         </div>
-        <p class="panel-tabs">
-          <a class="is-active">All</a>
-          <a>Joined</a>
-          <a>Upcoming</a>
-        </p>
         <div class="panel-block">
           <div class="container">
                 @foreach ($events as $event)

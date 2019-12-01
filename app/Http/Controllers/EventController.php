@@ -73,6 +73,11 @@ class EventController extends Controller
         return view('event.profile', ['event' => Event::findOrFail($id)]);
     }
 
+    public function get_details($id)
+    {
+        return view('event_details', ['event' => Event::findOrFail($id)]);
+    }
+
     public function edit($id)
     {
         $event = Event::find($id);

@@ -18,7 +18,9 @@
                        <div class="level"><span class="level-left title is-bold">
                         {{$event->name}}
                        </span>
-                    <a class="button level-right" href="/edit_event">Edit</a></div>
+                    <div class="level-right">
+                        <a class="button level-right" href="/edit_event">Edit</a>
+                        <a class="button level-right" href="/event_details/{{$event->id}}">Details</a></div></div>
 
                      <p><span class="title is-bold is-size-4">
                         Start Date
