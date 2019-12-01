@@ -54,11 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/dm_recipients', function(){
         return view('dm_recipients');
-    });
+    })->name('dm_recipients');
     
     Route::get('/postform', function () {
         return view('postform');
     });
+    
+    Route::post('/storepost', 'PostController@store');
     
     Route::get('/editpost', function () {
         return view('editpost');
