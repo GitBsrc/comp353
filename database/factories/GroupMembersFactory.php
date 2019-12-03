@@ -8,7 +8,7 @@ $factory->define(App\GroupMembers::class, function (Faker $faker) {
     return [
         'userID' => $faker->randomNumber(),
         'groupID' => $faker->randomNumber(),
-        'isLeader' => $faker->word,
+        'isLeader' => $faker->numberBetween($min = 0, $max = 1),
         'joinDate' => $faker->dateTime(),
         'group_id' => function () {
             return factory(App\Group::class)->create()->id;

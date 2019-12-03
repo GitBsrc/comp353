@@ -66,6 +66,7 @@
                                 </a>
                         
                                 <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{ route('create_group')}}">Create Group</a>
                                   <a class="navbar-item" href="{{ route('logout') }}"
                                   onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">

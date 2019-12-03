@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GroupMembers;
 use Illuminate\Http\Request;
+use App\Providers\Generator;
 
 class GroupMembersController extends Controller
 {
@@ -17,7 +18,7 @@ class GroupMembersController extends Controller
         $group_members = GroupMembers::all();
 
         // display members
-        return View::make('groupMembers.index')
+        return view('groupMembers.index')
             ->with('groupMembers', $group_members);
     }
 
@@ -27,7 +28,7 @@ class GroupMembersController extends Controller
      * @return Response
      */
     public function create(){
-        return View::make('groupMembers.create');
+        return view('group.add_group_member');
     }
 
     /**
@@ -42,21 +43,22 @@ class GroupMembersController extends Controller
         // validate that user and group exist
         // and that person is leader?
         $this->validate($request, [
-            // 'user' => 'required',
+            'userEmail' => 'required',
             'isLeader' => 'required'
         ]);
 
         // store group member
         $group_member = new GroupMembers();
+        $userID = User::where('email', 'userEmail')->first()->userID;
+        $groupID = Group::where('groupID', '')->get()->groupID;
 
-        // $group_member->userID = ;
-        // $group_member->groupID = ;
+        $group_member->userID = $userID;
+        $group_member->groupID = $groupID;
         $group_member->isLeader = $request->input('isLeader');
-        // store end date?? need to generate it
 
         $group_member->save();
         Session::flash('message', 'Group member added!');
-        return Redirect::to('groupMembers');
+        return redirect('groupMembers');
     }
 
     /**
@@ -70,7 +72,7 @@ class GroupMembersController extends Controller
         $group_members = GroupMembers::find($id);
 
         // show members
-        return View::make('groupMembers.show')
+        return view('groupMembers.show')
             ->with('groupMembers', $group_members);
     }
 
@@ -85,7 +87,7 @@ class GroupMembersController extends Controller
         $group_member = GroupMembers::find($id);
 
         // show edit view
-        return View::make('groupMembers.edit')
+        return view('groupMembers.edit')
             ->with('groupMembers', $group_member);
     }
 
@@ -114,7 +116,7 @@ class GroupMembersController extends Controller
 
         $group_member->save();
         Session::flash('message', 'Group member updated!');
-        return Redirect::to('groupMembers');
+        return redirect('groupMembers');
     }
 
     /**
@@ -130,6 +132,6 @@ class GroupMembersController extends Controller
         $group->delete();
 
         Session:flash('message', 'Group member deleted.');
-        return Redirect::to('groupMembers');
+        return redirect('groupMembers');
     }
 }
