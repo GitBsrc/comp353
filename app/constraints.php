@@ -13,4 +13,6 @@ class constraints extends Model
     public function posts(){
         return $this->hasMany('App\Posts');
     }
+
+    public $timestamps = false;
 }
