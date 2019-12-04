@@ -42,7 +42,7 @@
                     </div>
 
                 <br />
-
+                    <p>Warning: Repeating an event comes at an additional charge</p>
                         <p><button class="button is-fullwidth" type="submit">Repeat</button></p>
                 </form>
             </div>
