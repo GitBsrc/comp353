@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/create_group', 'GroupController@create')->name('create_group');
 
     Route::get('/group/{id}/edit_group', 'GroupController@edit');
+    
+    Route::post('/update_group/{id}', 'GroupController@update');
 
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
 

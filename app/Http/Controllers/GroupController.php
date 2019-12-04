@@ -129,23 +129,28 @@ class GroupController extends Controller
      * @param int $groupID
      * @return Response
      */
-    public function update(Request $request, Group $group){
-        // validate login
+    public function update(Request $request, $id){        
+        $group = Group::find($id);
 
         // validate input
-        $this->validate($request, [
-            'groupName' => 'required', 
-            'groupDescription' => 'required|max:1000', 
-            'groupIsPublic' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required', 
+        //     'description' => 'required|max:1000', 
+        //     'isPublic' => 'required'
+        // ]);
 
-        $group->groupName = $request->input('groupName');
-        $group->groupDescription = $request->input('groupDescription');
-        $group->groupIsPublic = $request->input('groupIsPublic');
+        $group->groupName = $request->input('name');
+        $group->groupDescription = $request->input('description');
+        if($request->has('isPublic')) {
+            $group->groupIsPublic = 1;
+        }
+        else {
+            $group->groupIsPublic = 0;
+        }
 
-        $group->save();
-        Session::flash('message', 'Group updated!');
-        return redirect('group.profile', ['group'=>$group]);
+        $group->update();
+        
+        return redirect('group/'.$id);
     }
 
     /**

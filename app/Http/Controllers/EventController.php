@@ -20,7 +20,7 @@ class EventController extends Controller
 
     public function create()
     {
-        return View::make('edit_event');
+        return View::make('event.edit');
     }
 
     // Only system administrator user type can call this function
@@ -82,7 +82,7 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        return view('edit_event')->with('event', $event);
+        return view('event.edit')->with('event', $event);
     }
 
     // Only manager type user can call this function

@@ -17,7 +17,7 @@ class CreateGroupTable extends Migration
             $table->bigIncrements('id');
             $table->string('groupName');
             $table->string('groupDescription', 1000);
-            $table->binary('groupIsPublic');
+            $table->boolean('groupIsPublic');
             $table->timestamps(); // takes care of creation & update date columns
         });
     }
