@@ -29,7 +29,7 @@ class EventController extends Controller
         $generator = new Generator();
 
         $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required', 'startTime' => 'required', 'endTime' => 'required']);
-        
+
         $event = new Event();
         $event->name = $request->input('name');
         $event->description = $request->input('description');
@@ -47,7 +47,8 @@ class EventController extends Controller
         $event->storage = 50;
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         // should get price rate from administrator type user set value
-        $event->price = 22;
+        $base_price = 22;
+        $event->price = $generator->generate_price($request->input('type'), $base_price);
 
         $event->save();
         return view('event.profile')->with('event', $event);

@@ -25,9 +25,9 @@ class Generator
         if ($event_type == "Profit") {
             return $system_price_rate;
         }
-        else if($event_type == "Non-Profit"){
+        else{
             return 0;
-            }
+        }
     }
 
     public function add_config_rates($storage, $bandwidth, $storage_rate, $bandwidth_rate){
