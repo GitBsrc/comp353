@@ -22,7 +22,7 @@
                    <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
                 <div class="column group-admin-privileges" rendered="{{$admin_user}}">
-           <a class="button" class="is-pulled-left is-active" href="">Edit Group</a><br />
+           <a class="button" class="is-pulled-left is-active" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
            <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
         </div>
              </div>
