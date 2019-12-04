@@ -139,6 +139,10 @@ class GroupController extends Controller
         // get group
         $group = Group::find($groupID);
 
+        if(GroupMembers::where('groupID', $groupID)->where('userID', Auth::id())->first()->isLeader == 0) {
+            return redirect('/profile');
+        }
+
         // show edit view
         return view('group.edit')
             ->with('group', $group);
@@ -167,13 +171,11 @@ class GroupController extends Controller
         return redirect('group/'.$id);
     }
 
-    /**
-     * Remove the specified group from storage.
-     * 
-     * @param int $groupID
-     * @return Response
-     */
     public function destroy($groupID){
+        if(GroupMembers::where('groupID', $groupID)->where('userID', Auth::id())->first()->isLeader == 0) {
+            return redirect('/profile');
+        }
+
         // find group
         $group = Group::find($groupID);
         $group->delete();
