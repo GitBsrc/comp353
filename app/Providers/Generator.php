@@ -80,4 +80,8 @@ class Generator
         $rand_keys = array_rand($input, 2);
         return $input[$rand_keys[0]];
     }
+
+    public function merge_date_time($date, $time){
+        return date('Y-m-d H:i:s', strtotime("$date $time"));
+    }
 }

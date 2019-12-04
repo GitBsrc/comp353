@@ -28,13 +28,13 @@ class EventController extends Controller
     {
         $generator = new Generator();
 
-        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required']);
-
+        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required', 'startTime' => 'required', 'endTime' => 'required']);
+        
         $event = new Event();
         $event->name = $request->input('name');
         $event->description = $request->input('description');
-        $event->startDate = $request->input('startDate');
-        $event->endDate = $request->input('endDate');
+        $event->startDate = $generator->merge_date_time($request->input('startDate'), $request->input('startTime')) ;
+        $event->endDate = $generator->merge_date_time($request->input('endDate'), $request->input('endTime'));
         // Assume for now 2 types of events: profit and non-profit through dropdown
         $event->type = $request->input('type');
         $event->location = $request->input('location');

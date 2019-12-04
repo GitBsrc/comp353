@@ -16,7 +16,7 @@
                 <div class="field">
                     <label class="label">Event Name</label>
                     <div class="control">
-                        <input class="input" name="name" placeholder="e.g Coffee break">
+                        <input class="input" name="name" placeholder="e.g Enter event name">
                     </div>
                 </div>
 
@@ -48,9 +48,23 @@
                 </div>
 
                 <div class="field">
+                    <label class="label">Start Time</label>
+                    <div class="control">
+                        <input class="input" type="time" name="startTime">
+                    </div>
+                </div>
+
+                <div class="field">
                     <label class="label">End Date</label>
                     <div class="control">
                         <input class="input" name="endDate" type="date">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">End Time</label>
+                    <div class="control">
+                        <input class="input" type="time" name="endTime">
                     </div>
                 </div>
 
