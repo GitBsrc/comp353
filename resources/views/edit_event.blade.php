@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<form method="post" action="/update_event/{{$event->id}}">
+@csrf
 <div class="columns is-centered">
 <div class="section column is-half">
     <div class="box">
@@ -14,67 +16,40 @@
       <div class="field">
         <label class="label">Event Name</label>
         <div class="control">
-          <input class="input" type="email" value="{{$event->name}}">
+          <input class="input" name="name"  value="{{$event->name}}">
         </div>
       </div>
 
       <div class="field">
             <label class="label">Event Description</label>
             <div class="control">
-                <textarea class="textarea">{{$event->description}}</textarea>
+                <textarea class="textarea" name="description">{{$event->description}}</textarea>
             </div>
         </div>
 
-      <div class="field">
-            <label class="label">Start Date</label>
+        <div class="field">
+            <label class="label">Event Location</label>
             <div class="control">
-                <input class="input" type="date">
+                <input class="input" name="location" value="{{$event->location}}">
             </div>
         </div>
 
         <div class="field">
-                <label class="label">End Date</label>
+                <label class="label">Extend End Date</label>
+                Current: {{$event->endDate}} (Warning: this comes at an additional charge)
                 <div class="control">
-                    <input class="input" type="date">
+                    <input class="input" name="endDate" type="date">
                 </div>
         </div>
 
-        <div class="field">
-                <label class="label">Event Location</label>
-                <div class="control">
-                  <input class="input" type="email" value="{{$event->location}}">
-                </div>
-        </div>
         <br />
         <p>
-        <a class="button is-fullwidth" href="/event">Save</a>
+        <button class="button is-fullwidth" type="submit">Save</button>
         </p>
-
-
-
 
  </div>
 </div>
 </div>
+</form>
 @endsection
-<script src="~bulma-calendar/dist/js/bulma-calendar.min.js">
-// Initialize all input of type date
-var calendars = bulmaCalendar.attach('[type="date"]', options);
 
-// Loop on each calendar initialized
-for(var i = 0; i < calendars.length; i++) {
-	// Add listener to date:selected event
-	calendars[i].on('select', date => {
-		console.log(date);
-	});
-}
-
-// To access to bulmaCalendar instance of an element
-var element = document.querySelector('#my-element');
-if (element) {
-	// bulmaCalendar instance is available as element.bulmaCalendar
-	element.bulmaCalendar.on('select', function(datepicker) {
-		console.log(datepicker.data.value());
-	});
-}
-</script>

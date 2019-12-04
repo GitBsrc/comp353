@@ -62,8 +62,10 @@ class Generator
     }
 
     public function date_is_greater($date1, $date2){
-        $date1 = new DateTime($date1);
-        $date2 = new DateTime($date2);
+
+        $date1 = date("Y-m-d H:i:s", strtotime($date1));
+        $date2 = date("Y-m-d H:i:s", strtotime($date2));
+
         return $date1>$date2;
     }
 

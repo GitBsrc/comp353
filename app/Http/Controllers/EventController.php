@@ -88,27 +88,30 @@ class EventController extends Controller
     // Only manager type user can call this function
     // Cannot update type to avoid bypassing additional charges
     // Not sure about verify null unless we get current values in front end then re-post them
-    public function update(Request $request,  Event $event)
+    public function update(Request $request, $id)
     {
         $generator = new Generator();
+        $event = Event::find($id);
 
-        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'startDate' => 'nullable', 'endDate' => 'nullable|after:startDate']);
+        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'endDate' => 'nullable']);
 
         $event->name = $generator->verify_null($request->input('name'), $event->name);
         $event->description = $generator->verify_null($request->input('description'), $event->description);
         $event->location = $generator->verify_null($request->input('location'), $event->location);
-        $event->startDate = $generator->verify_null($request->input('startDate'), $event->startDate);
-        $event->endDate = $generator->verify_null($request->input('endDate'), $event->endDate);
-        $current_end_date = $event->endDate;
 
+        $end_time = $event->endTime;
+        $current_end_date = $event->endDate;
+        $event->endDate = $generator->merge_date_time($generator->verify_null($request->input('endDate'), $event->endDate), $end_time);
+        
         // Add 15$ additional charge if date was extended during event update
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
-            $event->price += 15;
+            $current = $event->price;
+            $event->price = $current + 20;
         };
 
-        $event->save();
+        $event->update();
 
-        return redirect('event')->with('event', $event);
+        return view('event.profile')->with('event', $event);
     }
 
     // Does not clearly state but assume this function should be called by manager user type
