@@ -5,6 +5,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\DMRecipients;
+use App\User;
 
 class DMRecipientController extends Controller
 {
@@ -20,11 +21,18 @@ class DMRecipientController extends Controller
         #getting the id of the authenticates users
          $user_id = Auth::id();
 
-        #get a list of all the the dm recipients/group from the DMRecipient model
-        $dmrecipients = DB::table('dm_recipients')->where('user_id', $user_id)->pluck('group_id');
+         #getting the message id of all messages sent by the authenticated user from the dm_messages
+         $mess_id = DB::table('dm_messages')->where('sender', $user_id)->pluck('id');
+         
+        #get the list of all the recipient that the authenticated user dm from the DMRecipient model
+        $dmrecipients = DB::table('dm_recipients')->where('message_id', $mess_id)->pluck('recipient');
+
+        #get the list of names of the recipients
+        $name = DB::table('users')->where('id', $dmrecipients)->pluck('name');
+
 
         #open up the dm_recipient view page and load the recipient list according to the user
-        $name = ["Bob", "Jim", "Tim"]; #test data (for testing purpose). Unable to retrieve data from db tables.
+       # $name = ["Bob", "Jim", "Tim"]; #test data (for testing purpose). Unable to retrieve data from db tables.
 
         return view('dm_recipients', ['name' => $name]);
     }

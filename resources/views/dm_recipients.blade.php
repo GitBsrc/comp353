@@ -16,6 +16,10 @@
                            {{$names}}
          </a>
          @endforeach
+      @else
+         <a class="list-item">
+              <b> No DM Sent </b>
+         </a>
       @endif
     </div>
   </div>
