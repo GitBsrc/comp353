@@ -34,6 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/event_list', 'EventController@index')->name('event_list');
 
+    Route::get('/join_event/{id}', 'EventMembersController@join');
+
+    Route::get('/leave_event/{id}', 'EventMembersController@leave');
+
     Route::get('/create_event', function (){
         return view('create_event');
     });

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\_Event_;
-use App\_EventMembers_;
+use App\Event;
+use App\EventMembers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class EventMembersController extends Controller
@@ -19,10 +20,25 @@ class EventMembersController extends Controller
         return view::make('event_member');
     }
 
+    public function join($id) {
+        $member = new EventMembers();
+        $member->event_id = $id;
+        $member->user_id = Auth::id();
+        $member->member_type_id = 1; // member
+        $member->save();
+        return redirect('/event/'.$id);
+    }
+
+    public function leave($id) {
+        $member = EventMembers::where('event_id', $id)->where('user_id', Auth::id());
+        $member->delete();
+        return redirect('/profile');
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, ['user_id' => 'required', 'event_id' => 'required', 'member_type_id' => 'required']);
-        $event_member = new _EventMembers_();
+        $event_member = new EventMembers();
         $event_member->user_id = $request->input('user_id');
         $event_member->event_id = $request->input('event_id');
         $event_member->member_id = $request->input('member_id');
@@ -30,22 +46,22 @@ class EventMembersController extends Controller
         return redirect('event_member')->with('event_member', $event_member);
     }
 
-    public function show(_EventMembers_ $_EventMembers_)
+    public function show(EventMembers $EventMembers)
     {
-        $members = _EventMembers_::with('_Event_')->get();
+        $members = EventMembers::with('Event')->get();
 
         return view::make('event_members')->with($members);
     }
 
 
     // Not sure you can edit an event member
-    public function edit(_EventMembers_ $_EventMembers_)
+    public function edit(EventMembers $EventMembers)
     {
         return view::make('event_member');
     }
 
     // Don't think we need it
-    public function update(Request $request, _EventMembers_ $_EventMembers_)
+    public function update(Request $request, EventMembers $EventMembers)
     {
         //
     }
@@ -53,7 +69,7 @@ class EventMembersController extends Controller
     // To remove an event member
     public function destroy($id)
     {
-        $event_member = _EventMembers_::find($id);
+        $event_member = EventMembers::find($id);
         $event_member->delete();
 
         return redirect('event_members');

@@ -23,10 +23,14 @@
                     <div class="container">
                       <form>
                         <div class="field">
-                        <a class="is-pulled-left is-active" href="event/{{$event->id}}">{{$event->name}}</a>
+                        <a class="is-pulled-left is-active" href="/event/{{$event->id}}">{{$event->name}}</a>
                         </div>
                         <div class="field">
-                            <a class="button is-pulled-right is-small">Join</a>
+                          @if(in_array($event->id, $joinedEvents))
+                            <a href="/leave_event/{{$event->id}}" class="button is-pulled-right is-small">Leave</a>
+                          @else
+                            <a href="/join_event/{{$event->id}}" class="button is-pulled-right is-small">Join</a>
+                          @endif
                         </div>
                       </form>
                     </div>
