@@ -99,16 +99,16 @@
            <div class="group-admin-privileges" rendered="{{$admin_user}}">
                <a class="button" href="{{$group->id}}/add_members">Add User(s)</a>
                <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
+               <!-- update this : save method -->
                <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
             </div>
             <div class="panel-block">
                <p class="control has-icons-left">
-                  <input class="input" type="text" placeholder="Search Event">
+                  <input class="input" type="text" placeholder="Search Members">
                   <span class="icon is-left">
                      <i class="fas fa-search" aria-hidden="true"></i>
                   </span>
                </p>
-            <a class="button" href="create_event">+</a>
             </div>
             @foreach ($group_members as $member)
                 <div class="panel-block">

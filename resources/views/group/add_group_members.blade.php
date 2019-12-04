@@ -10,7 +10,21 @@
                         Members Manager - Adding member
                     </span>
                 </div>
-                <p>Group: {{$group->groupName}}</p>
+                <div class="panel-block">
+                    <p>Group: {{$group->groupName}}</p>
+                </div>
+                
+                <!-- update this : search method & auto-fill ideally.
+                if not then just remove search bar entirely  -->
+                <div class="field panel-block">
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" placeholder="Search Members">
+                        <span class="icon is-left">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </span>
+                    </p>
+                </div>
+
                 <div class="field">
                     <label class="label">ID</label>
                     <div class="control">
