@@ -82,7 +82,7 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        return View::make('edit_event')->with('event', $event);
+        return view('edit_event')->with('event', $event);
     }
 
     // Only manager type user can call this function

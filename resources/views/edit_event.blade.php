@@ -7,21 +7,21 @@
     <div class="level">
         <a class="button level-left" href="/event/{{$event->id}}">Back</a>
         <span class="level-item title is-bold">
-            Edit Event 1
+            Edit {{$event->name}}
         </span>
     </div>
 
       <div class="field">
         <label class="label">Event Name</label>
         <div class="control">
-          <input class="input" type="email" placeholder="e.g Coffee break">
+          <input class="input" type="email" value="{{$event->name}}">
         </div>
       </div>
 
       <div class="field">
             <label class="label">Event Description</label>
             <div class="control">
-                <textarea class="textarea" placeholder="e.g. Describe your evemt here"></textarea>
+                <textarea class="textarea">{{$event->description}}</textarea>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
         <div class="field">
                 <label class="label">Event Location</label>
                 <div class="control">
-                  <input class="input" type="email" placeholder="e.g H609 Hall Building">
+                  <input class="input" type="email" value="{{$event->location}}">
                 </div>
         </div>
         <br />

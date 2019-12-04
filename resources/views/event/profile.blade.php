@@ -19,7 +19,7 @@
                         {{$event->name}}
                        </span>
                     <div class="level-right">
-                        <a class="button level-right" href="/edit_event">Edit</a>
+                        <a class="button level-right" href="/edit_event/{{$event->id}}">Edit</a>
                         <a class="button level-right" href="/event_details/{{$event->id}}">Details</a></div></div>
 
                      <p><span class="title is-bold is-size-4">
@@ -60,26 +60,17 @@
                <div class="column level is-mobile">
                   <a href="/social-ui/#/u/me/i" class="level-item has-text-centered router-link-active">
                      <div>
-                        <p>4</p>
                         <p>Posts</p>
                      </div>
                   </a>
                   <a href="/event_members" class="level-item has-text-centered">
                      <div>
-                        <p>54</p>
                         <p>Participants</p>
                      </div>
                   </a>
                   <a href="/social-ui/#/u/me/e" class="level-item has-text-centered">
                      <div>
-                        <p>3</p>
                         <p>Groups</p>
-                     </div>
-                  </a>
-                  <a href="/social-ui/#/u/me/r" class="level-item has-text-centered">
-                     <div>
-                        <p>6</p>
-                        <p>Join request</p>
                      </div>
                   </a>
                </div>

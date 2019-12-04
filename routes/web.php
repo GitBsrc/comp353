@@ -28,9 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('event/{id}', 'EventController@get');
 
-    Route::get('/edit_event', function () {
-        return view('edit_event');
-    });
+    Route::get('/edit_event/{id}', 'EventController@edit')->name('event');
 
     Route::get('/event_list', 'EventController@index')->name('event_list');
 
