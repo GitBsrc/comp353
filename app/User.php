@@ -23,7 +23,7 @@ class User extends Authenticatable
         return $this->hasMany('App\DMMessage');
     }
     /**
-     * Each user can receive several messages from a DM 
+     * Each user can receive several messages from a DM
      * or group DM.
      */
     public function receivesDMs(){
@@ -36,6 +36,10 @@ class User extends Authenticatable
         return $this->hasMany('App\EventMembers');
     }
 
+    public function user_type(){
+        return $this->hasOne('App\UserTypes');
+    }
+
     // VARIABLES
     /**
      * The attributes that are mass assignable.
@@ -43,7 +47,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'user_type_id'
     ];
 
     /**
@@ -52,7 +56,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
