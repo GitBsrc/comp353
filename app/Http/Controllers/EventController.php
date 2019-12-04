@@ -47,11 +47,10 @@ class EventController extends Controller
         $event->storage = 50;
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         // should get price rate from administrator type user set value
-        $event->price = $generator->generate_price($request->input('type'), 25);
+        $event->price = 22;
 
         $event->save();
-
-        return redirect('event')->with('event', $event);
+        return view('event.profile')->with('event', $event);
     }
 
     public function show($id)

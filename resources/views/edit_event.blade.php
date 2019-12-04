@@ -5,7 +5,7 @@
 <div class="section column is-half">
     <div class="box">
     <div class="level">
-        <a class="button level-left" href="/event">Back</a>
+        <a class="button level-left" href="/event/{{$event->id}}">Back</a>
         <span class="level-item title is-bold">
             Edit Event 1
         </span>

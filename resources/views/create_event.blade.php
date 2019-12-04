@@ -2,7 +2,7 @@
 
 @section('content')
 <form method="post" action="/new_event">
-    {{ csrf_field() }}
+    @csrf
     <div class="columns is-centered">
         <div class="section column is-half">
             <div class="box">
@@ -33,8 +33,8 @@
                         <div class="select is-fullwidth">
                             <select name="type">
                                 <option>Select type</option>
-                                <option>Profit</option>
-                                <option>Non-profit</option>
+                                <option value="Profit">Profit</option>
+                                <option value="Non-profit">Non-profit</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="field">
                     <label class="label">Event Location</label>
                     <div class="control">
-                        <input class="input" name="location" type="email" placeholder="e.g H609 Hall Building">
+                        <input class="input" name="location" placeholder="e.g H609 Hall Building">
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                 </div>
                 <br />
                 <p>
-                    <a class="button is-fullwidth" type="submit" href="/new_event">Create</a>
+                    <button class="button is-fullwidth" type="submit">Create</button>
                 </p>
 
             </div>

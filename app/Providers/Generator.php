@@ -40,8 +40,15 @@ class Generator
     // Generate event status by checking current date within the bounds of start and end dates
     public static function generate_status($startDate, $endDate){
 
-        $start = $startDate->format('Y-m-d H:i:s');
-        $end = $endDate->format('Y-m-d H:i:s');
+        if( is_string($startDate) & is_string($endDate)){
+            $start = date("Y-m-d H:i:s", strtotime($startDate));
+            $end = date("Y-m-d H:i:s", strtotime($endDate));
+        }
+        else{
+            $start = $startDate->format('Y-m-d H:i:s');
+            $end = $endDate->format('Y-m-d H:i:s');
+        }
+
 
         if( (strtotime('now') < strtotime($start)) & (strtotime('now') < strtotime($end)) ){
             return 'Upcoming';
