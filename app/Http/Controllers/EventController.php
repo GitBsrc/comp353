@@ -119,23 +119,41 @@ class EventController extends Controller
         };
 
         $event->update();
+        $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
-        return view('event.profile')->with('event', $event);
+        return view('event.profile', ['event' => Event::findOrFail($id), 'isManager' => $isManager, 'isAdmin' => $isAdmin])->with('event', $event);
     }
 
     // Does not clearly state but assume this function should be called by manager user type
-    public function repeat($id)
+    public function repeat($id, Request $request)
     {
+        $generator = new Generator();
+
+        $this->validate($request, ['startDate' => 'required', 'endDate' => 'required|after:startDate', 'startTime' => 'required', 'endTime' => 'required']);
+
         $event = Event::find($id);
         $recurrence = $event->recurrence;
         $recurrence++;
         $event->recurrence = $recurrence;
         $current = $event->price;
         $event->price = $current + 10;
-
+        $event->startDate = $generator->merge_date_time($request->input('startDate'), $request->input('startTime')) ;
+        $event->endDate = $generator->merge_date_time($request->input('endDate'), $request->input('endTime'));
+        $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         $event->update();
 
-        return view('event.profile')->with('event', $event);
+        $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
+
+        return view('event.profile', ['event' => Event::findOrFail($id), 'isManager' => $isManager, 'isAdmin' => $isAdmin])->with('event', $event);
+    }
+
+    public function get_repeat($id)
+    {
+        $event = Event::find($id);
+
+        return view('event.repeat')->with('event', $event);
     }
 
     // Only administrator user type can call this function based on his set price rates for storage and bandwidth

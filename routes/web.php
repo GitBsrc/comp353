@@ -61,13 +61,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dm_recipients', function(){
         return view('dm_recipients');
     })->name('dm_recipients');
-    
+
     Route::get('/postform', function () {
         return view('postform');
     });
-    
+
     Route::post('/storepost', 'PostController@store');
-    
+
     Route::get('/editpost', function () {
         return view('editpost');
     });
@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
-    
+
     Route::get('/profile/{id}', 'ProfileController@get');
 
     Route::get('/group/{id}', 'GroupController@get');
@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/new_group', 'GroupController@store');
 
     Route::get('/group/{id}/edit_group', 'GroupController@edit');
-    
+
     Route::post('/update_group/{id}', 'GroupController@update');
 
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
@@ -106,3 +106,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/delete_event/{id}', 'EventController@destroy');
 
     Route::post('/repeat_event/{id}', 'EventController@repeat');
+
+    Route::get('/repeat/{id}', 'EventController@get_repeat');
