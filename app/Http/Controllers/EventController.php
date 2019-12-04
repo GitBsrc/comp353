@@ -73,8 +73,11 @@ class EventController extends Controller
 
     public function get($id)
     {
+        $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
+        $isAdmin = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 3)->pluck('user_id')->all());
+
         // event.profile same as event view, just kept both to see difference in code
-        return view('event.profile', ['event' => Event::findOrFail($id)]);
+        return view('event.profile', ['event' => Event::findOrFail($id), 'isManager' => $isManager, 'isAdmin' => $isAdmin]);
     }
 
     public function get_details($id)

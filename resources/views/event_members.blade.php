@@ -18,16 +18,26 @@
             </span>
                     </p>
                 </div>
+                @foreach($users as $user)
                 <div class="panel-block">
                     <div class="container">
-                        @foreach($users as $user)
                         <div class="field">
                         <a class="is-pulled-left is-active" href="/profile/{{$user['name']->id}}">{{$user['name']->name}}</a>
+                            @if($isAdmin)
+                                @if($user['memberType'] == 'participant')
+                                <a href="/set_manager/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Manager</a>
+                                @elseif($user['memberType'] == 'manager')
+                                <a href="/set_participant/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Participant</a>
+                                @else
+                                <p class="is-pulled-right is-active">{{$user['memberType']}}</p>
+                                @endif
+                            @else
                             <p class="is-pulled-right is-active">{{$user['memberType']}}</p>
+                            @endif
                         </div>
-                        @endforeach
                     </div>
                 </div>
+                @endforeach
             </nav>
         </div>
     </div>

@@ -13,6 +13,8 @@ class EventMembersController extends Controller
 {
     public function get($id)
     {
+        $isAdmin = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 3)->pluck('user_id')->all());
+
         $event = Event::find($id);
         $members = EventMembers::where('event_id', $id)->get();
         $users = array();
@@ -22,7 +24,7 @@ class EventMembersController extends Controller
                 "memberType"=>EventMemberType::find($member->member_type_id)->type
             );
         }
-        return view('event_members', ['event'=>$event, 'users'=>$users]);
+        return view('event_members', ['event'=>$event, 'users'=>$users, 'isAdmin'=>$isAdmin]);
     }
 
     public function create()
@@ -45,6 +47,23 @@ class EventMembersController extends Controller
         return redirect('/profile');
     }
 
+    public function setParticipant($eventID, $userID) {
+        if(EventMembers::where('event_id', $eventID)->where('user_id', Auth::id())->first()->member_type_id != 3) {
+            return redirect('/profile');
+        }
+        $member = EventMembers::where('event_id', $eventID)->where('user_id', $userID);
+        $member->update(['member_type_id' => 1]);
+        return redirect('/event/'.$eventID);
+    }
+
+    public function setManager($eventID, $userID) {
+        if(EventMembers::where('event_id', $eventID)->where('user_id', Auth::id())->first()->member_type_id != 3) {
+            return redirect('/profile');
+        }
+        $member = EventMembers::where('event_id', $eventID)->where('user_id', $userID);
+        $member->update(['member_type_id' => 2]);
+        return redirect('/event/'.$eventID);
+    }
     public function store(Request $request)
     {
         $this->validate($request, ['user_id' => 'required', 'event_id' => 'required', 'member_type_id' => 'required']);

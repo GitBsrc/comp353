@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/leave_event/{id}', 'EventMembersController@leave');
 
+    Route::get('/set_participant/{eventID}/{userID}', 'EventMembersController@setParticipant');
+
+    Route::get('/set_manager/{eventID}/{userID}', 'EventMembersController@setManager');
+
     Route::get('/create_event', function (){
         return view('create_event');
     });

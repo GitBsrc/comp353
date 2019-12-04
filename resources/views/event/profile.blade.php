@@ -15,12 +15,17 @@
                  <div class="column is-1"></div>
                  <div class="column is-two-thirds content">
                     <p>
-                       <div class="level"><span class="level-left title is-bold">
-                        {{$event->name}}
-                       </span>
-                    <div class="level-right">
-                        <a class="button level-right" href="/edit_event/{{$event->id}}">Edit</a>
-                        <a class="button level-right" href="/event_details/{{$event->id}}">Details</a></div></div>
+                       <div class="level">
+                          <span class="level-left title is-bold">
+                              {{$event->name}}
+                           </span>
+                           <div class="level-right">
+                              @if($isAdmin || $isManager)
+                              <a class="button level-right" href="/edit_event/{{$event->id}}">Edit</a>
+                              @endif
+                              <a class="button level-right" href="/event_details/{{$event->id}}">Details</a>
+                           </div>
+                        </div>
 
                      <p><span class="title is-bold is-size-4">
                         Start Date
