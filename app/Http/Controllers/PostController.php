@@ -11,6 +11,7 @@ use Session;
 //add routes
 class postController extends Controller
 {
+
      /**
      * Display a listing of all posts.
      *
@@ -45,21 +46,32 @@ class postController extends Controller
     {
             //include validation + make sure session logged in
 
-            // store
-            $media = $request->file('images');
-            $extension = $media->getClientOriginalExtension();
-            Storage::disk('public')->put($media->getFilename().'.'.$extension,  File::get($media));
-
+         
             $posts = new Posts;
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
             $posts->groupID   = 1; // change once proper frontend options are there
             $posts->eventID   = 1; //change once proper frontend options are there
-            $posts->canComment = request('canComment'); // need to fill DB table with only 2 values for this to really make sense
-            $posts->mime = $media->getClientMimeType();
-            $posts->original_filename = $media->getClientOriginalName();
-            $posts->filename = $media->getFilename().'.'.$extension;            
+            $posts->canComment = request('canComment'); // need to fill DB table with only 2 values for this to really make sense         
             $posts->save();
+           
+            $request->validate([
+                'post_image'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+            // Check if a profile image has been uploaded
+        if ($request->has('post_image')) {
+            // Get image file
+            $image = $request->file('post_image');
+            // Define folder path
+            $folder = '/uploads/images/';
+            // Make a file path where image will be stored [ folder path + file name + file extension]
+            $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
+            // Upload image
+            $this->uploadOne($image, $folder, 'public', $name);
+
+        }
+        // Persist user record to database
+        $posts->save();
 
             // redirect
             Session::flash('message', 'Successfully created new post!');
@@ -116,7 +128,6 @@ class postController extends Controller
             $posts->first_name = Input::get('first_name');
             $posts->group_id   = Input::get('group_id');
             $posts->event_id   = Input::get('event_id');
-            $posts->constraint = Input::get('constraint');
             $posts->save();
 
             // redirect
@@ -141,6 +152,7 @@ class postController extends Controller
         Session::flash('message', 'Successfully deleted the post!');
         return Redirect::to('Posts');
     }
+
 
 }
 

@@ -28,20 +28,19 @@
     </div>
     
     <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Upload a Picture/Video/Post</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-narrow">
-            <div class="form-group">
-                <input type="file" name="photos"/>
+        <div class="field-label is-normal">
+          <label class="label">Upload</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+                <div class="control">
+                <input id="post_image" type="file" class="form-control" name="post_image">
             </div>
+          </div>
         </div>
       </div>
-    </div>
-    
+     
     <!-- get list of events -->
-    @foreach ($events as $event)
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Share In</label>
@@ -51,14 +50,13 @@
               <div class="control">
                       <div class="select">
                         <select>
-                          <option value = {{$event->id}}>{{$event->name}}</option>
+                          <option> Other events... </option>
                         </select>
                       </div>
                     </div>
         </div>
       </div>
     </div>
-@endforeach
 
 <!-- get list of posts --> 
     <div class="field is-horizontal">
