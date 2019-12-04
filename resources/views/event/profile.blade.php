@@ -63,7 +63,7 @@
                         <p>Posts</p>
                      </div>
                   </a>
-                  <a href="/event_members" class="level-item has-text-centered">
+                  <a href="/event_members/{{$event->id}}" class="level-item has-text-centered">
                      <div>
                         <p>Participants</p>
                      </div>

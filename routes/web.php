@@ -46,9 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('add_manager_info');
     });
 
-    Route::get('/event_members', function() {
-       return view('event_members');
-    });
+    Route::get('/event_members/{id}', 'EventMembersController@get');
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
 
