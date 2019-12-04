@@ -52,10 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
         return view('dm');
     });
     
-    Route::get('/dm_recipients', function(){
-        return view('dm_recipients');
-    });
-    
     Route::get('/postform', function () {
         return view('postform');
     });
@@ -75,12 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/groupMembers', function() {
         return view('groupMembers');
     });
+
+    Route::get('/dm_recipients', 'DMRecipientController@index');
    
 });
 
-# routing the dm message model to the controller
-#Route::resource('dm_messages', 'DMController');
 
-#routing the dm recipient model to the controller
-#Route::resource("dm_recipients", "DMRecipientController");
 

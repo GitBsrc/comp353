@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DMRecipients;
+use App\dmrecipients;
 
 class DMRecipientController extends Controller
 {
@@ -14,10 +14,13 @@ class DMRecipientController extends Controller
      */
     public function index()
     {
+        #getting all the authenticates users
+       # $user_id = Auth::id();
         #get all the dm recipients from the DMRecipient model
-        $dmrecipients = DMRecipients::all(); 
+        #$dmrecipients = DMRecipients::where()
         #open up the dm recipient page and load the dm recipient list according to the user
-        return view('dm_recipients', ['dm_recipient' => $dmrecipients]);
+        $name = ["Bob", "Jim", "Tim"];
+        return view('dm_recipients', ['name' => $name]);
     }
 
     /**
@@ -42,7 +45,7 @@ class DMRecipientController extends Controller
         $dm_recipient->user_id= $request->input('user_id');
         $dm_recipient->message_id= $request->input('message_id');
         $dm_recipient->group_id= $request->input('group_id');
-
+        $dm_recipient->save();
         #redirect to the dm recipient page with dm recipient page.
         return redirect('dm_recipients')->with('dm_recipient', $dm_recipient);
     }
