@@ -55,7 +55,8 @@ class ProfileController extends Controller
             'posts'=>$posts, 
             'groups'=>$groups,
             'post_count'=>$post_count,
-            'group_count'=>$group_count
+            'group_count'=>$group_count,
+            'isHome'=>true
         ]);
     }
 
@@ -89,7 +90,8 @@ class ProfileController extends Controller
             'posts'=>$posts, 
             'groups'=>$groups,
             'post_count'=>$post_count,
-            'group_count'=>$group_count
+            'group_count'=>$group_count,
+            'isHome'=>false
         ]);
     }
 }
