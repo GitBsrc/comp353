@@ -59,6 +59,11 @@
             @csrf
             <p><button class="button is-fullwidth is-danger" type="submit">Delete</button></p>
         </form>
+        <br />
+        <form method="post" action="/repeat_event/{{$event->id}}">
+            @csrf
+            <p><button class="button is-fullwidth" type="submit">Repeat</button></p>
+        </form>
  </div>
 </div>
 </div>

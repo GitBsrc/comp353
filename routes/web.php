@@ -82,3 +82,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update_event/{id}', 'EventController@update');
 
     Route::post('/delete_event/{id}', 'EventController@destroy');
+
+    Route::post('/repeat_event/{id}', 'EventController@repeat');

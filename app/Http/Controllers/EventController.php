@@ -115,26 +115,18 @@ class EventController extends Controller
     }
 
     // Does not clearly state but assume this function should be called by manager user type
-    public function repeat(Request $request, Event $event)
+    public function repeat($id)
     {
-        $generator = new Generator();
+        $event = Event::find($id);
+        $recurrence = $event->recurrence;
+        $recurrence++;
+        $event->recurrence = $recurrence;
+        $current = $event->price;
+        $event->price = $current + 10;
 
-        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'location' => 'required', 'startDate' => 'required', 'endDate' => 'required|after:startDate']);
+        $event->update();
 
-        $event->name = $request->input('name');
-        $event->description = $request->input('description');
-        $event->location = $request->input('location');
-        $event->startDate = $request->input('startDate');
-        $event->endDate = $request->input('endDate');
-        $event->recurence += 1;
-        $event->discount = $generator->generate_discount($event->recurrence, $event->discount);
-        // should get price rate from administrator type user set value
-        $event_price_no_discount = $generator->generate_price($request->input('type'), 25);
-        $event->price = $generator->apply_discount($event_price_no_discount, $event->discount);
-
-        $event->save();
-
-        return redirect('event')->with('event', $event);;
+        return view('event.profile')->with('event', $event);
     }
 
     // Only administrator user type can call this function based on his set price rates for storage and bandwidth
