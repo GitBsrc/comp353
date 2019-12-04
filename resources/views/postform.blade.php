@@ -40,6 +40,8 @@
       </div>
     </div>
     
+    <!-- get list of events -->
+    @foreach ($events as $event)
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Share In</label>
@@ -49,14 +51,16 @@
               <div class="control">
                       <div class="select">
                         <select>
-                          <option>Events...</option>
+                          <option value = {{$event->id}}>{{$event->name}}</option>
                         </select>
                       </div>
                     </div>
         </div>
       </div>
     </div>
+@endforeach
 
+<!-- get list of posts --> 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Link to</label>

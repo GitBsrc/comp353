@@ -77,4 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/groupMembers', function() {
         return view('groupMembers');
     });
+
+    Route::get('/postform/{id}', 'EventController@index')->name('event');
+
 });
