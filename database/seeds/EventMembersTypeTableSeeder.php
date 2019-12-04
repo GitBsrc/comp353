@@ -11,15 +11,15 @@ class EventMembersTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('event_member_type')->insert([
+        DB::table('event_member_types')->insert([
             'type' => 'participant'
         ]);
 
-        DB::table('event_member_type')->insert([
+        DB::table('event_member_types')->insert([
             'type' => 'manager'
         ]);
 
-        DB::table('event_member_type')->insert([
+        DB::table('event_member_types')->insert([
             'type' => 'admin'
         ]);
     }
