@@ -57,10 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dm', function () {
         return view('dm');
     });
-
-    Route::get('/dm_recipients', function(){
-        return view('dm_recipients');
-    })->name('dm_recipients');
     
     Route::get('/postform', function () {
         return view('postform');
@@ -95,8 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add_member/{id}', 'GroupMembersController@store');
 
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
-});
-
+    
     Route::get('event_details/{id}', 'EventController@get_details');
 
     Route::post('/new_event', 'EventController@store');
@@ -106,3 +101,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/delete_event/{id}', 'EventController@destroy');
 
     Route::post('/repeat_event/{id}', 'EventController@repeat');
+
+    Route::get('/dm_recipients', 'DMRecipientController@index');
+   
+});
+
+
+

@@ -15,8 +15,11 @@ class CreateDmRecipientsTable extends Migration
     {
         Schema::create('dm_recipients', function (Blueprint $table) {
             $table->bigIncrements('id');
+            #the message created by
             $table->unsignedBigInteger('user_id');
+            # the message id 
             $table->unsignedBigInteger('message_id');
+            # the message is sent to 
             $table->unsignedBigInteger('group_id');
             $table->unique(["user_id","message_id","group_id"]);
             $table->timestamps();
