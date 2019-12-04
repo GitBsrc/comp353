@@ -21,6 +21,10 @@
                    </p>
                    <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
+                <div class="column group-admin-privileges" rendered="{{$admin_user}}">
+           <a class="button" class="is-pulled-left is-active" href="">Edit Group</a><br />
+           <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
+        </div>
              </div>
           </div>
        </div>
@@ -44,9 +48,6 @@
              </div>
           </div>
        </div>
-       <div class="group-admin-privileges" rendered="{{$admin_user}}">
-           edit button<br />delete button
-        </div>
     </div>
     <div class="container">
        <hr>
@@ -97,16 +98,27 @@
        <div id="group-members" style="display:none;">
            <div class="group-admin-privileges" rendered="{{$admin_user}}">
                <a class="button" href="{{$group->id}}/add_members">Add User(s)</a>
-               <a class="button" href="{{$group->id}}/delete_members">Delete User(s)</a>
-           </div>
+               <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
+               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
+            </div>
+            <div class="panel-block">
+               <p class="control has-icons-left">
+                  <input class="input" type="text" placeholder="Search Event">
+                  <span class="icon is-left">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                  </span>
+               </p>
+            <a class="button" href="create_event">+</a>
+            </div>
             @foreach ($group_members as $member)
                 <div class="panel-block">
                     <div class="container">
                         <form>
                             <div class="field">
                                 <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
-                                <a align="right" class="button is-pulled-right is-small" href="">DM</a>
-                                <a align="right" class="button is-pulled-right is-small" href="" rendered="{{$admin_user}}">Make Leader</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:block;" href="">DM</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Make Leader</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Delete</a>
                             </div>
                         </form>
                     </div>
@@ -128,6 +140,22 @@
                   node.style.display = (node == pageToActivate) ? 'block' : 'none';
               }
           }
+      }
+
+      function activateEdit(){
+         var blocksCtrl = document.getElementsByClassName('hiddenBlock');
+         for(var i = 0; i < blocksCtrl.length; i++){
+            var block = blocksCtrl[i];
+            if(block.style.display === 'none'){
+               block.style.display = 'block';
+            }
+            else {
+               block.style.display = 'none';
+            }
+         }
+      }
+      function endEdit(){
+
       }
 
 </script>

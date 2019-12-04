@@ -5,17 +5,16 @@
         <div class="section column is-half">
             <div class="box">
                 <div class="level">
-                    <a class="button level-left" href="/event_list">Back</a>
+                    <a class="button level-left" href="/group/{{$group->id}}">Back</a>
                     <span class="level-item title is-bold">
                         Members Manager - Adding member
                     </span>
-                    <span>Group: {{$group->groupName}}</span>
                 </div>
-
+                <p>Group: {{$group->groupName}}</p>
                 <div class="field">
                     <label class="label">ID</label>
                     <div class="control">
-                        <input class="input" type="text" placeholder="e.g Coffee break">
+                        <input class="input" type="text" placeholder="e.g 3">
                     </div>
                 </div>
 
@@ -37,7 +36,7 @@
                 <div class="field">
                     <label class="label">Date of Birth</label>
                     <div class="control">
-                        <input class="input" type="text">
+                        <input class="input" type="date">
                     </div>
                 </div>
 
