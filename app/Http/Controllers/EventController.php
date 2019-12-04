@@ -102,7 +102,7 @@ class EventController extends Controller
         $end_time = $event->endTime;
         $current_end_date = $event->endDate;
         $event->endDate = $generator->merge_date_time($generator->verify_null($request->input('endDate'), $event->endDate), $end_time);
-        
+
         // Add 15$ additional charge if date was extended during event update
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
             $current = $event->price;
@@ -151,9 +151,13 @@ class EventController extends Controller
 
     }
 
-    public function destroy(Event $Event)
+    public function destroy($id)
     {
-        // TODO: Change to method that archives an event and only makes it visible to certain user types
+        $event = Event::find($id);
+        $event->delete();
+
+        $events = Event::all();
+        return redirect()->route('event_list');
     }
 
 

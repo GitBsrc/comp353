@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="post" action="/update_event/{{$event->id}}">
-@csrf
+
 <div class="columns is-centered">
 <div class="section column is-half">
     <div class="box">
+        <form method="post" action="/update_event/{{$event->id}}">
+            @csrf
     <div class="level">
         <a class="button level-left" href="/event/{{$event->id}}">Back</a>
         <span class="level-item title is-bold">
@@ -46,10 +47,22 @@
         <p>
         <button class="button is-fullwidth" type="submit">Save</button>
         </p>
+        <br />
 
+
+
+
+
+
+        </form>
+        <form method="post" action="/delete_event/{{$event->id}}">
+            @csrf
+            <p><button class="button is-fullwidth is-danger" type="submit">Delete</button></p>
+        </form>
  </div>
 </div>
 </div>
-</form>
+
+
 @endsection
 

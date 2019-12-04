@@ -23,7 +23,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->foreign('groupID')->references('id')->on('group');
-            $table->foreign('eventID')->references('id')->on('events');
+            $table->foreign('eventID')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('constraint')->references('id')->on('constraints');
             $table->foreign('userID')->references('id')->on('users');
         });
