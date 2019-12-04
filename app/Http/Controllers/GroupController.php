@@ -105,23 +105,7 @@ class GroupController extends Controller
         $group->recurrence = 0;
 
         $group->save();
-        Session::flash('message', 'New group created!');
         return redirect('group.profile')->with('group', $group);
-    }
-
-    /**
-     * Display the specified group.
-     * 
-     * @param int $groupID
-     * @return Response
-     */
-    public function show($groupID){
-
-        // get the group
-        $group = Group::find($groupID);
-
-        // show group
-        return view('group.profile', ['group'=>$group]);
     }
 
     /**
