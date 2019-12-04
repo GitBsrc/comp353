@@ -13,7 +13,7 @@ class EventMembersController extends Controller
 {
     public function get($id)
     {
-        $isAdmin = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 3)->pluck('user_id')->all());
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
         $event = Event::find($id);
         $members = EventMembers::where('event_id', $id)->get();
