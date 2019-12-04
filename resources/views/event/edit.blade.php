@@ -35,6 +35,7 @@
             </div>
         </div>
 
+        @if($event->status != 'Archived')
         <div class="field">
                 <label class="label">Extend End Date</label>
                 Current: {{$event->endDate}} (Warning: this comes at an additional charge)
@@ -42,6 +43,7 @@
                     <input class="input" name="endDate" type="date">
                 </div>
         </div>
+        @endif
 
         <br />
         <p>
