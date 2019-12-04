@@ -32,6 +32,9 @@ class GroupController extends Controller
         // update this once events have group id
         // $events = Event::where('groupID', $id)->get();
         $memberships = GroupMembers::where('groupID', $id)->get();
+        if($group->groupIsPublic == 0 && !in_array(Auth::id(), GroupMembers::where('groupID', $id)->pluck('userID')->all())){
+            return redirect('/profile');
+        }
         $admin_user = 0;
         $group_members = array();
         foreach($memberships as $member){
