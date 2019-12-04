@@ -20,4 +20,6 @@ class DMMessage extends Model
     public function recipients(){
         return $this->hasMany('App\DMRecipients');
     }
+
+    protected $table = 'dm_messages';
 }

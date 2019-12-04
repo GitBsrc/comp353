@@ -16,12 +16,12 @@ class CreateDmMessagesTable extends Migration
         Schema::create('dm_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             #the message is created by (user)
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('sender');
+            $table->foreign('sender')->references('id')->on('users');
             # the dm
             $table->mediumText('message_body');
             $table->timestamps();
             # from the user model
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

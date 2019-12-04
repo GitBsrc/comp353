@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
 use Illuminate\Support\Facades\DB;
-#use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\DMMessage;
 use App\DMRecipients;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class DMController extends Controller
 {
@@ -37,11 +37,43 @@ class DMController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function messageForm($id)
     {
-        //
+        $user_id = Auth::id();
+
+        $messages = DMMEssage::all();
+        
+        // $messages = DMMEssage::find('user_id', $id);
+
+        // $recipient = $messages->recipients;
+
+        // $dms = $messages->merge($recipient);
+
+        // $recipentMessages = DMMEssage::find('user_id', $id)->all();
+
+
+
+        return view('dm.message', ['user'=>User::find($user_id), 'recipient'=>User::find($id), 'dms'=>$messages]);        
+    }
+
+    /**
+     * Send Message
+     *
+     */
+    public function message(Request $request, $id)
+    {
+        $dm = new DMMEssage();
+        $dm->sender = Auth::id();
+        $dm->message_body = $request->input('message');
+        $dm->save();
+
+        $recipient = new DMRecipients();
+        $recipient->recipient = $id;
+        $recipent->message_id = $dm->id;
+        $recipient->save();
+
+        return redirect('/dm/'.$id);        
     }
 
     /**

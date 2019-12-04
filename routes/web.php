@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add_member/{id}', 'GroupMembersController@store');
 
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
-    
+
     Route::get('event_details/{id}', 'EventController@get_details');
 
     Route::post('/new_event', 'EventController@store');
@@ -103,7 +103,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/repeat_event/{id}', 'EventController@repeat');
 
     Route::get('/dm_recipients', 'DMRecipientController@index');
+
+    Route::get('/dm/{id}', 'DMController@messageForm');
    
+    Route::post('/dm/message/{id}', 'DMController@message');
 });
 
 

@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             PostsTableSeeder::class,
-            EventMembersTypeTableSeeder::class,
+            EventMemberTypeTableSeeder::class,
+            EventMembersTableSeeder::class
         ]);
     }
 }
