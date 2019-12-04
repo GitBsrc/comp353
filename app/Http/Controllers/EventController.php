@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\EventMembers;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
@@ -17,9 +18,10 @@ class EventController extends Controller
         $events = Event::all();
 
         $joinedEvents = EventMembers::where('user_id', Auth::id())->pluck('event_id')->all();
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
         // load the view and pass the posts
-        return view('event_list', ['events'=>$events, 'joinedEvents'=>$joinedEvents]);
+        return view('event_list', ['events'=>$events, 'joinedEvents'=>$joinedEvents, 'isAdmin'=>$isAdmin]);
     }
 
     public function create()

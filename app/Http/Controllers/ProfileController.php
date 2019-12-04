@@ -50,9 +50,9 @@ class ProfileController extends Controller
         }
 
         // return view
-        return view('profile', 
-            ['user'=>$user, 
-            'posts'=>$posts, 
+        return view('profile',
+            ['user'=>$user,
+            'posts'=>$posts,
             'groups'=>$groups,
             'post_count'=>$post_count,
             'group_count'=>$group_count,
@@ -85,9 +85,9 @@ class ProfileController extends Controller
         }
 
         // return view
-        return view('profile', 
-            ['user'=>$user, 
-            'posts'=>$posts, 
+        return view('profile',
+            ['user'=>$user,
+            'posts'=>$posts,
             'groups'=>$groups,
             'post_count'=>$post_count,
             'group_count'=>$group_count,
