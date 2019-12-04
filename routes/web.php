@@ -86,14 +86,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
 
+    Route::post('/add_member/{id}', 'GroupMembersController@store');
+
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
 });
-
-    Route::get('/group', 'GroupController@index')->name('group');
-
-    Route::get('/groupMembers', function() {
-        return view('groupMembers');
-    });
 
     Route::get('event_details/{id}', 'EventController@get_details');
 

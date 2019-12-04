@@ -20,7 +20,6 @@ class GroupController extends Controller
      */
     public function index(){
         $user = Auth::user();
-        return view('group', ['user'=>$user]);
     }
 
     /**
@@ -61,6 +60,13 @@ class GroupController extends Controller
             $member_count = $member_count + 1;
         }
 
+        
+        if(GroupMembers::where('groupID', $id)->where('userID', Auth::id())->first()->isLeader == 0) {
+            $isLeader = false;
+        } else {
+            $isLeader = true;
+        }
+
         return view('group.profile', [
             'group' => $group,
             'posts' => $posts,
@@ -69,7 +75,8 @@ class GroupController extends Controller
             'post_count' => $post_count,
             'event_count' => $event_count,
             'member_count' => $member_count,
-            'admin_user' => $admin_user
+            'admin_user' => $admin_user, 
+            'isLeader'=>$isLeader
             ]);
     }
 

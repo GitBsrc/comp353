@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class GroupMembersController extends Controller
 {
@@ -34,6 +35,12 @@ class GroupMembersController extends Controller
         // should only be able to add if user is leader
         $group = Group::where('id', $groupID)->first();
         $memberships = GroupMembers::where('groupID', $groupID)->get();
+        // if(GroupMembers::where('groupID', $groupID)->where('userID', Auth::id())->where('isLeader', 1) === null){
+        //     return redirect('/profile');
+        // }
+
+        $users = User::all();
+
         $admin_user = 0;
         $group_members = array();
         foreach($memberships as $member){
@@ -49,13 +56,14 @@ class GroupMembersController extends Controller
             // show edit view
             return view('group.add_group_members', [
                 'group_members' => $group_members,
-                'group' => $group
+                'group' => $group,
+                'users' => $users
             ]);
         }
 
-        // update this
-        return view('welcome');
+        return redirect('/profile');
     }
+    
     public function deleteMemberForm($groupID){
         // should only be able to delete if user is leader
         $group = Group::where('id', $groupID)->first();
@@ -80,7 +88,7 @@ class GroupMembersController extends Controller
         }
 
         // update this
-        return view('welcome');
+        return view('/profile');
     }
 
     /**
@@ -88,26 +96,31 @@ class GroupMembersController extends Controller
      * 
      * @return Response
      */
-    public function store(Request $request){
+    public function store(Request $request, $id){
         // validate that user and group exist
         // and that person is leader?
         $this->validate($request, [
-            'userEmail' => 'required',
-            'isLeader' => 'required'
+            'id' => 'required'
         ]);
 
         // store group member
         $group_member = new GroupMembers();
-        $userID = User::where('email', 'userEmail')->first()->userID;
-        $groupID = Group::where('groupID', '')->get()->groupID;
 
-        $group_member->userID = $userID;
-        $group_member->groupID = $groupID;
-        $group_member->isLeader = $request->input('isLeader');
+        $group_member->userID = $request->input('id');
+        $group_member->groupID = $id;
+        $group_member->joinDate = Carbon::now();
+
+        if($request->has('isLeader')) {
+            $group_member->isLeader = 1;
+        }
+        else {
+            $group_member->isLeader = 0;
+        }
+
 
         $group_member->save();
-        Session::flash('message', 'Group member added!');
-        return redirect('groupMembers');
+
+        return redirect('/group/'.$id);
     }
 
     /**

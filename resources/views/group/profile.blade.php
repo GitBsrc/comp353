@@ -96,12 +96,14 @@
 
        </div>
        <div id="group-members" style="display:none;">
+            @if($isLeader)
            <div class="group-admin-privileges" rendered="{{$admin_user}}">
-               <a class="button" href="{{$group->id}}/add_members">Add User(s)</a>
+               <a class="button" href="/group/{{$group->id}}/add_members">Add User(s)</a>
                <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
                <!-- update this : save method -->
                <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
             </div>
+            @endif
             <div class="panel-block">
                <p class="control has-icons-left">
                   <input class="input" type="text" placeholder="Search Members">

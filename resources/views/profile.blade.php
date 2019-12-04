@@ -32,7 +32,7 @@
                 </div>
                 <div class="column is-two-thirds">
                    <h1 class="title is-bold">
-                      {{$user->name}}
+                      {{$user ?? ''->name}}
                    </h1>
                    <!---->
                 </div>
@@ -128,4 +128,4 @@
           }
       }
 
-    </script>
+</script>
