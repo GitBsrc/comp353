@@ -62,7 +62,9 @@
         <br />
         <form method="post" action="/repeat_event/{{$event->id}}">
             @csrf
+            @if($event->status == 'Archived')
             <p><button class="button is-fullwidth" type="submit">Repeat</button></p>
+            @endif
         </form>
  </div>
 </div>
