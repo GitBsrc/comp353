@@ -23,7 +23,7 @@
                 </div>
                 
                @if($isLeader)
-                  <div class="column group-admin-privileges" rendered="{{$admin_user}}">
+                  <div class="column group-admin-privileges" rendered="{{$isLeader}}">
                      <a class="button" class="is-pulled-left is-active" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
                      <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
                   </div>
@@ -100,11 +100,12 @@
        </div>
        <div id="group-members" style="display:none;">
             @if($isLeader)
-           <div class="group-admin-privileges" rendered="{{$admin_user}}">
+           <div class="group-admin-privileges" rendered="{{$isLeader}}">
                <a class="button" href="/group/{{$group->id}}/add_members">Add User(s)</a>
-               <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
+               <a class="button" href="javascript:toggleEdit()">Edit User(s)</a>
                <!-- update this : save method -->
                <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
+               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="javascript:toggleEdit()">Cancel</a>
             </div>
             @endif
             <div class="panel-block">
@@ -122,8 +123,8 @@
                             <div class="field">
                                 <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
                                 <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:block;" href="">DM</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Make Leader</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Delete</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$isLeader}}">Make Leader</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$isLeader}}">Delete</a>
                             </div>
                         </form>
                     </div>
@@ -147,7 +148,7 @@
           }
       }
 
-      function activateEdit(){
+      function toggleEdit(){
          var blocksCtrl = document.getElementsByClassName('hiddenBlock');
          for(var i = 0; i < blocksCtrl.length; i++){
             var block = blocksCtrl[i];
@@ -159,8 +160,28 @@
             }
          }
       }
-      function endEdit(){
+      function saveEdit(){
 
+      }
+
+      function search() {
+         // Declare variables
+         var input, filter, list, results, a, i, txtValue;
+         input = document.getElementById('search');
+         filter = input.value.toUpperCase();
+         list = document.getElementById("listSearch");
+         results = list.getElementsByTagName('div');
+         
+         // Loop through all list items, and hide those who don't match the search query
+         for (i = 0; i < results.length; i++) {
+            a = results[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               results[i].style.display = "";
+            } else {
+               results[i].style.display = "none";
+            }
+         }
       }
 
 </script>

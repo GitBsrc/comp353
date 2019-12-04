@@ -34,15 +34,11 @@ class GroupController extends Controller
         if($group->groupIsPublic == 0 && !in_array(Auth::id(), GroupMembers::where('groupID', $id)->pluck('userID')->all())){
             return redirect('/profile');
         }
-        $admin_user = 0;
         $group_members = array();
         foreach($memberships as $member){
             $userID = $member->userID;
             $user = User::where('id', $userID)->first();
             array_push($group_members, $user);
-            if($userID == Auth::user()->id){
-                $admin_user = $member->isLeader;
-            }
         }
 
         // determine whether viewing user is administrator
@@ -75,7 +71,6 @@ class GroupController extends Controller
             'post_count' => $post_count,
             'event_count' => $event_count,
             'member_count' => $member_count,
-            'admin_user' => $admin_user, 
             'isLeader'=>$isLeader
             ]);
     }
