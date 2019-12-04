@@ -44,7 +44,7 @@
              </div>
           </div>
        </div>
-       <div rendered="{{$admin_user}}">
+       <div class="group-admin-privileges" rendered="{{$admin_user}}">
            edit button<br />delete button
         </div>
     </div>
@@ -95,13 +95,18 @@
 
        </div>
        <div id="group-members" style="display:none;">
+           <div class="group-admin-privileges" rendered="{{$admin_user}}">
+               <a class="button" href="{{$group->id}}/add_members">Add User(s)</a>
+               <a class="button" href="{{$group->id}}/delete_members">Delete User(s)</a>
+           </div>
             @foreach ($group_members as $member)
                 <div class="panel-block">
                     <div class="container">
                         <form>
                             <div class="field">
                                 <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
-                                <a align="right" class="button is-pulled-right is-small">DM</a>
+                                <a align="right" class="button is-pulled-right is-small" href="">DM</a>
+                                <a align="right" class="button is-pulled-right is-small" href="" rendered="{{$admin_user}}">Make Leader</a>
                             </div>
                         </form>
                     </div>

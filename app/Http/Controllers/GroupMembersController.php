@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\GroupMembers;
+use App\User;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
+use Illuminate\Support\Facades\Auth;
 
 class GroupMembersController extends Controller
 {
@@ -23,12 +25,57 @@ class GroupMembersController extends Controller
     }
 
     /**
-     * Show the form for creating a new group member.
+     * Show the form for adding a new group member.
      * 
      * @return Response
      */
-    public function create(){
-        return view('group.add_group_member');
+    public function addMemberForm($groupID){
+        // should only be able to add if user is leader
+        $memberships = GroupMembers::where('groupID', $groupID)->get();
+        $admin_user = 0;
+        $group_members = array();
+        foreach($memberships as $member){
+            $userID = $member->userID;
+            $user = User::where('id', $userID)->first();
+            array_push($group_members, $user);
+            if($userID == Auth::user()->id){
+                $admin_user = $member->isLeader;
+                break;
+            }
+        }
+        if($admin_user == 1){
+            // show edit view
+            return view('group.add_group_members', [
+                'group_members' => $group_members
+            ]);
+        }
+
+        // update this
+        return view('welcome');
+    }
+    public function deleteMemberForm($groupID){
+        // should only be able to delete if user is leader
+        $memberships = GroupMembers::where('groupID', $groupID)->get();
+        $admin_user = 0;
+        $group_members = array();
+        foreach($memberships as $member){
+            $userID = $member->userID;
+            $user = User::where('id', $userID)->first();
+            array_push($group_members, $user);
+            if($userID == Auth::user()->id){
+                $admin_user = $member->isLeader;
+                break;
+            }
+        }
+        if($admin_user == 1){
+            // show edit view
+            return view('group.delete_group_members', [
+                'group_members' => $group_members
+            ]);
+        }
+
+        // update this
+        return view('welcome');
     }
 
     /**
@@ -37,9 +84,6 @@ class GroupMembersController extends Controller
      * @return Response
      */
     public function store(Request $request){
-        
-        // validate login
-
         // validate that user and group exist
         // and that person is leader?
         $this->validate($request, [
