@@ -9,7 +9,7 @@ use App\GroupMembers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Providers\Generator;
+use Carbon\Carbon;
 
 class GroupController extends Controller
 {
@@ -90,22 +90,33 @@ class GroupController extends Controller
 
         // validate input
         $this->validate($request, [
-            'groupName' => 'required', 
-            'groupDescription' => 'required|max:1000', 
-            'groupIsPublic' => 'required'
+            'name' => 'required', 
+            'description' => 'required|max:1000'
         ]);
 
         // store group
         $group = new Group();
 
-        $group->groupName = $request->input('groupName');
-        $group->groupDescription = $request->input('groupDescription');
-        $group->groupIsPublic = $request->input('groupIsPublic');
-
-        $group->recurrence = 0;
+        $group->groupName = $request->input('name');
+        $group->groupDescription = $request->input('description');
+        if($request->has('isPublic')) {
+            $group->groupIsPublic = 1;
+        }
+        else {
+            $group->groupIsPublic = 0;
+        }
 
         $group->save();
-        return redirect('group.profile')->with('group', $group);
+
+        $group_member = new GroupMembers();
+        $group_member->userID = Auth::id();
+        $group_member->groupID = $group->id;
+        $group_member->isLeader = 1;
+        $group_member->joinDate = Carbon::now();
+        
+        $group_member->save();
+
+        return redirect('group/'.$group->id);
     }
 
     /**
@@ -132,13 +143,6 @@ class GroupController extends Controller
     public function update(Request $request, $id){        
         $group = Group::find($id);
 
-        // validate input
-        // $this->validate($request, [
-        //     'name' => 'required', 
-        //     'description' => 'required|max:1000', 
-        //     'isPublic' => 'required'
-        // ]);
-
         $group->groupName = $request->input('name');
         $group->groupDescription = $request->input('description');
         if($request->has('isPublic')) {
@@ -164,7 +168,6 @@ class GroupController extends Controller
         $group = Group::find($groupID);
         $group->delete();
 
-        Session:flash('message', 'Group deleted.');
-        return redirect('/home');
+        return redirect('profile');
     }
 }

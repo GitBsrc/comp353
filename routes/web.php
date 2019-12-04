@@ -72,11 +72,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     
-    Route::get('/profile/{id}', 'ProfileController@get')->name('profile');
+    Route::get('/profile/{id}', 'ProfileController@get');
 
     Route::get('/group/{id}', 'GroupController@get');
 
     Route::get('/create_group', 'GroupController@create')->name('create_group');
+
+    Route::post('/new_group', 'GroupController@store');
 
     Route::get('/group/{id}/edit_group', 'GroupController@edit');
     
