@@ -7,41 +7,51 @@
                 <div class="level">
                     <a class="button level-left" href="/event_list">Back</a>
                     <span class="level-item title is-bold">
-            Event Manager
-        </span>
+                        Members Manager - Adding member
+                    </span>
+                    <span>Group: {{$group->groupName}}</span>
                 </div>
 
                 <div class="field">
-                    <label class="label">Name</label>
+                    <label class="label">ID</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="e.g Coffee break">
+                        <input class="input" type="text" placeholder="e.g Coffee break">
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label">Address</label>
+                    <label class="label">First Name</label>
                     <div class="control">
-                        <input class="input" type="email" placeholder="e.g Cote des neiges">
+                        <input class="input" type="text" placeholder="e.g Eve">
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label">Phone Number</label>
+                    <label class="label">E-mail</label>
                     <div class="control">
-                        <textarea class="textarea" placeholder="e.g. Describe your event here"></textarea>
+                        <input class="input" type="email" placeholder="e.g eb@email.com">
                     </div>
                 </div>
 
+                <!-- update this -->
+                <div class="field">
+                    <label class="label">Date of Birth</label>
+                    <div class="control">
+                        <input class="input" type="text">
+                    </div>
+                </div>
 
                 <div class="field">
-                    <label class="label">Add Payment</label>
+                    <label class="label">Make User a Leader</label>
                     <div class="control">
-                        <a class="button is-fullwidth" href="/event">Payment info</a>
+                        <input type="checkbox" placeholder="e.g Coffee break">
                     </div>
                 </div>
+
                 <br />
                 <p>
-                    <a class="button is-fullwidth" href="/event">Save</a>
+                    <!-- update this -->
+                    <a class="button is-fullwidth" href="/group/{{$group->id}}">Save</a>
                 </p>
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GroupMembers;
+use App\Group;
 use App\User;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
@@ -31,6 +32,7 @@ class GroupMembersController extends Controller
      */
     public function addMemberForm($groupID){
         // should only be able to add if user is leader
+        $group = Group::where('id', $groupID)->first();
         $memberships = GroupMembers::where('groupID', $groupID)->get();
         $admin_user = 0;
         $group_members = array();
@@ -46,7 +48,8 @@ class GroupMembersController extends Controller
         if($admin_user == 1){
             // show edit view
             return view('group.add_group_members', [
-                'group_members' => $group_members
+                'group_members' => $group_members,
+                'group' => $group
             ]);
         }
 
@@ -55,6 +58,7 @@ class GroupMembersController extends Controller
     }
     public function deleteMemberForm($groupID){
         // should only be able to delete if user is leader
+        $group = Group::where('id', $groupID)->first();
         $memberships = GroupMembers::where('groupID', $groupID)->get();
         $admin_user = 0;
         $group_members = array();
@@ -70,7 +74,8 @@ class GroupMembersController extends Controller
         if($admin_user == 1){
             // show edit view
             return view('group.delete_group_members', [
-                'group_members' => $group_members
+                'group_members' => $group_members,
+                'group' => $group
             ]);
         }
 
