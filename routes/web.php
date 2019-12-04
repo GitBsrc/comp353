@@ -74,9 +74,13 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/profile', 'ProfileController@index')->name('profile');
     
-    Route::get('/group', 'GroupController@index')->name('group');
-    
-    Route::get('/groupMembers', function() {
-        return view('groupMembers');
-    });
+    Route::get('/group/{id}', 'GroupController@get');
+
+    Route::get('/create_group', 'GroupController@create')->name('create_group');
+
+    Route::get('/group/{id}/edit_group', 'GroupController@edit');
+
+    Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
+
+    Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
 });

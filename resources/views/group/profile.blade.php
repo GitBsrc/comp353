@@ -16,11 +16,15 @@
                 <div class="column is-two-thirds content">
                    <p>
                       <span class="title is-bold">
-                            {{$user->name}}
+                           {{$group->groupName}}
                       </span> 
                    </p>
-                   <p><span class="subtitle"><small>user info.</small></span></p>
+                   <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
+                <div class="column group-admin-privileges" rendered="{{$admin_user}}">
+           <a class="button" class="is-pulled-left is-active" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
+           <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
+        </div>
              </div>
           </div>
        </div>
@@ -32,14 +36,14 @@
                 </div>
                 <div class="column is-two-thirds">
                    <h1 class="title is-bold">
-                      {{$user->name}}
+                      {{$group->groupName}}
                    </h1>
                    <!---->
                 </div>
              </div>
              <div class="columns">
                 <div class="column">
-                   <p><span class="subtitle"><small>user info.</small></span></p>
+                   <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
              </div>
           </div>
@@ -51,24 +55,29 @@
     <div class="container">
        <div class="columns">
           <div class="column level is-mobile">
-             <a href="javascript:activateTab('user-posts')" class="level-item has-text-centered router-link-active">
+             <a href="javascript:activateTab('group-posts')" class="level-item has-text-centered router-link-active">
                 <div>
                    <p>{{$post_count}}</p>
                    <p>Posts</p>
                 </div>
              </a>
-             <a href="javascript:activateTab('user-groups')" class="level-item has-text-centered">
+             <a href="javascript:activateTab('group-events')" class="level-item has-text-centered">
                 <div>
-                   <p>{{$group_count}}</p>
-                   <p>Groups</p>
+                   <p>{{$event_count}}</p>
+                   <p>Events</p>
+                </div>
+             </a>
+             <a href="javascript:activateTab('group-members')" class="level-item has-text-centered">
+                <div>
+                   <p>{{$member_count}}</p>
+                   <p>Group Members</p>
                 </div>
              </a>
           </div>
        </div>
     </div>
     <div class="container" id="tabCtrl">
-       <div id="user-posts" style="display:block;">
-          <div class="columns is-multiline is-mobile">
+       <div id="group-posts" style="display:block;">
             @foreach ($posts as $post)
                 <div class="panel-block">
                     <div class="container">
@@ -82,22 +91,39 @@
                     </div>
                 </div>
             @endforeach
-          </div>
        </div>
-       <div id="user-groups" style="display:none;">
-          <div class="columns is-multiline is-mobile">
-            @foreach ($groups as $group)
+       <div id="group-events" style="display:none;">
+
+       </div>
+       <div id="group-members" style="display:none;">
+           <div class="group-admin-privileges" rendered="{{$admin_user}}">
+               <a class="button" href="{{$group->id}}/add_members">Add User(s)</a>
+               <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
+               <!-- update this : save method -->
+               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
+            </div>
+            <div class="panel-block">
+               <p class="control has-icons-left">
+                  <input class="input" type="text" placeholder="Search Members">
+                  <span class="icon is-left">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                  </span>
+               </p>
+            </div>
+            @foreach ($group_members as $member)
                 <div class="panel-block">
                     <div class="container">
                         <form>
                             <div class="field">
-                                <a class="is-pulled-left is-active" href="group/{{$group->id}}">{{$group->groupName}}</a>
+                                <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:block;" href="">DM</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Make Leader</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Delete</a>
                             </div>
                         </form>
                     </div>
                 </div>
             @endforeach
-          </div>
        </div>
     </div>
  </div>
@@ -116,4 +142,20 @@
           }
       }
 
-    </script>
+      function activateEdit(){
+         var blocksCtrl = document.getElementsByClassName('hiddenBlock');
+         for(var i = 0; i < blocksCtrl.length; i++){
+            var block = blocksCtrl[i];
+            if(block.style.display === 'none'){
+               block.style.display = 'block';
+            }
+            else {
+               block.style.display = 'none';
+            }
+         }
+      }
+      function endEdit(){
+
+      }
+
+</script>
