@@ -36,7 +36,13 @@ class EventMembersController extends Controller
         $member = new EventMembers();
         $member->event_id = $id;
         $member->user_id = Auth::id();
-        $member->member_type_id = 1; // member
+        $isadmin = User::where('id', Auth::id())->value('user_type_id');
+        if ($isadmin == 2){
+            $member->member_type_id = 3; // admin
+        }
+        else{
+            $member->member_type_id = 1; // member
+        }
         $member->save();
         return redirect('/event/'.$id);
     }
