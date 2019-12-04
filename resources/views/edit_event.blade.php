@@ -1,80 +1,75 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="columns is-centered">
 <div class="section column is-half">
     <div class="box">
+        <form method="post" action="/update_event/{{$event->id}}">
+            @csrf
     <div class="level">
-        <a class="button level-left" href="/event">Back</a>
+        <a class="button level-left" href="/event/{{$event->id}}">Back</a>
         <span class="level-item title is-bold">
-            Edit Event 1
+            Edit {{$event->name}}
         </span>
     </div>
 
       <div class="field">
         <label class="label">Event Name</label>
         <div class="control">
-          <input class="input" type="email" placeholder="e.g Coffee break">
+          <input class="input" name="name"  value="{{$event->name}}">
         </div>
       </div>
 
       <div class="field">
             <label class="label">Event Description</label>
             <div class="control">
-                <textarea class="textarea" placeholder="e.g. Describe your evemt here"></textarea>
+                <textarea class="textarea" name="description">{{$event->description}}</textarea>
             </div>
         </div>
 
-      <div class="field">
-            <label class="label">Start Date</label>
+        <div class="field">
+            <label class="label">Event Location</label>
             <div class="control">
-                <input class="input" type="date">
+                <input class="input" name="location" value="{{$event->location}}">
             </div>
         </div>
 
         <div class="field">
-                <label class="label">End Date</label>
+                <label class="label">Extend End Date</label>
+                Current: {{$event->endDate}} (Warning: this comes at an additional charge)
                 <div class="control">
-                    <input class="input" type="date">
+                    <input class="input" name="endDate" type="date">
                 </div>
         </div>
 
-        <div class="field">
-                <label class="label">Event Location</label>
-                <div class="control">
-                  <input class="input" type="email" placeholder="e.g H609 Hall Building">
-                </div>
-        </div>
         <br />
         <p>
-        <a class="button is-fullwidth" href="/event">Save</a>
+        <button class="button is-fullwidth" type="submit">Save</button>
         </p>
+        <br />
 
 
 
 
+
+
+        </form>
+        <form method="post" action="/delete_event/{{$event->id}}">
+            @csrf
+            <p><button class="button is-fullwidth is-danger" type="submit">Delete</button></p>
+        </form>
+        <br />
+        <form method="post" action="/repeat_event/{{$event->id}}">
+            @csrf
+            @if($event->status == 'Archived')
+            <p><button class="button is-fullwidth" type="submit">Repeat</button></p>
+            @endif
+        </form>
  </div>
 </div>
 </div>
+
+
 @endsection
-<script src="~bulma-calendar/dist/js/bulma-calendar.min.js">
-// Initialize all input of type date
-var calendars = bulmaCalendar.attach('[type="date"]', options);
 
-// Loop on each calendar initialized
-for(var i = 0; i < calendars.length; i++) {
-	// Add listener to date:selected event
-	calendars[i].on('select', date => {
-		console.log(date);
-	});
-}
-
-// To access to bulmaCalendar instance of an element
-var element = document.querySelector('#my-element');
-if (element) {
-	// bulmaCalendar instance is available as element.bulmaCalendar
-	element.bulmaCalendar.on('select', function(datepicker) {
-		console.log(datepicker.data.value());
-	});
-}
-</script>

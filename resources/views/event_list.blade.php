@@ -16,59 +16,8 @@
           </p>
           <a class="button" href="create_event">+</a>
         </div>
-        <p class="panel-tabs">
-          <a class="is-active">All</a>
-          <a>Joined</a>
-          <a>Upcoming</a>
-        </p>
         <div class="panel-block">
           <div class="container">
-            <form>
-              <div class="field">
-                  <a class="is-pulled-left is-active" href="event">Event 1</a>
-              </div>
-              <div class="field">
-                  <a class="button is-pulled-right is-small">Join</a>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="panel-block">
-            <div class="container">
-                <form>
-                  <div class="field">
-                      <a class="is-pulled-left is-active" href="event">Event 2</a>
-                  </div>
-                  <div class="field">
-                      <a class="button is-pulled-right is-small is-static">Requested</a>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="panel-block">
-                <div class="container">
-                    <form>
-                      <div class="field">
-                          <a class="is-pulled-left is-active" href="event">Event 3</a>
-                      </div>
-                      <div class="field">
-                          <a class="button is-pulled-right is-small">Join</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="panel-block">
-                  <div class="container">
-                      <form>
-                        <div class="field">
-                            <a class="is-pulled-left is-active" href="event">Event 4</a>
-                        </div>
-                        <div class="field">
-                            <a class="button is-pulled-right is-small">Join</a>
-                        </div>
-                      </form>
-                  </div>
-                </div>
                 @foreach ($events as $event)
                   <div class="panel-block">
                     <div class="container">
@@ -83,6 +32,8 @@
                     </div>
                   </div>
                 @endforeach
+          </div>
+        </div>
       </nav>
 </div>
 </div>

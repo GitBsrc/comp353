@@ -28,13 +28,13 @@ class EventController extends Controller
     {
         $generator = new Generator();
 
-        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required']);
+        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'startDate' => 'required', 'endDate' => 'required|after:startDate', 'type' => 'required', 'location' => 'required', 'startTime' => 'required', 'endTime' => 'required']);
 
         $event = new Event();
         $event->name = $request->input('name');
         $event->description = $request->input('description');
-        $event->startDate = $request->input('startDate');
-        $event->endDate = $request->input('endDate');
+        $event->startDate = $generator->merge_date_time($request->input('startDate'), $request->input('startTime')) ;
+        $event->endDate = $generator->merge_date_time($request->input('endDate'), $request->input('endTime'));
         // Assume for now 2 types of events: profit and non-profit through dropdown
         $event->type = $request->input('type');
         $event->location = $request->input('location');
@@ -47,11 +47,11 @@ class EventController extends Controller
         $event->storage = 50;
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         // should get price rate from administrator type user set value
-        $event->price = $generator->generate_price($request->input('type'), 25);
+        $base_price = 22;
+        $event->price = $generator->generate_price($request->input('type'), $base_price);
 
         $event->save();
-
-        return redirect('event')->with('event', $event);
+        return view('event.profile')->with('event', $event);
     }
 
     public function show($id)
@@ -73,60 +73,60 @@ class EventController extends Controller
         return view('event.profile', ['event' => Event::findOrFail($id)]);
     }
 
+    public function get_details($id)
+    {
+        return view('event_details', ['event' => Event::findOrFail($id)]);
+    }
+
     public function edit($id)
     {
         $event = Event::find($id);
 
-        return View::make('edit_event')->with('event', $event);
+        return view('edit_event')->with('event', $event);
     }
 
     // Only manager type user can call this function
     // Cannot update type to avoid bypassing additional charges
     // Not sure about verify null unless we get current values in front end then re-post them
-    public function update(Request $request,  Event $event)
+    public function update(Request $request, $id)
     {
         $generator = new Generator();
+        $event = Event::find($id);
 
-        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'startDate' => 'nullable', 'endDate' => 'nullable|after:startDate']);
+        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'endDate' => 'nullable']);
 
         $event->name = $generator->verify_null($request->input('name'), $event->name);
         $event->description = $generator->verify_null($request->input('description'), $event->description);
         $event->location = $generator->verify_null($request->input('location'), $event->location);
-        $event->startDate = $generator->verify_null($request->input('startDate'), $event->startDate);
-        $event->endDate = $generator->verify_null($request->input('endDate'), $event->endDate);
+
+        $end_time = $event->endTime;
         $current_end_date = $event->endDate;
+        $event->endDate = $generator->merge_date_time($generator->verify_null($request->input('endDate'), $event->endDate), $end_time);
 
         // Add 15$ additional charge if date was extended during event update
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
-            $event->price += 15;
+            $current = $event->price;
+            $event->price = $current + 20;
         };
 
-        $event->save();
+        $event->update();
 
-        return redirect('event')->with('event', $event);
+        return view('event.profile')->with('event', $event);
     }
 
     // Does not clearly state but assume this function should be called by manager user type
-    public function repeat(Request $request, Event $event)
+    public function repeat($id)
     {
-        $generator = new Generator();
+        $event = Event::find($id);
+        $recurrence = $event->recurrence;
+        $recurrence++;
+        $event->recurrence = $recurrence;
+        $current = $event->price;
+        $event->price = $current + 10;
 
-        $this->validate($request, ['name' => 'required', 'description' => 'required|max:450', 'location' => 'required', 'startDate' => 'required', 'endDate' => 'required|after:startDate']);
+        $event->update();
 
-        $event->name = $request->input('name');
-        $event->description = $request->input('description');
-        $event->location = $request->input('location');
-        $event->startDate = $request->input('startDate');
-        $event->endDate = $request->input('endDate');
-        $event->recurence += 1;
-        $event->discount = $generator->generate_discount($event->recurrence, $event->discount);
-        // should get price rate from administrator type user set value
-        $event_price_no_discount = $generator->generate_price($request->input('type'), 25);
-        $event->price = $generator->apply_discount($event_price_no_discount, $event->discount);
-
-        $event->save();
-
-        return redirect('event')->with('event', $event);;
+        return view('event.profile')->with('event', $event);
     }
 
     // Only administrator user type can call this function based on his set price rates for storage and bandwidth
@@ -143,9 +143,13 @@ class EventController extends Controller
 
     }
 
-    public function destroy(Event $Event)
+    public function destroy($id)
     {
-        // TODO: Change to method that archives an event and only makes it visible to certain user types
+        $event = Event::find($id);
+        $event->delete();
+
+        $events = Event::all();
+        return redirect()->route('event_list');
     }
 
 
