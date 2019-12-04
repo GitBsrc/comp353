@@ -18,9 +18,5 @@ class EventMembersTypeTableSeeder extends Seeder
         DB::table('event_member_types')->insert([
             'type' => 'manager'
         ]);
-
-        DB::table('event_member_types')->insert([
-            'type' => 'admin'
-        ]);
     }
 }

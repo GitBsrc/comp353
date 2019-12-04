@@ -57,9 +57,6 @@ class EventMembersController extends Controller
     }
 
     public function setManager($eventID, $userID) {
-        if(EventMembers::where('event_id', $eventID)->where('user_id', Auth::id())->first()->member_type_id != 3) {
-            return redirect('/profile');
-        }
         $member = EventMembers::where('event_id', $eventID)->where('user_id', $userID);
         $member->update(['member_type_id' => 2]);
         return redirect('/event/'.$eventID);
