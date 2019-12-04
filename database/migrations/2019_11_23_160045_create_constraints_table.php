@@ -15,7 +15,7 @@ class CreateConstraintsTable extends Migration
     {
         Schema::create('constraints', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('constraint');
+            $table->boolean('canComment') ->default(false); //update to boolean 'canComment'
         });
     }
 

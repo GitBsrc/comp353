@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Session;
 
 //add routes
@@ -44,12 +46,19 @@ class postController extends Controller
             //include validation + make sure session logged in
 
             // store
+            $media = $request->file('images');
+            $extension = $media->getClientOriginalExtension();
+            Storage::disk('public')->put($media->getFilename().'.'.$extension,  File::get($media));
+
             $posts = new Posts;
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
             $posts->groupID   = 1; // change once proper frontend options are there
             $posts->eventID   = 1; //change once proper frontend options are there
-            $posts->constraint = $request->input('constraint'); // need to fill DB table with only 2 values for this to really make sense
+            $posts->canComment = request('canComment'); // need to fill DB table with only 2 values for this to really make sense
+            $posts->mime = $media->getClientMimeType();
+            $posts->original_filename = $media->getClientOriginalName();
+            $posts->filename = $media->getFilename().'.'.$extension;            
             $posts->save();
 
             // redirect

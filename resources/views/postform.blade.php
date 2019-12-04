@@ -12,21 +12,16 @@
 </section>
 
 <section class="section is-light">
-  <form action="/storepost" method="post">
+  <form action="/storepost" method="post" enctype="multipart/form-data">
     @csrf
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">Privacy</label>
+        <label class="label">Allow Replies</label>
       </div>
       <div class="field-body">
         <div class="field is-narrow">
           <div class="control">
-            <div class="select is-fullwidth">
-              <select name="constraint">
-                <option value="1">View Only</option>
-                <option value="2">View & Comment</option>
-              </select>
-            </div>
+              <input type="checkbox" name="canComment" class="switch-input" value="1">
           </div>
         </div>
       </div>
@@ -38,19 +33,9 @@
       </div>
       <div class="field-body">
         <div class="field is-narrow">
-              <div class="file">
-                      <label class="file-label">
-                        <input class="file-input" type="file" name="resume">
-                        <span class="file-cta">
-                          <span class="file-icon">
-                            <i class="fas fa-upload"></i>
-                          </span>
-                          <span class="file-label">
-                            Choose a file…
-                          </span>
-                        </span>
-                      </label>
-                    </div>
+            <div class="form-group">
+                <input type="file" name="photos"/>
+            </div>
         </div>
       </div>
     </div>

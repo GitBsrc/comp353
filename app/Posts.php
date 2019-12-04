@@ -14,6 +14,8 @@ class Posts extends Model
         return $this->hasOne('App\Constraint');
     }
 
+     
+
     /**
      * Each post belongs to a single group.
      */
