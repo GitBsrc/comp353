@@ -15,10 +15,13 @@ class CreateGroupTable extends Migration
     {
         Schema::create('group', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('eventID');
             $table->string('groupName');
             $table->string('groupDescription', 1000);
             $table->boolean('groupIsPublic');
             $table->timestamps(); // takes care of creation & update date columns
+
+            $table->foreign('eventID')->references('id')->on('events');
         });
     }
 

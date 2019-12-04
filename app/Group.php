@@ -28,6 +28,13 @@ class Group extends Model
         return $this->hasMany('App\Posts');
     }
 
+    /**
+     * Each group may belong to an event.
+     */
+    public function events(){
+        return $this->belongsTo('App\Event');
+    }
+
     // VARIABLES
     /** 
      * The database table used by the model.
