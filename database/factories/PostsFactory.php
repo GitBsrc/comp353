@@ -24,5 +24,6 @@ $factory->define(App\Posts::class, function (Faker $faker) {
         'eventID' => function () {
             return factory(App\Event::class)->create()->id;
         },
+        'postContent' => $faker->text,
     ];
 });

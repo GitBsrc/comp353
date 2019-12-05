@@ -21,7 +21,7 @@
       <div class="field-body">
         <div class="field is-narrow">
           <div class="control">
-              <input type="checkbox" name="canComment" class="switch-input">
+              <input type="checkbox" name="canComment[]" class="switch-input">
           </div>
         </div>
       </div>

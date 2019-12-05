@@ -56,7 +56,12 @@ class postController extends Controller
             $posts->firstName = Auth::user()->name;
             $posts->groupID   = $request->input('selected_group'); // change once proper frontend options are there
             $posts->eventID   = $request->input('selected_event'); //change once proper frontend options are there
-            $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+            if($request->has('canComment')) {
+                $posts->canComment = 1;
+            }
+            else {
+                $posts->canComment = 0;
+            }
             $posts->postContent = $request->input('postContent');
 
 
@@ -79,7 +84,7 @@ class postController extends Controller
         // Persist user record to database
         $posts->save();
 
-        return view('/posts');
+        return redirect('/posts');
     }
 
     /**
@@ -171,7 +176,7 @@ class postController extends Controller
         return Redirect::to('Posts');
     }
 
-    public function get_event()
+    public function createPostForm()
     {
         $events = Event::all();
         $groups = Group::all();
