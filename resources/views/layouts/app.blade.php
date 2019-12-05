@@ -43,6 +43,10 @@
                         <a class="navbar-item" href="/event_list">
                           Events
                         </a>
+
+                        <a class="navbar-item" href="/group_list">
+                          Groups
+                        </a>
                         </div>
                       </div>
 

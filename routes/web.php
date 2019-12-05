@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/profile/{id}', 'ProfileController@get');
 
+    Route::get('/group_list', 'GroupController@index')->name('group_list');
+
     Route::get('/group/{id}', 'GroupController@get');
 
     Route::get('/create_group', 'GroupController@create')->name('create_group');

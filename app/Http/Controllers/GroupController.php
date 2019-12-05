@@ -20,7 +20,32 @@ class GroupController extends Controller
      * @return Response
      */
     public function index(){
-        $user = Auth::user();
+        // get all PUBLIC groups and private groups the user is already in
+        $id = Auth::id();
+        $groups = array();
+        $allGroups = Group::all();
+        foreach($allGroups as $group){
+            if($group->groupIsPublic === 1){
+                array_push($groups, $group);
+            }
+        }
+        $user_memberships = GroupMembers::where('userID', $id)->get();
+        foreach($user_memberships as $membership){
+            $groupID = $membership->groupID;
+            $group = Group::where('id', $groupID)->first();
+            // add group to regular groups
+            array_push($groups, $group);
+        }
+        $joinedGroups = GroupMembers::where('userID', Auth::id())->pluck('groupID')->all();
+
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
+
+        // load the view and pass the groups
+        return view('group.group_list', [
+            'groups' => $groups, 
+            'joinedGroups' => $joinedGroups,
+            'isAdmin' => $isAdmin
+        ]);
     }
 
     /**
