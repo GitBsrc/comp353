@@ -27,13 +27,6 @@ class DMRecipientController extends Controller
          }else{
             $dmrecipients = [];
          }
-         
-        #get the list of all the recipient that the authenticated user dm from the DMRecipient model
-        #$dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
-
-        #get the list of names of the recipients
-        #$name = User::where('id', $dmrecipients)->pluck('name')->all();
-
 
         #open up the dm_recipient view page and load the recipient list according to the user
 
