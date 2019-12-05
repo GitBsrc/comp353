@@ -30,13 +30,25 @@ class DMController extends Controller
         $user_id = Auth::id();
 
         #get all the dm messages
-        $mess_id = DMRecipients::all();
+        // $mess_id = DMRecipients::all();
+
+        $recipients = DMRecipients::where('recipient', $id);
+
+        // $messages = array();
+
+        // foreach($recipients as $r) {
+        //     $messages.push(DMMessage::find($r->message_id));
+        // }
+
+        
+        $messages = DMMEssage::all();
+
 
        #Parameters:
          # user -> authenticated user
          # recipient -> person you are sending the dm to 
          # dms -> list of all the dm recipient objects(id, recipient, message_id)
-        return view('dm.message', ['user'=> $user_id, 'recipient'=>User::find($id), 'dms'=>$mess_id]);        
+        return view('dm.message', ['user'=> $user_id, 'recipient'=>User::find($id), 'dms'=>$messages]);        
     }
 
     /**

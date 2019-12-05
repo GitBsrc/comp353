@@ -1,46 +1,43 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.app') @section('content')
 <section class="hero is-primary is-fullheight-with-navbar">
     <div class="hero-body">
         <div class="container">
             @foreach($dms as $dm)
             <div class="columns is-centered">
                 <div class="column">
-                {{-- Trying to refer to the foreign key to get the value of sender in dmmessage model --}}
-                {{-- If condition, to check if the message is created by the authenticated user and check if it is send to the specific recipient--}}
-                 @if(($dm->dm_messages->sender == $user_id) && ($dm->recipient == $recipient)) 
+                    @if($dm->sender == $user)
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
                                 <figure class="media-left">
                                     <p class="image is-64x64 sui-avatar"><img class="is-rounded" src="/images/users.png"></p>
                                 </figure>
-                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 1</strong></a> </p>
+                            <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>{{$dm->sender}}</strong></a> </p>
                             </div>
                             <div class="message-body">
-                             <p>
-                             {{$dm->dm_messages->message_body}}
-                             </p>
+                                <span>
+                               {{$dm->message_body}}
+                             </span>
                             </div>
                         </article>
                     </div>
-                   @elseif(($dm->dm_messages->sender == $recipient) && ($dm->recipient == $user_id)) 
+                    @else
                     <div class="level-right">
                         <article class="message is-small is-success column is-two-fifths ">
                             <div class="message-header">
                                 <figure class="media-left">
                                     <p class="image is-64x64 sui-avatar"><img class="is-rounded" src="/images/users.png"></p>
                                 </figure>
-                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 2</strong></a> </p>
+                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>{{$dm->sender}}</strong></a> </p>
                             </div>
                             <div class="message-body">
                                 <p>
-                                {{$dm->dm_messages->message_body}}
+                                    {{$dm->message_body}}
                                 </p>
                             </div>
                         </article>
                     </div>
-                   @endif 
+                    @endif
                 </div>
             </div>
             @endforeach
