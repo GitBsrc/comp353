@@ -193,14 +193,14 @@ class GroupController extends Controller
 
     public function destroy($groupID){
         if(GroupMembers::where('groupID', $groupID)->where('userID', Auth::id())->first()->isLeader == 0) {
-            return redirect('/profile');
+            return redirect()->route('profile');
         }
 
-        // find group
+        // delete group
         $group = Group::find($groupID);
         $group->delete();
 
-        return redirect('profile');
+        return redirect()->route('profile');
     }
 
     public function autoCreateEventGroup($eventID){

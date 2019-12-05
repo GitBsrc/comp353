@@ -14,7 +14,7 @@ class AddForeignGroupKeyToEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->foreign('groupID')->references('id')->on('group');
+            $table->foreign('groupID')->references('id')->on('group')->onDelete('cascade');
         });
     }
 

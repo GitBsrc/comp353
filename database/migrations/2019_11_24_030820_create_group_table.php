@@ -21,7 +21,7 @@ class CreateGroupTable extends Migration
             $table->boolean('groupIsPublic');
             $table->timestamps(); // takes care of creation & update date columns
 
-            $table->foreign('eventID')->references('id')->on('events');
+            $table->foreign('eventID')->references('id')->on('events')->onDelete('cascade');
         });
     }
 

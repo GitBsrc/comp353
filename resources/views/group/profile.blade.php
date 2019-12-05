@@ -25,7 +25,10 @@
                @if($isLeader)
                   <div class="column group-admin-privileges" rendered="{{$isLeader}}">
                      <a class="button" class="is-pulled-left is-active" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
-                     <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
+                     <form method="post" action="/delete_group/{{$group->id}}">
+                        @csrf
+                        <p><button class="button is-pulled-left is-danger" type="submit">Delete Group</button></p>
+                     </form>
                   </div>
                @endif
              </div>

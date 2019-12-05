@@ -92,6 +92,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/update_group/{id}', 'GroupController@update');
 
+    Route::post('/delete_group/{id}', 'GroupController@destroy');
+
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
 
     Route::post('/add_member/{id}', 'GroupMembersController@store');
