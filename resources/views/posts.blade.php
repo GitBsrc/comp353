@@ -30,9 +30,14 @@
                         <br>
                         {{$post->postContent}}
                         <br>
-                        <small><a href="/commentpost">Reply</a>  @if($post->userID == $id)
+                        <small>
+                            @if($post->canComment == 1)
+                            <a href="/commentpost">Reply</a>
+                            @endif  
+                            @if($post->userID == $id)
                             <a href="/editpost">Edit</a>
-                            @endif · {{$post->created_at}}</small>
+                            @endif · {{$post->created_at}}
+                        </small>
                         
                     </p>
                 </div>
