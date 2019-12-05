@@ -44,7 +44,6 @@
                    <h1 class="title is-bold">
                       {{$group->groupName}}
                    </h1>
-                   <!---->
                 </div>
              </div>
              <div class="columns">
@@ -84,19 +83,40 @@
     </div>
     <div class="container" id="tabCtrl">
        <div id="group-posts" style="display:block;">
-            @foreach ($posts as $post)
-                <div class="panel-block">
-                    <div class="container">
-                        <form>
-                            <div class="field">
-                            <!-- update this once posts are done so we 
-                            can have post/{{$post->id}} and maybe a blurb -->
-                                <a class="is-pulled-left is-active" href="">post contents</a>
-                            </div>
-                        </form>
-                    </div>
+       @foreach ($posts as $post)
+         <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{$post->firstName}}</strong>
+                        <br>
+                        @if($post->postContent != null)
+                        {{$post->postContent}}
+                        <br>
+                        @endif
+                        @if($post->post_image != null)
+                        <img src="{{ \Storage::url($post->post_image)}}" alt="">
+                        <br>
+                        @endif
+                        <small>
+                            @if($post->canComment == 1)
+                            <a href="/commentpost">Reply</a>
+                            @endif  
+                            @if($post->userID == $id)
+                            <a href="/editpost">Edit</a>
+                            @endif · {{$post->created_at}}
+                        </small>
+                        
+                    </p>
                 </div>
-            @endforeach
+            </div>
+         </article>
+         @endforeach
        </div>
        <div id="group-events" style="display:none;">
          @foreach ($events as $event)

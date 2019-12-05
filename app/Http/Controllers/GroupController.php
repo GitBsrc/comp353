@@ -89,6 +89,8 @@ class GroupController extends Controller
         } else {
             $isLeader = false;
         }
+        // pass id for posts
+        $id = Auth::id();
 
         return view('group.profile', [
             'group' => $group,
@@ -99,7 +101,8 @@ class GroupController extends Controller
             'event_count' => $event_count,
             'member_count' => $member_count,
             'isLeader' => $isLeader,
-            'isAdmin' => $isAdmin
+            'isAdmin' => $isAdmin,
+            'id' => $id
             ]);
     }
 
