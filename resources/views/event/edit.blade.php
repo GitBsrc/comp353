@@ -38,12 +38,29 @@
         @if($event->status != 'Archived')
         <div class="field">
                 <label class="label">Extend End Date</label>
-                Current: {{$event->endDate}} (Warning: this comes at an additional charge)
+                Current: {{$event->endDate}} (Additional charge of {{$event_rate->event_extension}} $)
                 <div class="control">
                     <input class="input" name="endDate" type="date">
                 </div>
         </div>
         @endif
+
+        <div class="field">
+                <label class="label">Add Bandwidth</label>
+                (Additional charge of {{$event_rate->bandwidth}} $ / Mbps)
+                <div class="control">
+                    <input class="input" min="{{$event->bandwidth}}" type="number" step="0.01" name="bandwidth"  value="{{$event->bandwidth}}">
+                </div>
+        </div>
+
+
+        <div class="field">
+                <label class="label">Add storage</label>
+            Additional charge of {{$event_rate->storage}} $ / GB)
+                <div class="control">
+                    <input class="input" min="{{$event->storage}}" type="number" step="0.01" name="storage"  value="{{$event->storage}}">
+                </div>
+        </div>
 
         <br />
         <p>

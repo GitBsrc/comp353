@@ -98,8 +98,9 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::find($id);
+        $event_rate = EventRates::find(1);
 
-        return view('event.edit')->with('event', $event);
+        return view('event.edit', ['event' => $event, 'event_rate' => $event_rate]);
     }
 
     // Only manager type user can call this function
@@ -110,24 +111,30 @@ class EventController extends Controller
         $generator = new Generator();
         $event = Event::find($id);
 
-        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'endDate' => 'nullable']);
+        $this->validate($request, ['name' => 'nullable', 'description' => 'nullable|max:450', 'location' => 'nullable', 'endDate' => 'nullable', 'bandwidth' => 'nullable', 'storage' => 'nullable']);
 
         $event->name = $generator->verify_null($request->input('name'), $event->name);
         $event->description = $generator->verify_null($request->input('description'), $event->description);
         $event->location = $generator->verify_null($request->input('location'), $event->location);
-
         $end_time = $event->endTime;
         $current_end_date = $event->endDate;
         $event->endDate = $generator->merge_date_time($generator->verify_null($request->input('endDate'), $event->endDate), $end_time);
 
+        $event->bandwidth = $generator->verify_null($request->input('bandwidth'), $event->bandwidth);
+        $event->storage = $generator->verify_null($request->input('storage'), $event->storage);
         // Add 15$ additional charge if date was extended during event update
+        $event_rate = EventRates::find(1);
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
             $current = $event->price;
-            $event_rate = EventRates::find(1);
             $base_extension = $event_rate->event_extension;
             $base_price = $current + $base_extension;
-            $event->price = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
-        };
+            $after_discount = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
+        }
+
+        $after_discount = $generator->apply_discount($event->pric, $event_rate->event_recurrence_discount);
+        $extra_charges = $generator->add_config_rates($request->input('storage'), $request->input('bandwidth'), $event_rate->storage, $event_rate->bandwidth);
+        $event->price += $after_discount+$extra_charges;
+
 
         $event->update();
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
