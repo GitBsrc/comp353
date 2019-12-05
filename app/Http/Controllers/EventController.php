@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventRates;
 use App\EventMembers;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
 
+
+
 // TODO: Instantiate Generator once (wasn't working)
 class EventController extends Controller
 {
+
+
     public function index()
     {
         // get all the posts
@@ -51,13 +56,16 @@ class EventController extends Controller
         // Preset bandwidth and storage for all events and can be changed after creation of event
         $event->bandwidth = 86.92;
         $event->storage = 50;
+        $event->event_rates_id = 1;
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         // should get price rate from administrator type user set value
-        $base_price = 22;
+        $event_rate = EventRates::find(1);
+        $base_price = $event_rate->event;
         $event->price = $generator->generate_price($request->input('type'), $base_price);
 
         $event->save();
-        return view('event.profile')->with('event', $event);
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
+        return view('event.profile', ['event'=>$event, 'isAdmin'=>$isAdmin]);
     }
 
     public function show($id)
@@ -115,7 +123,10 @@ class EventController extends Controller
         // Add 15$ additional charge if date was extended during event update
         if($generator->date_is_greater($generator->verify_null($request->input('endDate'), $event->endDate), $current_end_date)){
             $current = $event->price;
-            $event->price = $current + 20;
+            $event_rate = EventRates::find(1);
+            $base_extension = $event_rate->event_extension;
+            $base_price = $current + $base_extension;
+            $event->price = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
         };
 
         $event->update();
@@ -137,7 +148,16 @@ class EventController extends Controller
         $recurrence++;
         $event->recurrence = $recurrence;
         $current = $event->price;
-        $event->price = $current + 10;
+        $event_rate = EventRates::find(1);
+        $base_recurrence = $event_rate->event_recurrence;
+        $base_price = $current + $base_recurrence;
+        if($event->recurrence % 2 == 1){
+            $event->price = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
+            $event->discount += $event_rate->event_recurrence_discount;
+        }
+        else{
+            $event->price = $base_price;
+        }
         $event->startDate = $generator->merge_date_time($request->input('startDate'), $request->input('startTime')) ;
         $event->endDate = $generator->merge_date_time($request->input('endDate'), $request->input('endTime'));
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
