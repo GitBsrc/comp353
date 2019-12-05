@@ -14,75 +14,32 @@
               <i class="fas fa-search" aria-hidden="true"></i>
             </span>
           </p>
+           @if($isAdmin)
           <a class="button" href="create_event">+</a>
+           @endif
         </div>
-        <p class="panel-tabs">
-          <a class="is-active">All</a>
-          <a>Joined</a>
-          <a>Upcoming</a>
-        </p>
         <div class="panel-block">
           <div class="container">
-            <form>
-              <div class="field">
-                  <a class="is-pulled-left is-active" href="event">Event 1</a>
-              </div>
-              <div class="field">
-                  <a class="button is-pulled-right is-small">Join</a>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="panel-block">
-            <div class="container">
-                <form>
-                  <div class="field">
-                      <a class="is-pulled-left is-active" href="event">Event 2</a>
-                  </div>
-                  <div class="field">
-                      <a class="button is-pulled-right is-small is-static">Requested</a>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="panel-block">
-                <div class="container">
-                    <form>
-                      <div class="field">
-                          <a class="is-pulled-left is-active" href="event">Event 3</a>
-                      </div>
-                      <div class="field">
-                          <a class="button is-pulled-right is-small">Join</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="panel-block">
-                  <div class="container">
-                      <form>
-                        <div class="field">
-                            <a class="is-pulled-left is-active" href="event">Event 4</a>
-                        </div>
-                        <div class="field">
-                            <a class="button is-pulled-right is-small">Join</a>
-                        </div>
-                      </form>
-                  </div>
-                </div>
                 @foreach ($events as $event)
                   <div class="panel-block">
                     <div class="container">
                       <form>
                         <div class="field">
-                        <a class="is-pulled-left is-active" href="event/{{$event->id}}">{{$event->name}}</a>
+                        <a class="is-pulled-left is-active" href="/event/{{$event->id}}">{{$event->name}}</a>
                         </div>
                         <div class="field">
-                            <a class="button is-pulled-right is-small">Join</a>
+                          @if(in_array($event->id, $joinedEvents))
+                            <a href="/leave_event/{{$event->id}}" class="button is-pulled-right is-small">Leave</a>
+                          @else
+                            <a href="/join_event/{{$event->id}}" class="button is-pulled-right is-small">Join</a>
+                          @endif
                         </div>
                       </form>
                     </div>
                   </div>
                 @endforeach
+          </div>
+        </div>
       </nav>
 </div>
 </div>

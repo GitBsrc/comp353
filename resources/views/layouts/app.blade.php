@@ -26,30 +26,30 @@
                       <a class="navbar-item" href="{{ route('index') }}" style="font-weight:500;">
                         {{ config('app.name', 'Laravel') }}
                       </a>
-                  
+
                       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                       </a>
                     </div>
-                  
+
                     <div id="navbarBasicExample" class="navbar-menu">
                       <div class="navbar-start">
-                        <a class="navbar-item" href="posts">
+                        <a class="navbar-item" href="/posts">
                           Posts
                         </a>
 
-                        <a class="navbar-item" href="event_list">
+                        <a class="navbar-item" href="/event_list">
                           Events
                         </a>
                         </div>
                       </div>
 
                       <div class="navbar-center">
-                        
+
                       </div>
-                  
+
                       <div class="navbar-end">
                       @guest
                             <li class="navbar-item">
@@ -64,8 +64,9 @@
                                 <a class="navbar-link" href="/profile">
                                     {{ Auth::user()->name }}
                                 </a>
-                        
+
                                 <div class="navbar-dropdown">
+                                <a class="navbar-item" href="{{ route('create_group')}}">Create Group</a>
                                   <a class="navbar-item" href="{{ route('logout') }}"
                                   onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">

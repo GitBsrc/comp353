@@ -17,7 +17,7 @@ class CreateGroupMembersTable extends Migration
             $table->unsignedBigInteger('userID');
             $table->unsignedBigInteger('groupID');
             $table->primary(['userID', 'groupID']);
-            $table->binary('isLeader');
+            $table->boolean('isLeader');
             $table->timestamp('joinDate');
             $table->timestamps();
 

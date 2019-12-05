@@ -5,7 +5,7 @@
         <div class="section column is-half">
             <div class="box">
                 <div class="level">
-                    <a class="button level-left" href="/event">Back</a>
+                <a class="button level-left" href="/event/{{$event->id}}">Back</a>
                         <span class="level-item title is-bold">
                         Event Members
                          </span>
@@ -18,47 +18,28 @@
             </span>
                     </p>
                 </div>
+                @foreach($users as $user)
                 <div class="panel-block">
                     <div class="container">
-                        <form>
-                            <div class="field">
-                                <a class="is-pulled-left is-active" href="user_profile">Member 1</a>
-                                <a class="is-pulled-right is-active">Manager</a>
-                            </div>
-                        </form>
+                        <div class="field">
+                        <a class="is-pulled-left is-active" href="/profile/{{$user['name']->id}}">{{$user['name']->name}}</a>
+                            @if($isAdmin)
+                                @if($user['memberType'] == 'participant')
+                                <a href="/set_manager/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Manager</a>
+                                @elseif($user['memberType'] == 'manager')
+                                <a href="/set_participant/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Participant</a>
+                                @elseif($user['memberType'] == 'administrator')
+                                    <a class="is-pulled-right button is-small">Administrator</a>
+                                @else
+                                <p class="is-pulled-right is-active">{{$user['memberType']}}</p>
+                                @endif
+                            @else
+                            <p class="is-pulled-right is-active">{{$user['memberType']}}</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
-                <div class="panel-block">
-                    <div class="container">
-                        <form>
-                            <div class="field">
-                                <a class="is-pulled-left is-active" href="user_profile">Member 2</a>
-                                <a class="is-pulled-right is-active">Participant</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="panel-block">
-                    <div class="container">
-                        <form>
-                            <div class="field">
-                                <a class="is-pulled-left is-active" href="user_profile">Member 3</a>
-                                <a class="is-pulled-right is-active">Participant</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="panel-block">
-                    <div class="container">
-                        <form>
-                            <div class="field">
-                                <a class="is-pulled-left is-active" href="user_profile">Member 4</a>
-                                <a class="is-pulled-right is-active">Participant</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
+                @endforeach
             </nav>
         </div>
     </div>
