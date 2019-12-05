@@ -74,14 +74,6 @@
                         <input class="input" name="location" placeholder="e.g H609 Hall Building">
                     </div>
                 </div>
-
-                <div class="field">
-                    <!--Redirect button click to user list -->
-                    <label class="label">Add managers</label>
-                    <div class="control">
-                        <a class="button is-fullwidth">+</a>
-                    </div>
-                </div>
                 <br />
                 <p>
                     <button class="button is-fullwidth" type="submit">Create</button>

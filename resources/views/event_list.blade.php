@@ -14,7 +14,9 @@
               <i class="fas fa-search" aria-hidden="true"></i>
             </span>
           </p>
+           @if($isAdmin)
           <a class="button" href="create_event">+</a>
+           @endif
         </div>
         <div class="panel-block">
           <div class="container">

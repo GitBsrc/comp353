@@ -28,6 +28,8 @@
                                 <a href="/set_manager/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Manager</a>
                                 @elseif($user['memberType'] == 'manager')
                                 <a href="/set_participant/{{$event->id}}/{{$user['name']->id}}" class="is-pulled-right button is-small">Change to Participant</a>
+                                @elseif($user['memberType'] == 'administrator')
+                                    <a class="is-pulled-right button is-small">Administrator</a>
                                 @else
                                 <p class="is-pulled-right is-active">{{$user['memberType']}}</p>
                                 @endif
