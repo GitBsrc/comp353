@@ -6,6 +6,7 @@ use App\Event;
 use App\EventMembers;
 use App\User;
 use App\Group;
+use App\Posts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Providers\Generator;
@@ -76,17 +77,20 @@ class EventController extends Controller
 
     public function get($id)
     {
+        $id = Auth::id();
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
         $groups = Group::where('eventID', $id)->get();
-
+        $posts = Posts::where('eventID', $id)->get();
         // event.profile same as event view, just kept both to see difference in code
         return view('event.profile', [
             'event' => Event::findOrFail($id), 
             'isManager' => $isManager, 
             'isAdmin' => $isAdmin,
-            'groups' => $groups
+            'groups' => $groups,
+            'posts' => $posts,
+            'id' => $id
         ]);
     }
 
