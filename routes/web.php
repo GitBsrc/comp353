@@ -133,3 +133,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/editpost', 'PostController@update');
 });
+
+    Route::get('/event_rates', 'EventRateController@get_rates')->name('event_rates');
+
+    Route::post('/update_rates', 'EventRateController@update_rates');
+

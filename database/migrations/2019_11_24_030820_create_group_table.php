@@ -15,7 +15,7 @@ class CreateGroupTable extends Migration
     {
         Schema::create('group', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('eventID')->nullable();
+            $table->unsignedBigInteger('eventID')->nullable()->onDelete('cascade');
             $table->string('groupName');
             $table->string('groupDescription', 1000);
             $table->boolean('groupIsPublic');
