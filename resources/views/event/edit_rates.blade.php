@@ -5,7 +5,7 @@
     <div class="columns is-centered">
         <div class="section column is-half">
             <div class="box">
-                <form method="post" action="/update_event/{{$event_rates->id}}">
+                <form method="post" action="/update_rates">
                     @csrf
                     <div class="level">
                         <a class="button level-left" href="/event_list">Back</a>
