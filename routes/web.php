@@ -61,6 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/postform', function () {
         return view('postform');
     });
+    Route::get('/editpost', function () {
+        return view('editpost');
+    });
 
     Route::post('/storepost', 'PostController@store');
 

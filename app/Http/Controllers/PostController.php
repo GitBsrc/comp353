@@ -117,8 +117,8 @@ class postController extends Controller
         $posts = Posts::find($id);
 
         // show the edit form and pass the current post
-        return View::make('views.editpost')
-            ->with('posts', $posts);
+        return redirect('/posts');           
+      
     }
 
     /**
@@ -131,10 +131,16 @@ class postController extends Controller
     {
         $this->validate($request, ['cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
 
-        $posts = new Posts;
+        $this->validate($request, ['cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
+        $posts = new Posts();
         $posts->userID     = Auth::id();
         $posts->firstName = Auth::user()->name;
-        $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+        if($request->has('canComment')) {
+            $posts->canComment = 1;
+        }
+        else {
+            $posts->canComment = 0;
+        }
         $posts->postContent = $request->input('postContent');
               // Check if a profile image has been uploaded
               if ($request->has('post_image')) {
@@ -155,7 +161,8 @@ class postController extends Controller
             $posts->save();
 
             // redirect
-            return Redirect::to('Posts');
+            return redirect('/posts');
+
     }
 
     /**
