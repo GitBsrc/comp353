@@ -14,7 +14,7 @@ class GroupMembersController extends Controller
 {
     /**
      * Display a listing of the group members.
-     * 
+     *
      * @return Response
      */
     public function index(){
@@ -28,7 +28,7 @@ class GroupMembersController extends Controller
 
     /**
      * Show the form for adding a new group member.
-     * 
+     *
      * @return Response
      */
     public function addMemberForm($groupID){
@@ -63,8 +63,9 @@ class GroupMembersController extends Controller
 
         return redirect('/profile');
     }
-    
+
     public function deleteMember($groupID, $userID){
+
         $membership = GroupMembers::where('groupID', $groupID)->where('userID', $userID)->first();
         $membership->delete();
 
@@ -79,7 +80,7 @@ class GroupMembersController extends Controller
 
     /**
      * Store a newly created group member in storage.
-     * 
+     *
      * @return Response
      */
     public function store(Request $request, $id){
@@ -111,7 +112,7 @@ class GroupMembersController extends Controller
 
     /**
      * Display the specified group members.
-     * 
+     *
      * @param int $id
      * @return Response
      */
@@ -126,7 +127,7 @@ class GroupMembersController extends Controller
 
     /**
      * Show the form for editing the specified group member.
-     * 
+     *
      * @param int $id
      * @return Response
      */
@@ -141,7 +142,7 @@ class GroupMembersController extends Controller
 
     /**
      * Update the specified group member in storage.
-     * 
+     *
      * @param int $userID
      * @return Response
      */
@@ -169,7 +170,7 @@ class GroupMembersController extends Controller
 
     /**
      * Remove the specified group member from storage.
-     * 
+     *
      * @param int $id
      * @return Response
      */
