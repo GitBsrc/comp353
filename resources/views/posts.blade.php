@@ -92,6 +92,9 @@
                         {{$post->post_image}}
                         <br>
                         <small><a href="/commentpost">Reply</a> · {{$post->created_at}}</small>
+                        @if($post->userID == $id)
+                        <small><a href="/commentpost">Edit</a></small>
+                        @endif
                     </p>
                 </div>
             </div>

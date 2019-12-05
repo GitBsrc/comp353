@@ -49,9 +49,9 @@
         <div class="field">
               <div class="control">
                   <div class="select">
-                        <select name="events" id="events">
+                        <select name="selected_event" id="events">
                            @foreach($events as $single_event)
-                           <option name="selected_event" value={{$single_event->id}}>{{$single_event->name}}</option>
+                           <option value={{$single_event->id}}>{{$single_event->name}}</option>
                            @endforeach 
                         </select>
                       </div>
@@ -69,9 +69,9 @@
         <div class="field">
               <div class="control">
                       <div class="select">
-                          <select>
+                          <select name="selected_group">
                         @foreach($groups as $single_group)
-                          <option name="selected_group" value={{$single_group->id}}>{{$single_group->groupName}}</option>
+                          <option value={{$single_group->id}}>{{$single_group->groupName}}</option>
                         @endforeach
                       </select>
                       </div>

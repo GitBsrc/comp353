@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('userID');
             $table->string('firstName'); //Pretty sure this is redundant
-            $table->boolean('canComment')->default(0);
+            $table->boolean('canComment');
             $table->unsignedBigInteger('groupID');
             $table->unsignedBigInteger('eventID')->nullable();
             $table->string('post_image')->nullable();

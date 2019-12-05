@@ -24,9 +24,10 @@ class postController extends Controller
     {
         // get all the posts
         $posts = Posts::all();
+        $id = Auth::id();
 
         // load the view and pass the posts
-        return view('posts', ['posts'=>$posts]);
+        return view('posts', ['posts'=>$posts, 'id' => $id]);
     }
 
     /**
@@ -49,8 +50,8 @@ class postController extends Controller
     {
             //include validation + make sure session logged in
 
-            $this->validate($request, ['selected_event' => 'nullable', 'selected_group' => 'nullable', 'cancomment' => 'nullable', 'postContent' => 'nullable']);
-            $posts = new Posts;
+            $this->validate($request, ['selected_event' => 'required', 'selected_group' => 'required', 'cancomment' => 'required', 'postContent' => 'required']);
+            $posts = new Posts();
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
             $posts->groupID   = $request->input('selected_group'); // change once proper frontend options are there
@@ -59,7 +60,7 @@ class postController extends Controller
             $posts->postContent = $request->input('postContent');
 
 
-            // Check if a profile image has been uploaded
+  /*          // Check if a profile image has been uploaded
         if ($request->has('post_image')) {
             // Get image file
             $image = $request->file('post_image');
@@ -69,13 +70,12 @@ class postController extends Controller
             $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
             // Upload image
 
-            $image_upload = new UploadTrait();
-            $image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
+            //$image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
             
             $posts->post_image = $request->validate([
                 'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
-        }
+        }*/
         // Persist user record to database
         $posts->save();
 
