@@ -160,7 +160,7 @@
                         </div> --}}
                         <div class="card-content">
                            <div class="media-content">
-                           <a class="title is-4" href="group/{{$group->id}}">{{$group->groupName}}</a>
+                           <a class="title is-4" href="/group/{{$group->id}}">{{$group->groupName}}</a>
                            </div>
                         </div>
                         <div class="content has-padding-20">

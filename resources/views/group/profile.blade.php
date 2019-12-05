@@ -22,7 +22,7 @@
                    <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
                 
-               @if($isLeader)
+               @if($isLeader || $isAdmin ?? '')
                   <div class="column group-admin-privileges" rendered="{{$isLeader}}">
                      <a class="button is-pulled-right" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
                      <form method="post" action="/delete_group/{{$group->id}}">

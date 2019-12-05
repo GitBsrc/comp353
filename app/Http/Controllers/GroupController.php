@@ -66,8 +66,6 @@ class GroupController extends Controller
             array_push($group_members, $user);
         }
 
-        // determine whether viewing user is administrator
-
         $post_count = 0;
         foreach($posts as $post){
             $post_count = $post_count + 1;
@@ -81,11 +79,15 @@ class GroupController extends Controller
             $member_count = $member_count + 1;
         }
 
-        
-        if(GroupMembers::where('groupID', $id)->where('userID', Auth::id())->first()->isLeader == 0) {
-            $isLeader = false;
+        // determine whether viewing user is administrator
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
+        $current_membership = GroupMembers::where('groupID', $id)->where('userID', Auth::id())->first();
+        if($current_membership !== NULL) {
+            if($current_membership->isLeader == 1 || $isAdmin){
+                $isLeader = true;
+            }
         } else {
-            $isLeader = true;
+            $isLeader = false;
         }
 
         return view('group.profile', [
@@ -96,7 +98,8 @@ class GroupController extends Controller
             'post_count' => $post_count,
             'event_count' => $event_count,
             'member_count' => $member_count,
-            'isLeader'=>$isLeader
+            'isLeader' => $isLeader,
+            'isAdmin' => $isAdmin
             ]);
     }
 
