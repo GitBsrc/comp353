@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Posts;
 use App\Event;
+use App\EventMembers;
 use App\GroupMembers;
 use App\User;
 use Illuminate\Http\Request;
@@ -176,5 +177,56 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect('profile');
+    }
+
+    public function autoCreateEventGroup($eventID){
+        $group = new Group();
+
+        $group->groupName = $request->input('name');
+        $group->groupDescription = $request->input('description');
+        $group->eventID = $eventID;
+        if($request->has('isPublic')) {
+            $group->groupIsPublic = 1;
+        }
+        else {
+            $group->groupIsPublic = 0;
+        }
+
+        $group->save();
+
+        // find event so we can add members
+        $event_members = EventMembers::where('event_id', $eventID)->get();
+
+        // add all event members to the group
+        foreach($event_members as $member){
+            $group_member = new GroupMembers();
+            $group_member->userID = $member->userID;
+            $group_member->groupID = $group->id;
+            $group_member->isLeader = 0;
+            $group_member->joinDate = Carbon::now();
+            
+            $group_member->save();
+        }
+
+        return redirect('group/'.$group->id);
+    }
+
+    public function createEmptyEventGroup($eventID){
+        $group = new Group();
+
+        $group->groupName = $request->input('name');
+        $group->groupDescription = $request->input('description');
+        $group->eventID = $eventID;
+        if($request->has('isPublic')) {
+            $group->groupIsPublic = 1;
+        }
+        else {
+            $group->groupIsPublic = 0;
+        }
+
+        $group->save();
+
+        // add members individually to the group later, not in here
+        return redirect('group/'.$group->id);
     }
 }
