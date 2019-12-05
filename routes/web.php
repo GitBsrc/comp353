@@ -57,26 +57,28 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dm', function () {
         return view('dm');
     });
-
-    Route::get('/dm_recipients', function(){
-        return view('dm_recipients');
-    })->name('dm_recipients');
-
+    
     Route::get('/postform', function () {
         return view('postform');
     });
 
     Route::post('/storepost', 'PostController@store');
 
-    Route::get('/editpost', function () {
-        return view('editpost');
-    });
 
     Route::get('/commentpost', function () {
         return view('commentpost');
     });
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
+    
+    Route::get('/group', 'GroupController@index')->name('group');
+    
+    Route::get('/groupMembers', function() {
+        return view('groupMembers');
+    });
+
+    Route::get('/create_post', 'PostController@createPostForm');
+
 
     Route::get('/profile/{id}', 'ProfileController@get');
 
@@ -115,4 +117,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/repeat_event/{id}', 'EventController@repeat');
 
+    Route::get('/dm_recipients', 'DMRecipientController@index');
+
+    Route::get('/dm/{id}', 'DMController@messageForm');
+   
+    Route::post('/dm/message/{id}', 'DMController@message');
+
     Route::get('/repeat/{id}', 'EventController@get_repeat');
+
+    Route::post('/editpost', 'PostController@update');
+});

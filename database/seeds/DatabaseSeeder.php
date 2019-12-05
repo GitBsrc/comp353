@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             UserTypeSeeder::class,
             UsersTableSeeder::class,
             PostsTableSeeder::class,
-            EventMembersTypeTableSeeder::class,
+            EventMemberTypeTableSeeder::class,
+            EventMembersTableSeeder::class
         ]);
     }
 }

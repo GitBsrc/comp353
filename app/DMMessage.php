@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dmmessage extends Model
+class DMMessage extends Model
 {
+   
     // RELATIONSHIPS
     /**
      * Each Message belongs to a single user.
@@ -19,4 +20,6 @@ class dmmessage extends Model
     public function recipients(){
         return $this->hasMany('App\DMRecipients');
     }
+
+    protected $table = 'dm_messages';
 }

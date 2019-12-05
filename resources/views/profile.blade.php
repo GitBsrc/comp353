@@ -19,7 +19,7 @@
                             {{$user->name}}
                       </span> 
                    </p>
-                   <p><span class="subtitle"><small>user info.</small></span></p>
+                  <p><a href="/dm/{{$user->id}}" class="button"><small>Send Message</small></a></p>
                 </div>
              </div>
           </div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="column is-two-thirds">
                    <h1 class="title is-bold">
-                      {{$user ?? ''->name}}
+                      {{$user->name}}
                    </h1>
                    <!---->
                 </div>

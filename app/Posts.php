@@ -6,14 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Posts extends Model
 {
-    // RELATIONSHIPS
-    /**
-     * Each post has a single corresponding constraint.
-     */
-    public function constraints(){
-        return $this->hasOne('App\Constraint');
-    }
-
     /**
      * Each post belongs to a single group.
      */
@@ -26,6 +18,11 @@ class Posts extends Model
      */
     public function event(){
         return $this->belongsTo('App\Event');
+    }
+    
+    public function getImageAttribute()
+    {
+       return $this->post_image;
     }
 }
 

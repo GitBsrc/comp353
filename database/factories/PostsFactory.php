@@ -18,14 +18,12 @@ $factory->define(App\Posts::class, function (Faker $faker) {
             $user = App\User::where('id', $userID)->value('name');
             return $user;
         },
-        'constraint' => function () {
-            return factory(App\constraints::class)->create()->id;
-        },
         'groupID' => function () {
             return factory(App\Group::class)->create()->id;
         },
         'eventID' => function () {
             return factory(App\Event::class)->create()->id;
         },
+        'postContent' => $faker->text,
     ];
 });

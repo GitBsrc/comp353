@@ -61,7 +61,7 @@
                             </li>
                         @else
                                 
-                          <a class="navbar-item" href="{{route('dm_recipients')}}">
+                        <a class="navbar-item" href="/dm_recipients">
                           Messages
                         </a>
                             <div class="navbar-item has-dropdown is-hoverable">
