@@ -28,8 +28,14 @@
                     <p>
                         <strong>{{$post->firstName}}</strong>
                         <br>
+                        @if($post->postContent != null)
                         {{$post->postContent}}
                         <br>
+                        @endif
+                        @if($post->post_image != null)
+                        <img src="{{ \Storage::url($post->post_image)}}" alt="">
+                        <br>
+                        @endif
                         <small>
                             @if($post->canComment == 1)
                             <a href="/commentpost">Reply</a>

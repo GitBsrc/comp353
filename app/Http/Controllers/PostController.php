@@ -15,6 +15,8 @@ use App\Traits\UploadTrait;
 class postController extends Controller
 {
 
+    use UploadTrait;
+
      /**
      * Display a listing of all posts.
      *
@@ -72,14 +74,9 @@ class postController extends Controller
             // Define folder path
             $folder = '/uploads/images/';
             // Make a file path where image will be stored [ folder path + file name + file extension]
-            $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
+            $filePath = $folder . $posts->id. '.' . $image->getClientOriginalExtension();
             // Upload image
-
-            //$image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
-            
-            $posts->post_image = $request->validate([
-                'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
+            $posts->post_image = $this->uploadOne($image, $folder, 'public', $posts->id);
         }
         // Persist user record to database
         $posts->save();
