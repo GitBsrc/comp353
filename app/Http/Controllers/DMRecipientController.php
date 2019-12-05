@@ -53,7 +53,7 @@ class DMRecipientController extends Controller
     public function store(Request $request)
     {
         #GOAL: This method is meant to store the data when an user send a dm to a group/friend on the dm view page.
-        $dm_recipient = new DMRecipients;
+        $dm_recipient = new DMRecipients();
 
         # the id of the user that created the message
         $dm_recipient->user_id= $request->input('user_id');
@@ -62,7 +62,7 @@ class DMRecipientController extends Controller
         $dm_recipient->message_id= $request->input('message_id');
 
         # the id of the message being sent to
-        $dm_recipient->group_id= $request->input('group_id');
+        $dm_recipient->group_id= $request->input('recipient');
 
         $dm_recipient->save();
 

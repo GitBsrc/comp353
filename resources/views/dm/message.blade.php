@@ -6,7 +6,10 @@
             @foreach($dms as $dm)
             <div class="columns is-centered">
                 <div class="column">
-                  @if($dm->message_id == '1') {{-- for testing purposes --}}
+                {{-- Trying to refer to the foreign key to get the value of sender in dmmessage model --}}
+                {{-- If condition, to check if the message is created by the authenticated user and check if it is send to the specific recipient--}}
+
+                  @if(($dm->dm_messages->sender == $user_id) && ($dm->recipient == $recipient))
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
@@ -17,12 +20,12 @@
                             </div>
                             <div class="message-body">
                              <p>
-                                   {{$dm->message_id}}
+                                   {{$dm->dm_messages->message_body}}
                              </p>
                             </div>
                         </article>
                     </div>
-                    @else
+                    @elseif(($dm->dm_messages->sender == $recipient) && ($dm->recipient == $user_id))
                     <div class="level-right">
                         <article class="message is-small is-success column is-two-fifths ">
                             <div class="message-header">
@@ -33,7 +36,7 @@
                             </div>
                             <div class="message-body">
                                 <p>
-                                    Hey Tester 1, how are you doing today? :)
+                                   {{$dm->dm_messages->message_body}}
                                 </p>
                             </div>
                         </article>
