@@ -18,18 +18,27 @@ class DMRecipientController extends Controller
     public function index()
     {
         ## GOAL: This method is meant to pass the list of friends/group of the authenticated user to the dm_recipient list view page
-
+         $dmrecipients =[];
+         $dm_list = array();
          #getting the message id of all messages sent by the authenticated user from the dm_messages
          $mess_id = DMMessage::where('sender', Auth::id())->pluck('id')->all();
-
+ 
          if(count($mess_id) >0){
-            $dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
+           foreach($mess_id as $key => $mes){
+               $dmrecipients[$key] = DMRecipients::where('message_id', $mes)->pluck('recipient')->all();
+            };
          }else{
             $dmrecipients = [];
          }
+     
+         foreach($dmrecipients as $key => $dm){
+             foreach($dm as $k => $d){
+                    array_push($dm_list, $d);
+             }
+         }
 
         #open up the dm_recipient view page and load the recipient list according to the user
-        return view('dm_recipients', ['dmrecipients' => $dmrecipients]);
+        return view('dm_recipients', ['dmrecipients' => $dm_list]);
     }
 
     /**
