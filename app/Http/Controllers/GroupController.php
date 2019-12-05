@@ -53,30 +53,41 @@ class GroupController extends Controller
      */
     public function get($id){
         $group = Group::findOrFail($id);
-        $posts = Posts::where('groupID', $id)->get();
-        $events = Event::where('groupID', $id)->get();
-        $memberships = GroupMembers::where('groupID', $id)->get();
-        if($group->groupIsPublic == 0 && !in_array(Auth::id(), GroupMembers::where('groupID', $id)->pluck('userID')->all())){
-            return redirect('/profile');
-        }
-        $group_members = array();
-        foreach($memberships as $member){
-            $userID = $member->userID;
-            $user = User::where('id', $userID)->first();
-            array_push($group_members, $user);
-        }
 
+        // POSTS
+        $posts = Posts::where('groupID', $id)->get();
         $post_count = 0;
         foreach($posts as $post){
             $post_count = $post_count + 1;
         }
+
+        // EVENTS
+        $events = Event::where('groupID', $id)->get();
         $event_count = 0;
+        $events_array = array();
         foreach($events as $event){
             $event_count = $event_count + 1;
+            array_push($events_array, $event);
+        }
+        // add event that fathered this group
+        if($group->eventID !== NULL){
+            $father = Event::where('id', $group->eventID)->first();
+            $event_count = $event_count + 1;
+            array_push($events_array, $father);
+        }
+
+        // MEMBERS
+        $memberships = GroupMembers::where('groupID', $id)->get();
+        if($group->groupIsPublic == 0 && !in_array(Auth::id(), GroupMembers::where('groupID', $id)->pluck('userID')->all())){
+            return redirect('/profile');
         }
         $member_count = 0;
-        foreach($group_members as $member){
+        $group_members = array();
+        foreach($memberships as $member){
+            $userID = $member->userID;
+            $user = User::where('id', $userID)->first();
             $member_count = $member_count + 1;
+            array_push($group_members, $user);
         }
 
         // determine whether viewing user is administrator
@@ -95,7 +106,7 @@ class GroupController extends Controller
         return view('group.profile', [
             'group' => $group,
             'posts' => $posts,
-            'events' => $events,
+            'events' => $events_array,
             'group_members' => $group_members,
             'post_count' => $post_count,
             'event_count' => $event_count,
@@ -258,6 +269,15 @@ class GroupController extends Controller
         }
 
         $group->save();
+
+        // automatically make maker a member
+        $group_member = new GroupMembers();
+        $group_member->userID = Auth::id();
+        $group_member->groupID = $group->id;
+        $group_member->isLeader = 1;
+        $group_member->joinDate = Carbon::now();
+        
+        $group_member->save();
 
         // add members individually to the group later, not in here
         return redirect('group/'.$group->id);
