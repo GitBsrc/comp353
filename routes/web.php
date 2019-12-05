@@ -105,7 +105,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/create_group/{id}', 'GroupController@createEventGroup');
 
     Route::post('/new_event_group/{id}', 'GroupController@storeEventGroup');
-});
 
     Route::get('event_details/{id}', 'EventController@get_details');
 
