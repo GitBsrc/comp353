@@ -8,7 +8,7 @@
         Posts
         </h1>
         <div class="box has-text-centered">
-            <a class="button is-primary" type="submit" href="/postform" value="Create New Post">Create New Post</a>
+            <a class="button is-primary" type="submit" href="/create_post" value="Create New Post">Create New Post</a>
         </div>
       </div>
     </div>
@@ -89,6 +89,7 @@
                         <strong>{{$post->firstName}}</strong>
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                        {{$post->post_image}}
                         <br>
                         <small><a href="/commentpost">Reply</a> · {{$post->created_at}}</small>
                     </p>

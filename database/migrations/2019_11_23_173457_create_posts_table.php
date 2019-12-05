@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('groupID');
             $table->unsignedBigInteger('eventID')->nullable();
             $table->string('post_image')->nullable();
+            $table->string('postContent')->nullable();
             $table->timestamps();
 
             $table->foreign('groupID')->references('id')->on('group');

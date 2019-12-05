@@ -21,12 +21,12 @@
       <div class="field-body">
         <div class="field is-narrow">
           <div class="control">
-              <input type="checkbox" name="canComment" class="switch-input" value="1">
+              <input type="checkbox" name="canComment" class="switch-input">
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">Upload</label>
@@ -48,9 +48,11 @@
       <div class="field-body">
         <div class="field">
               <div class="control">
-                      <div class="select">
-                        <select>
-                          <option> Other events... </option>
+                  <div class="select">
+                        <select name="events" id="events">
+                           @foreach($events as $single_event)
+                           <option name="selected_event" value={{$single_event->id}}>{{$single_event->name}}</option>
+                           @endforeach 
                         </select>
                       </div>
                     </div>
@@ -67,9 +69,11 @@
         <div class="field">
               <div class="control">
                       <div class="select">
-                        <select>
-                          <option>Other Posts...</option>
-                        </select>
+                          <select>
+                        @foreach($groups as $single_group)
+                          <option name="selected_group" value={{$single_group->id}}>{{$single_group->groupName}}</option>
+                        @endforeach
+                      </select>
                       </div>
                     </div>
         </div>
@@ -83,7 +87,7 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <textarea class="textarea" placeholder="e.g. Join us this weekend for free breakfast!"></textarea>
+            <textarea name="postContent" class="textarea" placeholder="e.g. Join us this weekend for free breakfast!"></textarea>
           </div>
         </div>
       </div>

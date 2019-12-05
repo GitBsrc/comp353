@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Session;
+use App\Event;
+use App\Group;
+use App\Traits\UploadTrait;
 
 //add routes
 class postController extends Controller
@@ -46,18 +49,16 @@ class postController extends Controller
     {
             //include validation + make sure session logged in
 
-         
+            $this->validate($request, ['selected_event' => 'nullable', 'selected_group' => 'nullable', 'cancomment' => 'nullable', 'postContent' => 'nullable']);
             $posts = new Posts;
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
-            $posts->groupID   = 1; // change once proper frontend options are there
-            $posts->eventID   = 1; //change once proper frontend options are there
-            $posts->canComment = request('canComment'); // need to fill DB table with only 2 values for this to really make sense         
-            $posts->save();
-           
-            $request->validate([
-                'post_image'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
+            $posts->groupID   = $request->input('selected_group'); // change once proper frontend options are there
+            $posts->eventID   = $request->input('selected_event'); //change once proper frontend options are there
+            $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+            $posts->postContent = $request->input('postContent');
+
+
             // Check if a profile image has been uploaded
         if ($request->has('post_image')) {
             // Get image file
@@ -65,17 +66,20 @@ class postController extends Controller
             // Define folder path
             $folder = '/uploads/images/';
             // Make a file path where image will be stored [ folder path + file name + file extension]
-            $filePath = $folder . $name. '.' . $image->getClientOriginalExtension();
+            $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
             // Upload image
-            $this->uploadOne($image, $folder, 'public', $name);
 
+            $image_upload = new UploadTrait();
+            $image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
+            
+            $posts->post_image = $request->validate([
+                'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
         }
         // Persist user record to database
         $posts->save();
 
-            // redirect
-            Session::flash('message', 'Successfully created new post!');
-            return redirect('/posts');
+        return view('/posts');
     }
 
     /**
@@ -105,7 +109,6 @@ class postController extends Controller
     {
 
         //validate that the owner of the post is the only one who can edit
-        // get the nerd
         $posts = Posts::find($id);
 
         // show the edit form and pass the current post
@@ -153,6 +156,10 @@ class postController extends Controller
         return Redirect::to('Posts');
     }
 
-
+    public function get_event()
+    {
+        $events = Event::all();
+        $groups = Group::all();
+        return view('postform')->with(['events' => $events, 'groups' => $groups]);
+    }
 }
-

@@ -78,5 +78,6 @@ Route::group(['middleware' => 'auth'], function () {
         return view('groupMembers');
     });
 
+    Route::get('/create_post', 'PostController@get_event')->name('events')->name('groups');
 
 });
