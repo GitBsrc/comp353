@@ -4,21 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dmrecipients extends Model
+class DMRecipients extends Model
 {
     // RELATIONSHIPS
     /**
      * Each recipient gets several messages.
      */
     public function messages(){
-        return $this->hasMany('App\DMMessage');
-    }
-    
-    /**
-     * Each exchange is part of a single group.
-     */
-    public function group(){
-        return $this->belongsTo('App\Group');
+        return $this->belongsTo('App\DMMessage', 'foreign_key');
     }
 
     /**
@@ -27,4 +20,6 @@ class dmrecipients extends Model
     public function senders(){
         return $this->hasMany('App\User');
     }
+
+    protected $table = 'dm_recipients';
 }

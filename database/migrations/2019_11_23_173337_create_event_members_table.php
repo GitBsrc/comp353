@@ -13,7 +13,7 @@ class CreateEventMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_memberss', function (Blueprint $table) {
+        Schema::create('event_members', function (Blueprint $table) {
             $table->primary(['user_id','event_id']);
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');

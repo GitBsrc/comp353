@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class constraints extends Model
+class Constraints extends Model
 {
     // RELATIONSHIPS
     /**
@@ -13,4 +13,6 @@ class constraints extends Model
     public function posts(){
         return $this->hasMany('App\Posts');
     }
+
+    public $timestamps = false;
 }

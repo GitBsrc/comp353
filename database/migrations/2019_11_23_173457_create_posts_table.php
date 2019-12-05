@@ -16,15 +16,16 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('userID');
-            $table->string('firstName');
-            $table->unsignedBigInteger('constraint');
+            $table->string('firstName'); //Pretty sure this is redundant
+            $table->boolean('canComment')->nullable();;
             $table->unsignedBigInteger('groupID');
             $table->unsignedBigInteger('eventID')->nullable();
+            $table->string('post_image')->nullable();
+            $table->string('postContent')->nullable();
             $table->timestamps();
 
             $table->foreign('groupID')->references('id')->on('group');
             $table->foreign('eventID')->references('id')->on('events');
-            $table->foreign('constraint')->references('id')->on('constraints');
             $table->foreign('userID')->references('id')->on('users');
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConstraintsTable extends Migration
+class CreateUserTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateConstraintsTable extends Migration
      */
     public function up()
     {
-        Schema::create('constraints', function (Blueprint $table) {
+        Schema::create('user_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('constraint');
+            $table->string('type');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateConstraintsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('constraints');
+        Schema::dropIfExists('user_types');
     }
 }
