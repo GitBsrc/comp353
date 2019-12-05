@@ -60,16 +60,15 @@
                                 <a class="button is-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
-                                
-                        <a class="navbar-item" href="/dm_recipients">
+
+
 
                         @if($isAdmin ?? '')
                                   <a class="navbar-item" href="/event_rates">
                                       System Rates
                                   </a>
                         @endif
-
-                          <a class="navbar-item" href="{{route('dm_recipients')}}">
+                        <a class="navbar-item" href="/dm_recipients">
                           Messages
                         </a>
                             <div class="navbar-item has-dropdown is-hoverable">
