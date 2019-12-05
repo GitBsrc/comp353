@@ -12,7 +12,7 @@ class DMMessage extends Model
      * Each Message belongs to a single user.
      */
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'sender');
     }
     /**
      * Each message has one or many recipients.

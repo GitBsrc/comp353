@@ -17,21 +17,7 @@ class DMController extends Controller
      */
     public function index()
     {   
-    
-    # GOAL: Load all the Authenticated user message and the respective recipient response/message to the dm
-    # Return the respective DM View page with both messages
-        
-    # The Recipient chosen depends on the item clicked on the list of recipients
-       $group_id = "1"; # For Testing Purpose 
-
-       #getting the authenticated user id 
-       $user_id = Auth::id();
-
-       //get all the message written by both the authenticated user and the group/recipient from the dm_recipient model.
-       $dm = DB::table('dm_recipients')->where('group_id', $group_id)->where('user_id', $user_id)->pluck('message_id');
-
-       # trying to load the dm view page and sends a list of messages made by both user and recipient.
-        return view('dm', ['dm' => $dm]);
+       //
     }
 
     /**
@@ -40,21 +26,17 @@ class DMController extends Controller
      */
     public function messageForm($id)
     {
+        #get the authenticated user
         $user_id = Auth::id();
 
-        $messages = DMMEssage::all();
-        
-        // $messages = DMMEssage::find('user_id', $id);
+        #get all the dm messages
+        $mess_id = DMRecipients::all();
 
-        // $recipient = $messages->recipients;
-
-        // $dms = $messages->merge($recipient);
-
-        // $recipentMessages = DMMEssage::find('user_id', $id)->all();
-
-
-
-        return view('dm.message', ['user'=>User::find($user_id), 'recipient'=>User::find($id), 'dms'=>$messages]);        
+       #Parameters:
+         # user -> authenticated user
+         # recipient -> person you are sending the dm to 
+         # dms -> list of all the dm recipient objects(id, recipient, message_id)
+        return view('dm.message', ['user'=> $user_id, 'recipient'=>User::find($id), 'dms'=>$mess_id]);        
     }
 
     /**
@@ -73,9 +55,11 @@ class DMController extends Controller
         $recipent->message_id = $dm->id;
         $recipient->save();
 
-        return redirect('/dm/'.$id);        
+        return redirect('/dm/message/'.$id);        
     }
 
+
+    
     /**
      * Store a newly created resource in storage.
      *

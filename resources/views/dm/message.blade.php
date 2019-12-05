@@ -1,11 +1,14 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('content')
 <section class="hero is-primary is-fullheight-with-navbar">
     <div class="hero-body">
         <div class="container">
             @foreach($dms as $dm)
             <div class="columns is-centered">
                 <div class="column">
-                    @if($dm->user_id == $user->id)
+                {{-- Trying to refer to the foreign key to get the value of sender in dmmessage model --}}
+                {{-- If condition, to check if the message is created by the authenticated user and check if it is send to the specific recipient--}}
+                 @if(($dm->dm_messages->sender == $user_id) && ($dm->recipient == $recipient)) 
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
@@ -15,13 +18,13 @@
                                 <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 1</strong></a> </p>
                             </div>
                             <div class="message-body">
-                                <span>
-                               Hey, my name is Tester 1.
-                             </span>
+                             <p>
+                             {{$dm->dm_messages->message_body}}
+                             </p>
                             </div>
                         </article>
                     </div>
-                    @else
+                   @elseif(($dm->dm_messages->sender == $recipient) && ($dm->recipient == $user_id)) 
                     <div class="level-right">
                         <article class="message is-small is-success column is-two-fifths ">
                             <div class="message-header">
@@ -32,12 +35,12 @@
                             </div>
                             <div class="message-body">
                                 <p>
-                                    Hey Tester 1, how are you doing today? :)
+                                {{$dm->dm_messages->message_body}}
                                 </p>
                             </div>
                         </article>
                     </div>
-                    @endif
+                   @endif 
                 </div>
             </div>
             @endforeach

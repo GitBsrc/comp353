@@ -110,7 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dm_recipients', 'DMRecipientController@index');
 
-    Route::get('/dm/{id}', 'DMController@messageForm');
+    Route::get('/dm/message/{id}', 'DMController@messageForm');
    
     Route::post('/dm/message/{id}', 'DMController@message');
 

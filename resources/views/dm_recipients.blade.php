@@ -7,15 +7,19 @@
     <p class="title">Chat</p>
   <div class = "has-padding-left-110  has-padding-right-110">
     <div class="list">
-    @if(count($name) > 0)
-        @foreach($name as $names)
-         <a class="list-item" href= "/dm">
+    @if(count($dmrecipients) > 0)
+        @foreach($dmrecipients as $dmrecipient)
+         <a class="list-item" href= "/dm/message/{{$dmrecipient}}">
            <figure class="media-left">
              <p class="image is-64x64 sui-avatar"><img class="is-rounded" src="/images/users.png"></p>
            </figure>
-                           {{$names}}
+                           {{$dmrecipient}}
          </a>
          @endforeach
+      @else
+         <a class="list-item">
+              <b> No DM Sent </b>
+         </a>
       @endif
     </div>
   </div>

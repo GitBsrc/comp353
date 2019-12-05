@@ -5,6 +5,8 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\DMRecipients;
+use App\DMMessage;
+use App\User;
 
 class DMRecipientController extends Controller
 {
@@ -16,17 +18,27 @@ class DMRecipientController extends Controller
     public function index()
     {
         ## GOAL: This method is meant to pass the list of friends/group of the authenticated user to the dm_recipient list view page
-       
-        #getting the id of the authenticates users
-         $user_id = Auth::id();
-
-        #get a list of all the the dm recipients/group from the DMRecipient model
-        $dmrecipients = DB::table('dm_recipients')->where('user_id', $user_id)->pluck('group_id');
+         $dmrecipients =[];
+         $dm_list = array();
+         #getting the message id of all messages sent by the authenticated user from the dm_messages
+         $mess_id = DMMessage::where('sender', Auth::id())->pluck('id')->all();
+ 
+         if(count($mess_id) >0){
+           foreach($mess_id as $key => $mes){
+               $dmrecipients[$key] = DMRecipients::where('message_id', $mes)->pluck('recipient')->all();
+            };
+         }else{
+            $dmrecipients = [];
+         }
+     
+         foreach($dmrecipients as $key => $dm){
+             foreach($dm as $k => $d){
+                    array_push($dm_list, $d);
+             }
+         }
 
         #open up the dm_recipient view page and load the recipient list according to the user
-        $name = ["Bob", "Jim", "Tim"]; #test data (for testing purpose). Unable to retrieve data from db tables.
-
-        return view('dm_recipients', ['name' => $name]);
+        return view('dm_recipients', ['dmrecipients' => $dm_list]);
     }
 
     /**
@@ -48,7 +60,7 @@ class DMRecipientController extends Controller
     public function store(Request $request)
     {
         #GOAL: This method is meant to store the data when an user send a dm to a group/friend on the dm view page.
-        $dm_recipient = new DMRecipients;
+        $dm_recipient = new DMRecipients();
 
         # the id of the user that created the message
         $dm_recipient->user_id= $request->input('user_id');
@@ -57,7 +69,7 @@ class DMRecipientController extends Controller
         $dm_recipient->message_id= $request->input('message_id');
 
         # the id of the message being sent to
-        $dm_recipient->group_id= $request->input('group_id');
+        $dm_recipient->group_id= $request->input('recipient');
 
         $dm_recipient->save();
 
