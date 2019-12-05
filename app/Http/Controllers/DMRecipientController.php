@@ -26,12 +26,12 @@ class DMRecipientController extends Controller
         $dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
 
         #get the list of names of the recipients
-        $name = User::where('id', $dmrecipients)->pluck('name')->all();
+        #$name = User::where('id', $dmrecipients)->pluck('name')->all();
 
 
         #open up the dm_recipient view page and load the recipient list according to the user
 
-        return view('dm_recipients', ['name' => $name]);
+        return view('dm_recipients', ['dmrecipients' => $dmrecipients]);
     }
 
     /**

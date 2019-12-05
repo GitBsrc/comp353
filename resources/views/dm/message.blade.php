@@ -1,11 +1,12 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('content')
 <section class="hero is-primary is-fullheight-with-navbar">
     <div class="hero-body">
         <div class="container">
             @foreach($dms as $dm)
             <div class="columns is-centered">
                 <div class="column">
-                    @if($dm->user_id == $user->id)
+                  @if($dm->message_id == '1') {{-- for testing purposes --}}
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
@@ -15,9 +16,9 @@
                                 <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 1</strong></a> </p>
                             </div>
                             <div class="message-body">
-                                <span>
-                               Hey, my name is Tester 1.
-                             </span>
+                             <p>
+                                   {{$dm->message_id}}
+                             </p>
                             </div>
                         </article>
                     </div>

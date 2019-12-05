@@ -19,7 +19,7 @@
                             {{$user->name}}
                       </span> 
                    </p>
-                  <p><a href="/dm/{{$user->id}}" class="button"><small>Send Message</small></a></p>
+                  <p><a href="/dm_recipients" class="button"><small>Send Message</small></a></p>
                 </div>
              </div>
           </div>
