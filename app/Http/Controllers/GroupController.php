@@ -235,7 +235,10 @@ class GroupController extends Controller
         return redirect('group/'.$group->id);
     }
 
-    public function createEmptyEventGroup($eventID){
+    public function createEventGroup($eventID){
+        return view('group.create_event_group', ['eventID' => $eventID]);
+    }
+    public function storeEventGroup(Request $request, $eventID){
         $group = new Group();
 
         $group->groupName = $request->input('name');

@@ -63,7 +63,7 @@
         <div class="container">
             <div class="columns">
                <div class="column level is-mobile">
-                  <a href="/social-ui/#/u/me/i" class="level-item has-text-centered router-link-active">
+                  <a href="javascript:activateTab('event-posts')" class="level-item has-text-centered router-link-active">
                      <div>
                         <p>Posts</p>
                      </div>
@@ -73,7 +73,7 @@
                         <p>Participants</p>
                      </div>
                   </a>
-                  <a href="/social-ui/#/u/me/e" class="level-item has-text-centered">
+                  <a href="javascript:activateTab('event-groups')" class="level-item has-text-centered">
                      <div>
                         <p>Groups</p>
                      </div>
@@ -105,7 +105,8 @@
      <div class="container">
         <hr>
      </div>
-     <div class="container">
+     <div class="container" id="tabCtrl">
+     <div id="event-posts" style="display:bock;">
         <article class="media">
             <figure class="media-left">
                 <p class="image is-64x64">
@@ -187,6 +188,39 @@
                 </div>
             </div>
         </article>
+      </div>
+      <div id="event-groups" style="display:none;">
+         @if(($isAdmin ?? '') || ($isManager ?? ''))
+          <div class="level"> 
+            <a class="button is-pulled-left" href="/create_group/{{$event->id}}">Add Event Group</a>
+          </div>
+          @endif
+          <div class="columns">
+            @foreach ($groups as $group)
+               @if($group->groupIsPublic == 1 || $isHome)
+                  <div class="column">
+                     <div class="card">
+                        {{-- <div class="card-image">
+                           <figure class="image is-4by3">
+                              <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                           </figure>
+                        </div> --}}
+                        <div class="card-content">
+                           <div class="media-content">
+                           <a class="title is-4" href="group/{{$group->id}}">{{$group->groupName}}</a>
+                           </div>
+                        </div>
+                        <div class="content has-padding-20">
+                           Description: {{$group->groupDescription}}
+                           <br>
+                           <time datetime="2016-1-1">Created: {{$group->created_at}}</time>
+                        </div>
+                     </div>
+                  </div>
+               @endif
+            @endforeach
+          </div>
+       </div>
     </div>
     <button class="modal-close"></button>
     </div>
@@ -194,3 +228,18 @@
     </div>
  </div>
 @endsection
+
+<script type="text/javascript">
+
+      function activateTab(tabID) {
+          var tabCtrl = document.getElementById('tabCtrl');
+          var pageToActivate = document.getElementById(tabID);
+          for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+              var node = tabCtrl.childNodes[i];
+              if (node.nodeType == 1) { /* Element nodes only */
+                  node.style.display = (node == pageToActivate) ? 'block' : 'none';
+              }
+          }
+      }
+
+</script>

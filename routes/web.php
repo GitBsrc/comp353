@@ -99,6 +99,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add_member/{id}', 'GroupMembersController@store');
 
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
+
+    Route::get('/create_group/{id}', 'GroupController@createEventGroup');
+
+    Route::post('/new_event_group/{id}', 'GroupController@storeEventGroup');
 });
 
     Route::get('event_details/{id}', 'EventController@get_details');
