@@ -29,7 +29,6 @@ class DMRecipientController extends Controller
          }
 
         #open up the dm_recipient view page and load the recipient list according to the user
-
         return view('dm_recipients', ['dmrecipients' => $dmrecipients]);
     }
 

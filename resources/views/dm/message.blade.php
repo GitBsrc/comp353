@@ -8,8 +8,7 @@
                 <div class="column">
                 {{-- Trying to refer to the foreign key to get the value of sender in dmmessage model --}}
                 {{-- If condition, to check if the message is created by the authenticated user and check if it is send to the specific recipient--}}
-
-                  @if(($dm->dm_messages->sender == $user_id) && ($dm->recipient == $recipient))
+                 @if(($dm->dm_messages->sender == $user_id) && ($dm->recipient == $recipient)) 
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
@@ -20,12 +19,12 @@
                             </div>
                             <div class="message-body">
                              <p>
-                                   {{$dm->dm_messages->message_body}}
+                             {{$dm->dm_messages->message_body}}
                              </p>
                             </div>
                         </article>
                     </div>
-                    @elseif(($dm->dm_messages->sender == $recipient) && ($dm->recipient == $user_id))
+                   @elseif(($dm->dm_messages->sender == $recipient) && ($dm->recipient == $user_id)) 
                     <div class="level-right">
                         <article class="message is-small is-success column is-two-fifths ">
                             <div class="message-header">
@@ -36,12 +35,12 @@
                             </div>
                             <div class="message-body">
                                 <p>
-                                   {{$dm->dm_messages->message_body}}
+                                {{$dm->dm_messages->message_body}}
                                 </p>
                             </div>
                         </article>
                     </div>
-                    @endif
+                   @endif 
                 </div>
             </div>
             @endforeach
