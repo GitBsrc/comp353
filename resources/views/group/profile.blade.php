@@ -136,9 +136,7 @@
            <div class="group-admin-privileges" rendered="{{$isLeader}}">
                <a class="button" href="/group/{{$group->id}}/add_members">Add User(s)</a>
                <a class="button" href="javascript:toggleEdit()">Edit User(s)</a>
-               <!-- update this : save method -->
-               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
-               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="javascript:toggleEdit()">Cancel</a>
+               <button class="hiddenBlock button is-pulled-right" style="align:right; display:none;" ><a href="javascript:toggleEdit()">Finish Editing</a></button>
             </div>
             @endif
             <div class="panel-block">
@@ -152,14 +150,24 @@
             @foreach ($group_members as $member)
                 <div class="panel-block">
                     <div class="container">
-                        <form>
                             <div class="field">
                                 <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:block;" href="">DM</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$isLeader}}">Make Leader</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$isLeader}}">Delete</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" 
+                                    style="align:right; display:block;" 
+                                    href="/dm/{{$member->id}}">DM</a>
+                                    <form method="post" action="/make_leader/{{$group->id}}/{{$member->id}}">
+                                       @csrf
+                                       <button class="hiddenBlock button is-pulled-right is-small" 
+                                          style="align:right; display:none;" type="submit"
+                                          rendered="{{$isLeader}}">Make Leader</button>
+                                    </form>
+                                    <form method="post" action="/delete_member/{{$group->id}}/{{$member->id}}">
+                                       @csrf
+                                       <button class="hiddenBlock button is-pulled-right is-small is-danger" 
+                                          style="align:right; display:none;" type="submit"
+                                          rendered="{{$isLeader}}">Delete</button>
+                                    </form>
                             </div>
-                        </form>
                     </div>
                 </div>
             @endforeach

@@ -100,6 +100,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/add_member/{id}', 'GroupMembersController@store');
 
+    Route::post('/delete_member/{groupID}/{userID}', 'GroupMembersController@deleteMember');
+
+    Route::post('/make_leader/{groupID}/{userID}', 'GroupMembersController@makeLeader');
+
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
 
     Route::get('/create_group/{id}', 'GroupController@createEventGroup');
