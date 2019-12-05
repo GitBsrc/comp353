@@ -21,9 +21,15 @@ class DMRecipientController extends Controller
 
          #getting the message id of all messages sent by the authenticated user from the dm_messages
          $mess_id = DMMessage::where('sender', Auth::id())->pluck('id')->all();
+
+         if(count($mess_id) >0){
+            $dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
+         }else{
+            $dmrecipients = [];
+         }
          
         #get the list of all the recipient that the authenticated user dm from the DMRecipient model
-        $dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
+        #$dmrecipients = DMRecipients::where('message_id', $mess_id)->pluck('recipient')->all();
 
         #get the list of names of the recipients
         #$name = User::where('id', $dmrecipients)->pluck('name')->all();
