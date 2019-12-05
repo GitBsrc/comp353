@@ -69,7 +69,7 @@ class EventController extends Controller
 
         PaymentController::deposit($event->price);
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
-        return view('event.profile', ['event'=>$event, 'isAdmin'=>$isAdmin]);
+        return redirect('/event/'.$event->id);
     }
 
     public function show($id)
@@ -87,7 +87,6 @@ class EventController extends Controller
 
     public function get($id)
     {
-        $id = Auth::id();
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
@@ -95,12 +94,12 @@ class EventController extends Controller
         $posts = Posts::where('eventID', $id)->get();
         // event.profile same as event view, just kept both to see difference in code
         return view('event.profile', [
-            'event' => Event::findOrFail($id), 
-            'isManager' => $isManager, 
+            'event' => Event::findOrFail($id),
+            'isManager' => $isManager,
             'isAdmin' => $isAdmin,
             'groups' => $groups,
             'posts' => $posts,
-            'id' => $id
+            'id' => Auth::id(),
         ]);
     }
 
@@ -144,8 +143,9 @@ class EventController extends Controller
             $base_price = $current + $base_extension;
             $after_discount = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
         }
-
-        $after_discount = $generator->apply_discount($event->pric, $event_rate->event_recurrence_discount);
+        else{
+            $after_discount = $generator->apply_discount($event->price, $event_rate->event_recurrence_discount);
+        }
         $extra_charges = $generator->add_config_rates($request->input('storage'), $request->input('bandwidth'), $event_rate->storage, $event_rate->bandwidth);
         $event->price += $after_discount+$extra_charges;
 
@@ -155,7 +155,7 @@ class EventController extends Controller
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
-        return view('event.profile', ['event' => Event::findOrFail($id), 'isManager' => $isManager, 'isAdmin' => $isAdmin])->with('event', $event);
+        return redirect('/event/'.$event->id);
     }
 
     // Does not clearly state but assume this function should be called by manager user type
@@ -188,7 +188,7 @@ class EventController extends Controller
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
-        return view('event.profile', ['event' => Event::findOrFail($id), 'isManager' => $isManager, 'isAdmin' => $isAdmin])->with('event', $event);
+        return redirect('/event/'.$event->id);
     }
 
     public function get_repeat($id)
