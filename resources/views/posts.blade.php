@@ -91,10 +91,10 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
                         {{$post->post_image}}
                         <br>
-                        <small><a href="/commentpost">Reply</a> · {{$post->created_at}}</small>
-                        @if($post->userID == $id)
-                        <small><a href="/commentpost">Edit</a></small>
-                        @endif
+                        <small><a href="/commentpost">Reply</a> · @if($post->userID == $id)
+                            <a href="/commentpost">Edit</a>
+                            @endif · {{$post->created_at}}</small>
+                        
                     </p>
                 </div>
             </div>
