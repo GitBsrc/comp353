@@ -108,3 +108,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/repeat_event/{id}', 'EventController@repeat');
 
     Route::get('/repeat/{id}', 'EventController@get_repeat');
+
+    Route::get('/event_rates', 'EventRateController@get_rates')->name('event_rates');
