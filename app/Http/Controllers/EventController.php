@@ -151,7 +151,7 @@ class EventController extends Controller
         $event_rate = EventRates::find(1);
         $base_recurrence = $event_rate->event_recurrence;
         $base_price = $current + $base_recurrence;
-        if($event->recurrence % 2 == 1){
+        if(($recurrence % 2) == 1){
             $event->price = $generator->apply_discount($base_price, $event_rate->event_recurrence_discount);
             $event->discount += $event_rate->event_recurrence_discount;
         }
