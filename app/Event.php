@@ -21,10 +21,14 @@ class Event extends Model
         return $this->hasMany('App\EventMembers');
     }
 
-    /** 
+    /**
      * Each event has a group.
      */
     public function groups(){
         return $this->hasMany('App\Group');
+    }
+
+    public function rates(){
+        return $this->hasOne('App\EventRates');
     }
 }

@@ -27,7 +27,10 @@ class CreateEventsTable extends Migration
             $table->decimal('price',9,3);
             $table->decimal('bandwidth',9,3);
             $table->integer('storage');
+            $table->unsignedBigInteger('event_rates_id');
             $table->timestamps();
+
+            $table->foreign('event_rates_id')->references('id')->on('event_rates');
         });
     }
 
