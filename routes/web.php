@@ -68,9 +68,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/storepost', 'PostController@store');
 
-    Route::get('/editpost', function () {
-        return view('editpost');
-    });
 
     Route::get('/commentpost', function () {
         return view('commentpost');
@@ -117,3 +114,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/repeat_event/{id}', 'EventController@repeat');
 
     Route::get('/repeat/{id}', 'EventController@get_repeat');
+
+    Route::post('/editpost', 'PostController@update');

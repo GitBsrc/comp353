@@ -50,7 +50,7 @@ class postController extends Controller
     {
             //include validation + make sure session logged in
 
-            $this->validate($request, ['selected_event' => 'required', 'selected_group' => 'required', 'cancomment' => 'required', 'postContent' => 'required']);
+            $this->validate($request, ['selected_event' => 'nullable', 'selected_group' => 'nullable', 'cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
             $posts = new Posts();
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
@@ -60,7 +60,7 @@ class postController extends Controller
             $posts->postContent = $request->input('postContent');
 
 
-  /*          // Check if a profile image has been uploaded
+           // Check if a profile image has been uploaded
         if ($request->has('post_image')) {
             // Get image file
             $image = $request->file('post_image');
@@ -75,7 +75,7 @@ class postController extends Controller
             $posts->post_image = $request->validate([
                 'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
-        }*/
+        }
         // Persist user record to database
         $posts->save();
 
@@ -122,19 +122,34 @@ class postController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request)
     {
-        //validate that the owner of the post is the only one who can edit
-        // store
-            $posts = new Posts;
-            $posts->user_id    = Input::get('user_id');
-            $posts->first_name = Input::get('first_name');
-            $posts->group_id   = Input::get('group_id');
-            $posts->event_id   = Input::get('event_id');
+        $this->validate($request, ['cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
+
+        $posts = new Posts;
+        $posts->userID     = Auth::id();
+        $posts->firstName = Auth::user()->name;
+        $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+        $posts->postContent = $request->input('postContent');
+              // Check if a profile image has been uploaded
+              if ($request->has('post_image')) {
+                // Get image file
+                $image = $request->file('post_image');
+                // Define folder path
+                $folder = '/uploads/images/';
+                // Make a file path where image will be stored [ folder path + file name + file extension]
+                $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
+                // Upload image
+    
+                //$image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
+                
+                $posts->post_image = $request->validate([
+                    'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                ]);
+              }
             $posts->save();
 
             // redirect
-            Session::flash('message', 'Successfully updated post!');
             return Redirect::to('Posts');
     }
 

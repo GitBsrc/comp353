@@ -5,113 +5,66 @@
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-      Update Post
+      Edit Post
       </h1>
     </div>
   </div>
 </section>
 
 <section class="section is-light">
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Privacy</label>
-    </div>
-    <div class="field-body">
-      <div class="field is-narrow">
-        <div class="control">
-          <div class="select is-fullwidth">
-            <select>
-              <option>View Only</option>
-              <option>View & Comment</option>
-            </select>
+  <form action="/editpost" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Allow Replies</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <div class="control">
+              <input type="checkbox" name="canComment" class="switch-input">
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <div class="field is-horizontal">
-    <div class="field-label">
-      <label class="label">Upload a Picture/Video/Post</label>
-    </div>
-    <div class="field-body">
-      <div class="field is-narrow">
-            <div class="file">
-                    <label class="file-label">
-                      <input class="file-input" type="file" name="resume">
-                      <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                          Choose a file…
-                        </span>
-                      </span>
-                    </label>
-                  </div>
+
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Upload</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+                <div class="control">
+                <input id="post_image" type="file" class="form-control" name="post_image">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Share In</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-            <div class="control">
-                    <div class="select">
-                      <select>
-                        <option>Events...</option>
-                      </select>
-                    </div>
-                  </div>
+    
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Caption</label>
       </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Link to</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-            <div class="control">
-                    <div class="select">
-                      <select>
-                        <option>Other Posts...</option>
-                      </select>
-                    </div>
-                  </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">Caption</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <textarea class="textarea" placeholder="e.g. Join us this weekend for free breakfast!"></textarea>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <textarea name="postContent" class="textarea" placeholder="e.g. Join us this weekend for free breakfast!"></textarea>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <div class="field is-horizontal">
-    <div class="field-label">
-      <!-- Left empty for spacing -->
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <div class="control">
-          <button class="button is-primary">
-            Update Post
-          </button>
+    
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <!-- Left empty for spacing -->
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <button class="button is-primary" type="submit">Save Post</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </section>
 @endsection
