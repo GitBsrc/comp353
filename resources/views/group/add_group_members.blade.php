@@ -19,7 +19,7 @@
         @csrf
                 <div class="field panel-block dropdown">
                     <p class="control has-icons-left dropdown-trigger">
-                        <input class="input" id="search" type="text" placeholder="Search Members" onkeyup="search()">
+                        <input class="input" id="search" type="text" placeholder="Select Member" onkeyup="search()">
                         <span class="icon is-left">
                             <i class="fas fa-search" aria-hidden="true"></i>
                         </span>

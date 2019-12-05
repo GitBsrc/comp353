@@ -64,31 +64,17 @@ class GroupMembersController extends Controller
         return redirect('/profile');
     }
     
-    public function deleteMemberForm($groupID){
-        // should only be able to delete if user is leader
-        $group = Group::where('id', $groupID)->first();
-        $memberships = GroupMembers::where('groupID', $groupID)->get();
-        $admin_user = 0;
-        $group_members = array();
-        foreach($memberships as $member){
-            $userID = $member->userID;
-            $user = User::where('id', $userID)->first();
-            array_push($group_members, $user);
-            if($userID == Auth::user()->id){
-                $admin_user = $member->isLeader;
-                break;
-            }
-        }
-        if($admin_user == 1){
-            // show edit view
-            return view('group.delete_group_members', [
-                'group_members' => $group_members,
-                'group' => $group
-            ]);
-        }
+    public function deleteMember($groupID, $userID){
+        $membership = GroupMembers::where('groupID', $groupID)->where('userID', $userID)->first();
+        $membership->delete();
 
-        // update this
-        return view('/profile');
+        return redirect('/group/'.$groupID);
+    }
+    public function makeLeader($groupID, $userID){
+        $membership = GroupMembers::where('groupID', $groupID)->where('userID', $userID)->first();
+        $membership->isLeader = 1;
+
+        return redirect('/group/'.$groupID);
     }
 
     /**
