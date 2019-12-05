@@ -54,8 +54,7 @@ class GroupController extends Controller
     public function get($id){
         $group = Group::findOrFail($id);
         $posts = Posts::where('groupID', $id)->get();
-        // update this once events have group id
-        // $events = Event::where('groupID', $id)->get();
+        $events = Event::where('groupID', $id)->get();
         $memberships = GroupMembers::where('groupID', $id)->get();
         if($group->groupIsPublic == 0 && !in_array(Auth::id(), GroupMembers::where('groupID', $id)->pluck('userID')->all())){
             return redirect('/profile');
@@ -74,9 +73,9 @@ class GroupController extends Controller
             $post_count = $post_count + 1;
         }
         $event_count = 0;
-        // foreach($events as $event){
-        //     $event_count = $event_count + 1;
-        // }
+        foreach($events as $event){
+            $event_count = $event_count + 1;
+        }
         $member_count = 0;
         foreach($group_members as $member){
             $member_count = $member_count + 1;
@@ -92,7 +91,7 @@ class GroupController extends Controller
         return view('group.profile', [
             'group' => $group,
             'posts' => $posts,
-            // 'events' => $events,
+            'events' => $events,
             'group_members' => $group_members,
             'post_count' => $post_count,
             'event_count' => $event_count,

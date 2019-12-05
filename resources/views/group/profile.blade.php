@@ -96,7 +96,17 @@
             @endforeach
        </div>
        <div id="group-events" style="display:none;">
-
+         @foreach ($events as $event)
+            <div class="panel-block">
+               <div class="container">
+                  <form>
+                     <div class="field">
+                        <a class="is-pulled-left is-active" href="/event/{{$event->id}}">{{$event->name}}</a>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         @endforeach
        </div>
        <div id="group-members" style="display:none;">
             @if($isLeader)
