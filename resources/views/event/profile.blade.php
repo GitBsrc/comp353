@@ -20,7 +20,7 @@
                               {{$event->name}}
                            </span>
                            <div class="level-right">
-                              @if($isAdmin || $isManager)
+                              @if( ($isAdmin ?? '') || ($isManager ?? ''))
                               <a class="button level-right" href="/edit_event/{{$event->id}}">Edit</a>
                               @endif
                               <a class="button level-right" href="/event_details/{{$event->id}}">Details</a>

@@ -5,10 +5,10 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-        Event Contents
+        Posts
         </h1>
         <div class="box has-text-centered">
-            <a class="button is-primary" type="submit" href="/postform" value="Create New Post">Create New Post</a>
+            <a class="button is-primary" type="submit" href="/create_post" value="Create New Post">Create New Post</a>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
                         <br>
-                        <small><a>Like</a> · <a href="/commentpost">Reply (only if allowed)</a> · 3 hrs</small>
+                        <small><a href="/commentpost">Reply</a></small>
                     </p>
                 </div>
                 <article class="media">
@@ -45,7 +45,6 @@
                             <br>
                             Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
                             <br>
-                            <small><a>Like</a> · 2 hrs</small>
                         </p>
                         </div>
                 
@@ -71,7 +70,6 @@
                                 <br>
                                 Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
                                 <br>
-                                <small><a>Like</a> ·  2 hrs</small>
                             </p>
                         </div>
                     </div>
@@ -91,8 +89,12 @@
                         <strong>{{$post->firstName}}</strong>
                         <br>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                        {{$post->post_image}}
                         <br>
-                        <small><a>Like</a> · <a href="/commentpost">Reply (only if allowed)</a> · {{$post->created_at}}</small>
+                        <small><a href="/commentpost">Reply</a>  @if($post->userID == $id)
+                            <a href="/editpost">Edit</a>
+                            @endif · {{$post->created_at}}</small>
+                        
                     </p>
                 </div>
             </div>
@@ -110,14 +112,19 @@
                     <textarea class="textarea" placeholder="Add a comment..."></textarea>
                 </p>
                 </div>
-                <div class="control">
-                    <div class="select">
-                      <select>
-                        <option>View Only</option>
-                        <option>View & Comment</option>
-                      </select>
+                <div class="field is-horizontal">
+                     <div class="field-label is-normal">
+                         <label class="label">Allow Replies</label>
+                     </div>
+                     <div class="field-body">
+                      <div class="field is-narrow">
+                          <div class="control">
+                            <input type="checkbox" name="canComment" class="switch-input" value="1">
+                        </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
+                              
                     <button class="button is-primary">Post comment</button>
             </div>
         </article>

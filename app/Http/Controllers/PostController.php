@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 use App\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Session;
+use App\Event;
+use App\Group;
+use App\Traits\UploadTrait;
 
 //add routes
 class postController extends Controller
 {
+
      /**
      * Display a listing of all posts.
      *
@@ -18,9 +24,10 @@ class postController extends Controller
     {
         // get all the posts
         $posts = Posts::all();
+        $id = Auth::id();
 
         // load the view and pass the posts
-        return view('posts', ['posts'=>$posts]);
+        return view('posts', ['posts'=>$posts, 'id' => $id]);
     }
 
     /**
@@ -43,18 +50,36 @@ class postController extends Controller
     {
             //include validation + make sure session logged in
 
-            // store
-            $posts = new Posts;
+            $this->validate($request, ['selected_event' => 'nullable', 'selected_group' => 'nullable', 'cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
+            $posts = new Posts();
             $posts->userID     = Auth::id();
             $posts->firstName = Auth::user()->name;
-            $posts->groupID   = 1; // change once proper frontend options are there
-            $posts->eventID   = 1; //change once proper frontend options are there
-            $posts->constraint = $request->input('constraint'); // need to fill DB table with only 2 values for this to really make sense
-            $posts->save();
+            $posts->groupID   = $request->input('selected_group'); // change once proper frontend options are there
+            $posts->eventID   = $request->input('selected_event'); //change once proper frontend options are there
+            $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+            $posts->postContent = $request->input('postContent');
 
-            // redirect
-            Session::flash('message', 'Successfully created new post!');
-            return redirect('/posts');
+
+           // Check if a profile image has been uploaded
+        if ($request->has('post_image')) {
+            // Get image file
+            $image = $request->file('post_image');
+            // Define folder path
+            $folder = '/uploads/images/';
+            // Make a file path where image will be stored [ folder path + file name + file extension]
+            $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
+            // Upload image
+
+            //$image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
+            
+            $posts->post_image = $request->validate([
+                'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+        }
+        // Persist user record to database
+        $posts->save();
+
+        return view('/posts');
     }
 
     /**
@@ -84,7 +109,6 @@ class postController extends Controller
     {
 
         //validate that the owner of the post is the only one who can edit
-        // get the nerd
         $posts = Posts::find($id);
 
         // show the edit form and pass the current post
@@ -98,20 +122,34 @@ class postController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request)
     {
-        //validate that the owner of the post is the only one who can edit
-        // store
-            $posts = new Posts;
-            $posts->user_id    = Input::get('user_id');
-            $posts->first_name = Input::get('first_name');
-            $posts->group_id   = Input::get('group_id');
-            $posts->event_id   = Input::get('event_id');
-            $posts->constraint = Input::get('constraint');
+        $this->validate($request, ['cancomment' => 'nullable', 'postContent' => 'nullable', 'post_image' => 'nullable']);
+
+        $posts = new Posts;
+        $posts->userID     = Auth::id();
+        $posts->firstName = Auth::user()->name;
+        $posts->canComment = $request->input('cancomment'); // need to fill DB table with only 2 values for this to really make sense         
+        $posts->postContent = $request->input('postContent');
+              // Check if a profile image has been uploaded
+              if ($request->has('post_image')) {
+                // Get image file
+                $image = $request->file('post_image');
+                // Define folder path
+                $folder = '/uploads/images/';
+                // Make a file path where image will be stored [ folder path + file name + file extension]
+                $filePath = $folder . Auth::user()->name. '.' . $image->getClientOriginalExtension();
+                // Upload image
+    
+                //$image_upload->uploadOne($image, $folder, 'public', Auth::user()->name);
+                
+                $posts->post_image = $request->validate([
+                    'post_image'     =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                ]);
+              }
             $posts->save();
 
             // redirect
-            Session::flash('message', 'Successfully updated post!');
             return Redirect::to('Posts');
     }
 
@@ -133,5 +171,10 @@ class postController extends Controller
         return Redirect::to('Posts');
     }
 
+    public function get_event()
+    {
+        $events = Event::all();
+        $groups = Group::all();
+        return view('postform')->with(['events' => $events, 'groups' => $groups]);
+    }
 }
-

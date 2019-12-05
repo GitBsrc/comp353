@@ -13,7 +13,7 @@ class EventMembersController extends Controller
 {
     public function get($id)
     {
-        $isAdmin = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 3)->pluck('user_id')->all());
+        $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
         $event = Event::find($id);
         $members = EventMembers::where('event_id', $id)->get();
@@ -36,7 +36,13 @@ class EventMembersController extends Controller
         $member = new EventMembers();
         $member->event_id = $id;
         $member->user_id = Auth::id();
-        $member->member_type_id = 1; // member
+        $isadmin = User::where('id', Auth::id())->value('user_type_id');
+        if ($isadmin == 2){
+            $member->member_type_id = 3; // admin
+        }
+        else{
+            $member->member_type_id = 1; // member
+        }
         $member->save();
         return redirect('/event/'.$id);
     }
@@ -57,9 +63,6 @@ class EventMembersController extends Controller
     }
 
     public function setManager($eventID, $userID) {
-        if(EventMembers::where('event_id', $eventID)->where('user_id', Auth::id())->first()->member_type_id != 3) {
-            return redirect('/profile');
-        }
         $member = EventMembers::where('event_id', $eventID)->where('user_id', $userID);
         $member->update(['member_type_id' => 2]);
         return redirect('/event/'.$eventID);

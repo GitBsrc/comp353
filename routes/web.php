@@ -61,12 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/postform', function () {
         return view('postform');
     });
-    
+
     Route::post('/storepost', 'PostController@store');
-    
-    Route::get('/editpost', function () {
-        return view('editpost');
-    });
+
 
     Route::get('/commentpost', function () {
         return view('commentpost');
@@ -74,6 +71,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     
+    Route::get('/group', 'GroupController@index')->name('group');
+    
+    Route::get('/groupMembers', function() {
+        return view('groupMembers');
+    });
+
+    Route::get('/create_post', 'PostController@get_event')->name('events')->name('groups');
+
+
     Route::get('/profile/{id}', 'ProfileController@get');
 
     Route::get('/group/{id}', 'GroupController@get');
@@ -83,7 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/new_group', 'GroupController@store');
 
     Route::get('/group/{id}/edit_group', 'GroupController@edit');
-    
+
     Route::post('/update_group/{id}', 'GroupController@update');
 
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
@@ -107,7 +113,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dm/{id}', 'DMController@messageForm');
    
     Route::post('/dm/message/{id}', 'DMController@message');
+
+    Route::get('/repeat/{id}', 'EventController@get_repeat');
+
+    Route::post('/editpost', 'PostController@update');
 });
-
-
-

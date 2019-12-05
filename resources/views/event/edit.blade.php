@@ -35,6 +35,7 @@
             </div>
         </div>
 
+        @if($event->status != 'Archived')
         <div class="field">
                 <label class="label">Extend End Date</label>
                 Current: {{$event->endDate}} (Warning: this comes at an additional charge)
@@ -42,6 +43,7 @@
                     <input class="input" name="endDate" type="date">
                 </div>
         </div>
+        @endif
 
         <br />
         <p>
@@ -60,12 +62,10 @@
             <p><button class="button is-fullwidth is-danger" type="submit">Delete</button></p>
         </form>
         <br />
-        <form method="post" action="/repeat_event/{{$event->id}}">
-            @csrf
-            @if($event->status == 'Archived')
-            <p><button class="button is-fullwidth" type="submit">Repeat</button></p>
-            @endif
-        </form>
+
+        @if($event->status == 'Archived')
+            <p><a class="button is-fullwidth" href="/repeat/{{$event->id}}">Repeat</a></p>
+        @endif
  </div>
 </div>
 </div>
