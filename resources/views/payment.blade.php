@@ -7,7 +7,7 @@ $autoload = base_path('vendor/autoload.php');
 $path = app_path('Http/Controllers/PaymentController.php');
 require($path);
 require_once($autoload);
- $orderArray = PaymentController::deposit();
+ $orderArray = PaymentController::deposit(25);
 PaymentController::initApiClient();
 // Create a new API object to send order information to Square Checkout
 $checkoutClient = new \SquareConnect\Api\CheckoutApi();

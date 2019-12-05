@@ -112,3 +112,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/event_rates', 'EventRateController@get_rates')->name('event_rates');
 
     Route::post('/update_rates', 'EventRateController@update_rates');
+

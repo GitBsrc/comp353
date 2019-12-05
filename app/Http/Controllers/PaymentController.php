@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 class PaymentController extends Controller {
     // Charge client a $20 deposit
-    public static function deposit(){
+    public static function deposit($amount = null ){
         $user_id = Auth::id();
         $random = rand(5, 200000);
 
@@ -19,7 +19,7 @@ class PaymentController extends Controller {
                     "name" => "Deposit",
                     "quantity" => "1",
                     "base_price_money" => array(
-                    "amount" => 2000,
+                    "amount" => $amount,
                     "currency" => "CAD"
                     ),
                 )
@@ -33,6 +33,7 @@ class PaymentController extends Controller {
     }
 
     public static function initApiClient() {
+
         $GLOBALS['ACCESS_TOKEN'] = env('SQUARE_ACCESS_TOKEN', 'sandbox-sq0atb-PXR6i_dkp5nQpn09pFkpDw');
         $GLOBALS['STORE_NAME'] = env('SQUARE_STORE_NAME', 'Storage Fellows');
         $GLOBALS['LOCATION_ID'] = env('SQUARE_LOCATION_ID', 'CBASEKk60CHv09BQ9ktOMqxVbAggAQ');
@@ -41,6 +42,7 @@ class PaymentController extends Controller {
         if ($GLOBALS['API_CLIENT_SET']) { return; }
         // Create and configure a new Configuration object
         $configuration = new \SquareConnect\Configuration();
+        $configuration::getDefaultConfiguration()->setSSLVerification(FALSE);
         \SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken($GLOBALS['ACCESS_TOKEN']);
         // Create a LocationsApi client to load the location ID
         $locationsApi = new \SquareConnect\Api\LocationsApi();

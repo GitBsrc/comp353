@@ -64,6 +64,8 @@ class EventController extends Controller
         $event->price = $generator->generate_price($request->input('type'), $base_price);
 
         $event->save();
+
+        PaymentController::deposit($event->price);
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
         return view('event.profile', ['event'=>$event, 'isAdmin'=>$isAdmin]);
     }
@@ -137,6 +139,7 @@ class EventController extends Controller
 
 
         $event->update();
+        PaymentController::deposit($event->price);
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
@@ -169,7 +172,7 @@ class EventController extends Controller
         $event->endDate = $generator->merge_date_time($request->input('endDate'), $request->input('endTime'));
         $event->status = $generator->generate_status($request->input('startDate'),$request->input('endDate'));
         $event->update();
-
+        PaymentController::deposit($event->price);
         $isManager = in_array(Auth::id(), EventMembers::where('event_id', $id)->where('member_type_id', 2)->pluck('user_id')->all());
         $isAdmin = in_array(Auth::id(), User::where('user_type_id', 2)->pluck('id')->all());
 
