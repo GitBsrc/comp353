@@ -22,10 +22,13 @@
                    <p><span class="subtitle"><small>{{$group->groupDescription}}</small></span></p>
                 </div>
                 
-               @if($isLeader)
-                  <div class="column group-admin-privileges" rendered="{{$admin_user}}">
-                     <a class="button" class="is-pulled-left is-active" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
-                     <a class="button" class="is-pulled-left is-active" href="">Delete Group</a>
+               @if($isLeader || $isAdmin ?? '')
+                  <div class="column group-admin-privileges" rendered="{{$isLeader}}">
+                     <a class="button is-pulled-right" href="/group/{{$group->id}}/edit_group">Edit Group</a><br />
+                     <form method="post" action="/delete_group/{{$group->id}}">
+                        @csrf
+                        <p><button class="button is-pulled-right is-danger" type="submit">Delete Group</button></p>
+                     </form>
                   </div>
                @endif
              </div>
@@ -41,7 +44,6 @@
                    <h1 class="title is-bold">
                       {{$group->groupName}}
                    </h1>
-                   <!---->
                 </div>
              </div>
              <div class="columns">
@@ -81,30 +83,60 @@
     </div>
     <div class="container" id="tabCtrl">
        <div id="group-posts" style="display:block;">
-            @foreach ($posts as $post)
-                <div class="panel-block">
-                    <div class="container">
-                        <form>
-                            <div class="field">
-                            <!-- update this once posts are done so we 
-                            can have post/{{$post->id}} and maybe a blurb -->
-                                <a class="is-pulled-left is-active" href="">post contents</a>
-                            </div>
-                        </form>
-                    </div>
+       @foreach ($posts as $post)
+         <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{$post->firstName}}</strong>
+                        <br>
+                        @if($post->postContent != null)
+                        {{$post->postContent}}
+                        <br>
+                        @endif
+                        @if($post->post_image != null)
+                        <img src="{{ \Storage::url($post->post_image)}}" alt="">
+                        <br>
+                        @endif
+                        <small>
+                            @if($post->canComment == 1)
+                            <a href="/commentpost">Reply</a>
+                            @endif  
+                            @if($post->userID == $id)
+                            <a href="/editpost">Edit</a>
+                            @endif · {{$post->created_at}}
+                        </small>
+                        
+                    </p>
                 </div>
-            @endforeach
+            </div>
+         </article>
+         @endforeach
        </div>
        <div id="group-events" style="display:none;">
-
+         @foreach ($events as $event)
+            <div class="panel-block">
+               <div class="container">
+                  <form>
+                     <div class="field">
+                        <a class="is-pulled-left is-active" href="/event/{{$event->id}}">{{$event->name}}</a>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         @endforeach
        </div>
        <div id="group-members" style="display:none;">
             @if($isLeader)
-           <div class="group-admin-privileges" rendered="{{$admin_user}}">
+           <div class="group-admin-privileges" rendered="{{$isLeader}}">
                <a class="button" href="/group/{{$group->id}}/add_members">Add User(s)</a>
-               <a class="button" href="javascript:activateEdit()">Edit User(s)</a>
-               <!-- update this : save method -->
-               <a class="hiddenBlock button is-pulled-right" style="align:right; display:none;" href="">Save changes</a>
+               <a class="button" href="javascript:toggleEdit()">Edit User(s)</a>
+               <button class="hiddenBlock button is-pulled-right" style="align:right; display:none;" ><a href="javascript:toggleEdit()">Finish Editing</a></button>
             </div>
             @endif
             <div class="panel-block">
@@ -118,14 +150,24 @@
             @foreach ($group_members as $member)
                 <div class="panel-block">
                     <div class="container">
-                        <form>
                             <div class="field">
                                 <p class="is-pulled-left is-active">{{$member->name}} - {{$member->email}}</p>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:block;" href="">DM</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Make Leader</a>
-                                <a class="hiddenBlock button is-pulled-right is-small" style="align:right; display:none;" href="" rendered="{{$admin_user}}">Delete</a>
+                                <a class="hiddenBlock button is-pulled-right is-small" 
+                                    style="align:right; display:block;" 
+                                    href="/dm/{{$member->id}}">DM</a>
+                                    <form method="post" action="/make_leader/{{$group->id}}/{{$member->id}}">
+                                       @csrf
+                                       <button class="hiddenBlock button is-pulled-right is-small" 
+                                          style="align:right; display:none;" type="submit"
+                                          rendered="{{$isLeader}}">Make Leader</button>
+                                    </form>
+                                    <form method="post" action="/delete_member/{{$group->id}}/{{$member->id}}">
+                                       @csrf
+                                       <button class="hiddenBlock button is-pulled-right is-small is-danger" 
+                                          style="align:right; display:none;" type="submit"
+                                          rendered="{{$isLeader}}">Delete</button>
+                                    </form>
                             </div>
-                        </form>
                     </div>
                 </div>
             @endforeach
@@ -147,7 +189,7 @@
           }
       }
 
-      function activateEdit(){
+      function toggleEdit(){
          var blocksCtrl = document.getElementsByClassName('hiddenBlock');
          for(var i = 0; i < blocksCtrl.length; i++){
             var block = blocksCtrl[i];
@@ -159,8 +201,28 @@
             }
          }
       }
-      function endEdit(){
+      function saveEdit(){
 
+      }
+
+      function search() {
+         // Declare variables
+         var input, filter, list, results, a, i, txtValue;
+         input = document.getElementById('search');
+         filter = input.value.toUpperCase();
+         list = document.getElementById("listSearch");
+         results = list.getElementsByTagName('div');
+         
+         // Loop through all list items, and hide those who don't match the search query
+         for (i = 0; i < results.length; i++) {
+            a = results[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+               results[i].style.display = "";
+            } else {
+               results[i].style.display = "none";
+            }
+         }
       }
 
 </script>

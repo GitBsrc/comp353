@@ -14,7 +14,7 @@ class GroupMembersController extends Controller
 {
     /**
      * Display a listing of the group members.
-     * 
+     *
      * @return Response
      */
     public function index(){
@@ -28,7 +28,7 @@ class GroupMembersController extends Controller
 
     /**
      * Show the form for adding a new group member.
-     * 
+     *
      * @return Response
      */
     public function addMemberForm($groupID){
@@ -63,37 +63,24 @@ class GroupMembersController extends Controller
 
         return redirect('/profile');
     }
-    
-    public function deleteMemberForm($groupID){
-        // should only be able to delete if user is leader
-        $group = Group::where('id', $groupID)->first();
-        $memberships = GroupMembers::where('groupID', $groupID)->get();
-        $admin_user = 0;
-        $group_members = array();
-        foreach($memberships as $member){
-            $userID = $member->userID;
-            $user = User::where('id', $userID)->first();
-            array_push($group_members, $user);
-            if($userID == Auth::user()->id){
-                $admin_user = $member->isLeader;
-                break;
-            }
-        }
-        if($admin_user == 1){
-            // show edit view
-            return view('group.delete_group_members', [
-                'group_members' => $group_members,
-                'group' => $group
-            ]);
-        }
 
-        // update this
-        return view('/profile');
+    public function deleteMember($groupID, $userID){
+
+        $membership = GroupMembers::where('groupID', $groupID)->where('userID', $userID)->first();
+        $membership->delete();
+
+        return redirect('/group/'.$groupID);
+    }
+    public function makeLeader($groupID, $userID){
+        $membership = GroupMembers::where('groupID', $groupID)->where('userID', $userID)->first();
+        $membership->isLeader = 1;
+
+        return redirect('/group/'.$groupID);
     }
 
     /**
      * Store a newly created group member in storage.
-     * 
+     *
      * @return Response
      */
     public function store(Request $request, $id){
@@ -125,7 +112,7 @@ class GroupMembersController extends Controller
 
     /**
      * Display the specified group members.
-     * 
+     *
      * @param int $id
      * @return Response
      */
@@ -140,7 +127,7 @@ class GroupMembersController extends Controller
 
     /**
      * Show the form for editing the specified group member.
-     * 
+     *
      * @param int $id
      * @return Response
      */
@@ -155,7 +142,7 @@ class GroupMembersController extends Controller
 
     /**
      * Update the specified group member in storage.
-     * 
+     *
      * @param int $userID
      * @return Response
      */
@@ -183,7 +170,7 @@ class GroupMembersController extends Controller
 
     /**
      * Remove the specified group member from storage.
-     * 
+     *
      * @param int $id
      * @return Response
      */

@@ -63,7 +63,7 @@
         <div class="container">
             <div class="columns">
                <div class="column level is-mobile">
-                  <a href="/social-ui/#/u/me/i" class="level-item has-text-centered router-link-active">
+                  <a href="javascript:activateTab('event-posts')" class="level-item has-text-centered router-link-active">
                      <div>
                         <p>Posts</p>
                      </div>
@@ -73,7 +73,7 @@
                         <p>Participants</p>
                      </div>
                   </a>
-                  <a href="/social-ui/#/u/me/e" class="level-item has-text-centered">
+                  <a href="javascript:activateTab('event-groups')" class="level-item has-text-centered">
                      <div>
                         <p>Groups</p>
                      </div>
@@ -105,8 +105,10 @@
      <div class="container">
         <hr>
      </div>
-     <div class="container">
-        <article class="media">
+     <div class="container" id="tabCtrl">
+     <div id="event-posts" style="display:bock;">
+         @foreach ($posts as $post)
+         <article class="media">
             <figure class="media-left">
                 <p class="image is-64x64">
                 <img src="https://bulma.io/images/placeholders/128x128.png">
@@ -115,78 +117,63 @@
             <div class="media-content">
                 <div class="content">
                     <p>
-                        <strong>Barbara Middleton</strong>
+                        <strong>{{$post->firstName}}</strong>
                         <br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                        @if($post->postContent != null)
+                        {{$post->postContent}}
                         <br>
-                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                        @endif
+                        @if($post->post_image != null)
+                        <img src="{{ \Storage::url($post->post_image)}}" alt="">
+                        <br>
+                        @endif
+                        <small>
+                            @if($post->canComment == 1)
+                            <a href="/commentpost">Reply</a>
+                            @endif  
+                            @if($post->userID == $id)
+                            <a href="/editpost">Edit</a>
+                            @endif · {{$post->created_at}}
+                        </small>
+                        
                     </p>
                 </div>
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                        <p>
-                            <strong>Sean Brown</strong>
-                            <br>
-                            Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                            <br>
-                            <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                        </p>
-                        </div>
-
-                        <article class="media">
-                        Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.
-                        </article>
-
-                        <article class="media">
-                        Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.
-                        </article>
-                    </div>
-                </article>
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>Kayli Eunice </strong>
-                                <br>
-                                Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                                <br>
-                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                            </p>
-                        </div>
-                    </div>
-                </article>
             </div>
-        </article>
-        <article class="media">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
-                </p>
-            </figure>
-            <div class="media-content">
-                <div class="field">
-                <p class="control">
-                    <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                </p>
-                </div>
-                <div class="field">
-                <p class="control">
-                    <button class="button">Post comment</button>
-                </p>
-                </div>
-            </div>
-        </article>
+         </article>
+         @endforeach
+      </div>
+      <div id="event-groups" style="display:none;">
+         @if(($isAdmin ?? '') || ($isManager ?? ''))
+          <div class="level"> 
+            <a class="button is-pulled-left" href="/create_group/{{$event->id}}">Add Event Group</a>
+          </div>
+          @endif
+          <div class="columns">
+            @foreach ($groups as $group)
+               @if($group->groupIsPublic == 1 || $isAdmin ?? '')
+                  <div class="column">
+                     <div class="card">
+                        {{-- <div class="card-image">
+                           <figure class="image is-4by3">
+                              <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                           </figure>
+                        </div> --}}
+                        <div class="card-content">
+                           <div class="media-content">
+                           <a class="title is-4" href="/group/{{$group->id}}">{{$group->groupName}}</a>
+                           </div>
+                        </div>
+                        <div class="content has-padding-20">
+                           Description: {{$group->groupDescription}}
+                           <br>
+                           <time datetime="2016-1-1">Created: {{$group->created_at}}</time>
+                        </div>
+                     </div>
+                  </div>
+               @endif
+            @endforeach
+          </div>
+       </div>
     </div>
     <button class="modal-close"></button>
     </div>
@@ -194,3 +181,18 @@
     </div>
  </div>
 @endsection
+
+<script type="text/javascript">
+
+      function activateTab(tabID) {
+          var tabCtrl = document.getElementById('tabCtrl');
+          var pageToActivate = document.getElementById(tabID);
+          for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+              var node = tabCtrl.childNodes[i];
+              if (node.nodeType == 1) { /* Element nodes only */
+                  node.style.display = (node == pageToActivate) ? 'block' : 'none';
+              }
+          }
+      }
+
+</script>

@@ -5,18 +5,18 @@
             @foreach($dms as $dm)
             <div class="columns is-centered">
                 <div class="column">
-                    @if($dm->user_id == $user->id)
+                    @if($dm->sender == $user)
                     <div class="level-left">
                         <article class="message is-small column is-two-fifths">
                             <div class="message-header">
                                 <figure class="media-left">
                                     <p class="image is-64x64 sui-avatar"><img class="is-rounded" src="/images/users.png"></p>
                                 </figure>
-                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 1</strong></a> </p>
+                            <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>{{$dm->sender}}</strong></a> </p>
                             </div>
                             <div class="message-body">
                                 <span>
-                               Hey, my name is Tester 1.
+                               {{$dm->message_body}}
                              </span>
                             </div>
                         </article>
@@ -28,11 +28,11 @@
                                 <figure class="media-left">
                                     <p class="image is-64x64 sui-avatar"><img class="is-rounded" src="/images/users.png"></p>
                                 </figure>
-                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>Tester 2</strong></a> </p>
+                                <p><a href="/social-ui/#/c/3f9387a3d91e696a"><strong>{{$dm->sender}}</strong></a> </p>
                             </div>
                             <div class="message-body">
                                 <p>
-                                    Hey Tester 1, how are you doing today? :)
+                                    {{$dm->message_body}}
                                 </p>
                             </div>
                         </article>

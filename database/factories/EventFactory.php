@@ -31,5 +31,6 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'price' => $generator->generate_price($type, 25) + $generator->add_config_rates($storage, $bandwidth, 4, 5),
         'bandwidth' => $bandwidth,
         'storage' => $storage,
+        'event_rates_id' => 1,
     ];
 });

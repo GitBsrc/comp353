@@ -18,14 +18,14 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('userID');
             $table->string('firstName'); //Pretty sure this is redundant
             $table->boolean('canComment')->nullable();;
-            $table->unsignedBigInteger('groupID');
-            $table->unsignedBigInteger('eventID')->nullable();
             $table->string('post_image')->nullable();
             $table->string('postContent')->nullable();
+            $table->unsignedBigInteger('groupID')->onDelete('cascade');
+            $table->unsignedBigInteger('eventID')->nullable()->onDelete('cascade');
             $table->timestamps();
 
-            $table->foreign('groupID')->references('id')->on('group');
-            $table->foreign('eventID')->references('id')->on('events');
+            $table->foreign('groupID')->references('id')->on('group')->onDelete('cascade');
+            $table->foreign('eventID')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('userID')->references('id')->on('users');
         });
     }

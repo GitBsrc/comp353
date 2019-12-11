@@ -21,8 +21,8 @@ class CreateGroupMembersTable extends Migration
             $table->timestamp('joinDate');
             $table->timestamps();
 
-            $table->foreign('userID')->references('id')->on('users');
-            $table->foreign('groupID')->references('id')->on('group');
+            $table->foreign('userID')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('groupID')->references('id')->on('group')->onDelete('cascade');
         });
     }
 

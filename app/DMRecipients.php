@@ -11,14 +11,14 @@ class DMRecipients extends Model
      * Each recipient gets several messages.
      */
     public function messages(){
-        return $this->belongsTo('App\DMMessage', 'foreign_key');
+        return $this->belongsTo('App\DMMessage', 'message_id');
     }
 
     /**
      * Each exchange has one to many senders.
      */
     public function senders(){
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User', 'recipient');
     }
 
     protected $table = 'dm_recipients';

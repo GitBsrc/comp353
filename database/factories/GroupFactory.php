@@ -9,5 +9,6 @@ $factory->define(App\Group::class, function (Faker $faker) {
         'groupName' => $faker->word,
         'groupDescription' => $faker->word,
         'groupIsPublic' => $faker->numberBetween($min = 0, $max = 1),
+        'eventID' => factory(App\Event::class)->create()->id,
     ];
 });

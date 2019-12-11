@@ -43,6 +43,10 @@
                         <a class="navbar-item" href="/event_list">
                           Events
                         </a>
+
+                        <a class="navbar-item" href="/group_list">
+                          Groups
+                        </a>
                         </div>
                       </div>
 
@@ -56,7 +60,14 @@
                                 <a class="button is-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @else
-                                
+
+
+
+                        @if($isAdmin ?? '')
+                                  <a class="navbar-item" href="/event_rates">
+                                      System Rates
+                                  </a>
+                        @endif
                         <a class="navbar-item" href="/dm_recipients">
                           Messages
                         </a>
@@ -67,6 +78,8 @@
 
                                 <div class="navbar-dropdown">
                                 <a class="navbar-item" href="{{ route('create_group')}}">Create Group</a>
+                                <a class="navbar-item" href="/payment">Payment</a>
+
                                   <a class="navbar-item" href="{{ route('logout') }}"
                                   onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">

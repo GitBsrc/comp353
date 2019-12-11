@@ -61,6 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/postform', function () {
         return view('postform');
     });
+    Route::get('/editpost', function () {
+        return view('editpost');
+    });
 
     Route::post('/storepost', 'PostController@store');
 
@@ -82,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/profile/{id}', 'ProfileController@get');
 
+    Route::get('/group_list', 'GroupController@index')->name('group_list');
+
     Route::get('/group/{id}', 'GroupController@get');
 
     Route::get('/create_group', 'GroupController@create')->name('create_group');
@@ -92,11 +97,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/update_group/{id}', 'GroupController@update');
 
+    Route::post('/delete_group/{id}', 'GroupController@destroy');
+
     Route::get('/group/{id}/add_members', 'GroupMembersController@addMemberForm');
 
     Route::post('/add_member/{id}', 'GroupMembersController@store');
 
+    Route::post('/delete_member/{groupID}/{userID}', 'GroupMembersController@deleteMember');
+
+    Route::post('/make_leader/{groupID}/{userID}', 'GroupMembersController@makeLeader');
+
     Route::get('/group/{id}/delete_members', 'GroupMembersController@deleteMemberForm');
+
+    Route::get('/create_group/{id}', 'GroupController@createEventGroup');
+
+    Route::post('/new_event_group/{id}', 'GroupController@storeEventGroup');
 
     Route::get('event_details/{id}', 'EventController@get_details');
 
@@ -110,7 +125,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dm_recipients', 'DMRecipientController@index');
 
-    Route::get('/dm/{id}', 'DMController@messageForm');
+    Route::get('/dm/message/{id}', 'DMController@messageForm');
    
     Route::post('/dm/message/{id}', 'DMController@message');
 
@@ -118,3 +133,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/editpost', 'PostController@update');
 });
+
+    Route::get('/event_rates', 'EventRateController@get_rates')->name('event_rates');
+
+    Route::post('/update_rates', 'EventRateController@update_rates');
+
